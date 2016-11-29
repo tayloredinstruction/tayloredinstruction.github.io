@@ -1,145 +1,492 @@
+
 <!DOCTYPE html>
-<html manifest = "ti.appcache">
-	
-<head>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<html>
+    <head>
+       	<meta charset="utf-8">
+<script type="application/javascript">
 
-  ga('create', 'UA-82227021-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
-<meta name="viewport">
-<title>River Levels-Northern NSW - Google Fusion Tables</title>
-<style type="text/css">
-html, body, #googft-mapCanvas {
-  height: 500px;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+//added to only show console info on local-hosts
+var DEBUG = (location.hostname.search("test") > -1 || location.hostname.search("local") > -1 || location.hostname.search("staging") > -1) ? true : false;
+if(!DEBUG){
+    if(!window.console) window.console = {};
+    var methods = ["log", "debug", "warn", "info"];
+    for(var i=0;i<methods.length;i++){
+    	console[methods[i]] = function(){};
+    }
 }
 
+	//global variable definitions that are convenient to have on each page
+	var preview = "0";
+	if(preview==1) console.log("*** PREVIEW ***");
+	
+	console.log("using vars copy: tayloredinstruction-vars - cached");
+	var generated = "2016-08-28 08:08:53";
+	var config_file_url = "https://origin-files.infinitemonkeys.mobi/userfiles/tayloredinstruction-var2.json";
+	console.log("config file: " + config_file_url + " - - " + generated);
+	console.log("last fetched: 1480396841");
+
+	var app_name = "tayloredinstruction";
+	var app_id = "104124832";
+	var app_userID = "d8a8d853-0cd8-4e14-a626-156812d4cc82";
+	console.log("app_userID: " + app_userID);
+	var app_copy = "cached";
+
+	var published = true;
+	var html_version = "1";
+	
+	var app_title = "Taylored Instruction";
+	var show_title = "text";
+	var col_back = "#ffffff";
+	var col_text = "#000000";
+	var col_title = "#000055";
+	var bg_opacity = "0.50";
+	var icon_scale = "1.0";
+	
+	var header_file = "104124832-title.png";
+	
+	var ads_on = "0";
+	
+	var fid = "";
+	var home_link = "/index.php?app=tayloredinstruction";
+	
+	var userfiles_path = "https://origin-files.infinitemonkeys.mobi/userfiles/";
+	var publish_type = "6";
+	
+	var menu_style = "grid";
+	
+</script> 
+	<!-- //ios7 app-view link overrides -->
+	<script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
+<meta name="viewport" content="initial-scale=1.0">
+
+        <meta charset="utf-8">
+        <link rel="canonical" href="http://h.fanapp.mobi/tayloredinstruction" />
+        <meta name="description" content="View river heights across Australia on a live map."/>
+        <meta name="keywords" content="kayak,rafting,whitewater" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <meta name="wot-verification" content="8069a6211313e4b1dcab"/>
+
+        <!-- added by david hoare to force refresh of index page each time  -->
+        <meta http-equiv="Expires" content="Mon, 26 Jul 1997 05:00:00 GMT">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+				<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+				<meta name="mobile-web-app-capable" content="yes">
+				<meta name="apple-mobile-web-app-capable" content="yes">
+
+        <title>Taylored Instruction</title>
+
+        <!-- favicons for various platforms -->
+<link rel="shortcut icon" type="image/png" href="https://fileadmin.infinitemonkeys.mobi/utils/resize_image.php?url=https%3A%2F%2Forigin-files.infinitemonkeys.mobi%2Fuserfiles%2F104124832-icon.png&w=16&h=16&filetype=png">
+
+<link rel="apple-touch-icon" href="https://fileadmin.infinitemonkeys.mobi/utils/resize_image.php?url=https%3A%2F%2Forigin-files.infinitemonkeys.mobi%2Fuserfiles%2F104124832-icon.png&w=152&h=152&filetype=png">
+     	<link rel="icon" sizes="196x196" href="https://fileadmin.infinitemonkeys.mobi/utils/resize_image.php?url=https%3A%2F%2Forigin-files.infinitemonkeys.mobi%2Fuserfiles%2F104124832-icon.png&w=196&h=196&filetype=png">
+
+    <!-- browser detection		 -->
+   	<link href="js/browser-detection/browser-detection.css" rel="stylesheet" type="text/css" media='screen' />
+		<script async type="text/javascript" src="/js/browser-detection/browser-detection.js"></script>
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+		<link rel="stylesheet" href="/theme/vendor/waves/waves.min.css" />
+		<link rel="stylesheet" href="/theme/vendor/wow/animate.css" />
+		<link rel="stylesheet" href="/theme/css/nativedroid2.css" />
+
+		<!--our custom or overridden styles-->
+	<!--- 	<link rel="stylesheet" type="text/css"  href="/css/style.css" /> -->
+		<link rel="stylesheet" href="/theme/css/theme_style.css" />
+
+
+		<!-- php-based style overrides -->
+		<style>
+	body, html, p, a:not(.ui-btn), li .rowDescription{
+		color:#000000 !important;
+	}
+		.ui-mobile .ui-page {
+	    padding-bottom: 0px !important;
+	}
+	
+	/*.dataList li a{ 	color:#000000 !important;  text-shadow: none !important;}*/
+	.dataList li, .nd2-card{
+		background-color:rgb(255,255,255) !important;
+		border-color:rgb(0,0,0) !important;
+		color:#000000 !important;
+	}
+
+	.rowTitle, .ui-li-heading, .card-primary-title, .card-primary-title a, .card-subtitle{
+		color:#000055 !important;
+	}
+
+	a,.default_btn{
+		color:#000055 !important;
+	}
+
+	.ui-header, .ui-footer, #leftpanel.ui-panel.ui-panel-open{
+		background-color:#ffffff !important;
+		/*background-color:#ddd !important;*/
+		color:#000055 !important;
+		/*color:#333 !important;*/
+	}
+	.custom_select option{
+		color:#000055 !important;
+		}
+	.ui-header > .ui-btn {
+		color:#000055 !important;
+	}
+
+	.col_title {
+		color: #000055 !important;
+	}
+	.module_custom_li > li:first-child
+	{border-color:#000055 !important;
+	border-top:1px solid
+	}
+	.col_text {
+		color: #000000 !important;
+	}
+	.col_back {
+		background-color:rgba(255,255,255,1) !important;
+	}
+	.col_back_without_opacity {
+		background-color:rgb(255,255,255) !important;
+	}
+	.col_back_without_opacity li a {
+		border-color:rgba(0,0,0,0.5) !important;
+	}
+	.classifiedList li a.ui-btn{border-color:#000000 !important;}
+	.direction_address{
+		background-color:rgb(255,255,255) !important;
+		text-shadow: none !important;
+		color:#000055 !important;
+	}
+	.openclose { color:#000000 !important; }
+
+	#html_content p{color:#000 !important;}
+
+	.dataList li a.more_but{
+		color:#000055 !important;
+		}
+
+	.ui-input-text.ui-focus::after, .ui-input-search.ui-focus::after{ background-color : #000055; }
+	.licustombible li a{color:#000000 !important;}
+	.ui-content .licustombible .ui-li-divider{border-bottom:1px solid;}
+	.card-subtitle{color:#000000 !important;}
+	#ad_type-button span{
+		color:#000055;
+	}
+
 </style>
-<style>
-  
-    body { 
-      background-color: black;
-  }
-	</style>
-	<script>
-		function processRequest() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        var response = JSON.parse(xhr.responseText);
-        alert(response);
-    }
-		var xhr = new XMLHttpRequest();
-	xhr.open('GET', "https://www.googleapis.com/fusiontables/v2/tables/1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke", true);
-	xhr.send();
-	xhr.onreadystatechange = processRequest();
-	
-}</script>
-<script type="text/javascript" src="map.js"></script>
-<script type="text/javascript">
-	
-	
-  function initialize() {
-    google.maps.visualRefresh = true;
-    var isMobile = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ||
-      (navigator.userAgent.match(/(iPod|iPhone|iPad|BlackBerry|Windows Phone|iemobile)/));
-    if (isMobile) {
-      var viewport = document.querySelector("meta[name=viewport]");
-      viewport.setAttribute('content', 'initial-scale=1.0, user-scalable=no');
-    }
-    var mapDiv = document.getElementById('googft-mapCanvas');
-    mapDiv.style.width ='100%';
-    mapDiv.style.height = isMobile ? '100%' : '500px';
-    var map = new google.maps.Map(mapDiv, {
-      center: new google.maps.LatLng(-30.3333, 152.7167),
-      zoom: 4,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend-open'));
-    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend'));
-    var mini = document.getElementById("min. level");
-    var miniVal = mini.options[mini.selectedIndex].value;
-    var maxi = document.getElementById("max. level");
-    var maxiVal = maxi.options[maxi.selectedIndex].value;
-    var minig = document.getElementById("min. grade");
-    var miniValg = minig.options[minig.selectedIndex].value;
-    var maxig = document.getElementById("max. grade");
-    var maxiValg = maxig.options[maxig.selectedIndex].value;
-    layer = new google.maps.FusionTablesLayer({
-      map: map,
-      heatmap: { enabled: false },
-      query: {
-        select: "col11",
-        from: "1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke",
-        where:  "col15 \x3e\x3d "+miniVal+" and col15 \x3c\x3d "+maxiVal+" and col14 \x3e\x3d "+miniValg+" and col16 \x3c\x3d "+maxiValg
-      },
-      options: {
-        styleId: 2,
-        templateId: 3
-      }
-    });
 
-    if (isMobile) {
-      var legend = document.getElementById('googft-legend');
-      var legendOpenButton = document.getElementById('googft-legend-open');
-      var legendCloseButton = document.getElementById('googft-legend-close');
-      legend.style.display = 'none';
-      legendOpenButton.style.display = 'block';
-      legendCloseButton.style.display = 'block';
-      legendOpenButton.onclick = function() {
-        legend.style.display = 'block';
-        legendOpenButton.style.display = 'none';
-      }
-      legendCloseButton.onclick = function() {
-        legend.style.display = 'none';
-        legendOpenButton.style.display = 'block';
-      }
-    }
-  }
+		<!--jq-mobile scripts-->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
 
-  google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-</head>
+		<!--- new js -->
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="/theme/vendor/waves/waves.min.js"></script>
+		<script src="/theme/js/nativedroid2.js"></script>
+		<script src="/theme/js/nd2settings.js"></script>
 
-<body>
-  <div> <p style="text-align:center;color:white">Min.&nbsp;Level:&nbsp;<select id="min. level" onchange="initialize()">
-  <option value=-1 selected>Any</option>
-  <option value=0>Visual</option>
-  <option value=1>Low Level</option>
-  <option value=2>Good Level</option>
-  <option value=3>High Level</option>
-</select>
- Max.&nbsp;Level:&nbsp;<select id="max. level" onchange="initialize()" default>
-  <option value=0>Visual</option>
-  <option value=1>Low Level</option>
-  <option value=2>Good Level</option>
-  <option value=3>High Level</option>
-  <option value=4 selected>Any</option>
-</select>
-Min.&nbsp;Grade:&nbsp;<select id="min. grade" onchange="initialize()" default>
-  <option value=-1>None</option>
-  <option value=2 selected>2</option>
-  <option value=3>3</option>
-  <option value=4>4</option>
-  <option value=5>5</option>
-  <option value=6>6</option>
-</select>
-Max.&nbsp;Grade:&nbsp;<select id="max. grade" onchange="initialize()" default>
-  <option value=7>None</option>
-  <option value=2>2</option>
-  <option value=3>3</option>
-  <option value=4>4</option>
-  <option value=5>5</option>
-  <option value=6 selected>6</option>
-    </select></p>
-</div>
-  
-  <div id="googft-mapCanvas"></div>
-</body>
+
+		<!--Script for fancy box-->
+		<script type="text/javascript" src="./fancybox/jquery.fancybox.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox.css" media="screen" />
+
+		<!--custom functions-->
+		<script type="text/javascript" src="./js/functions.js"></script>
+		<script type="text/javascript" src="./js/update.js"></script>
+
+		<style>
+		/*.module {
+			position:absolute;
+		}*/
+		</style>
+
+        <script type="text/javascript">
+
+				//added by David Hoare for frame background formatting
+			function hexToRGB(h){
+				h = (h.charAt(0)=="#") ? h.substring(1,7):h;
+				if ( h.length == 3 ) {
+			        h = h.substr(0,1) + h.substr(0,1) + h.substr(1,2) + h.substr(1,2) + h.substr(2,3) + h.substr(2,3);
+			    }
+				var rgb = parseInt(h.substring(0,2),16);
+				rgb += "," + parseInt(h.substring(2,4),16);
+				rgb += "," + parseInt(h.substring(4,6),16);
+				return rgb;
+			}
+			//end added
+
+			function getCookie(c_name)
+			{
+				var i,x,y,ARRcookies=document.cookie.split(";");
+				for (i=0;i<ARRcookies.length;i++)
+				{
+					x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+					y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+					x=x.replace(/^\s+|\s+$/g,"");
+					if (x==c_name)
+					{
+						return unescape(y);
+					}
+				}
+			}
+
+			$(document).ready(function() {
+
+				$(".various1").fancybox({
+					beforeLoad : function() {
+				        window.console && console.log("opening menu");
+				        return;
+				    }
+				});
+
+
+				//if the app is UNPUBLISHED - then redirect to error page:
+				if(published === false || published === "false"){
+					window.console && console.log("Unpublished app - redirecting: " + published);
+					document.location.href='unpublished.php?app='+app_name + "&email=" + "tayloredinstruction@gmail.com&url="+encodeURI(document.location.href);
+				}else if(html_version == "0"){
+					window.console && console.log("NO HTML_VERSION: " + html_version);
+					document.location.href='unpublished.php?app='+app_name + "&email=" + "tayloredinstruction@gmail.com&url="+encodeURI(document.location.href);
+				}else{
+					window.console && console.log("published app  & html version - continuing: " + published + " - " + html_version);
+				}
+
+
+
+				//title image
+				$("#homeimage").on("error", function(){
+					$(this).attr("src", "/images/empty.png");
+				});
+				var app_image = "https://origin-files.infinitemonkeys.mobi/userfiles/"+header_file;
+				if(app_copy == "fresh"){app_image += "?random="+Math.random();}
+				$("#homeimage").attr("src",app_image);
+
+
+
+				// Set background image for site
+				path = "https://origin-files.infinitemonkeys.mobi/userfiles";
+				var bg_image = path+"/"+"104124832-background.jpg";
+				if(app_copy == "fresh"){
+					bg_image += "?random="+Math.random();
+				}
+				$('#content').css("background-image", "url("+bg_image+")");
+
+				$( "#homeimage" ).load(function() {
+					console.log("image loaded - calling resize");
+					if(menu_style == "grid") resizegrid();
+				});
+
+				var pages = jQuery.parseJSON("{\"6291471\":{\"on\":true,\"name\":\"contacts\",\"title\":\"Contact Us\",\"icon\":\"104124832-6291471-icon.png\",\"icon_time\":\"2016-08-28 07:43:32\",\"order\":\"4\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:43:52\",\"data\":{\"contacts\":[{\"name\":\"Taylored Instruction\",\"address\":\"\",\"phone\":\"0431033970\",\"email\":\"tayloredinstruction@gmail.com\"}]}},\"6291468\":{\"on\":true,\"name\":\"websites\",\"title\":\"River Map\",\"icon\":\"104124832-6291468-icon.png\",\"icon_time\":\"2016-08-28 07:56:49\",\"order\":\"13\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:39:29\",\"data\":{\"web_links\":[{\"backgroundColor\":\"transparent\",\"color\":\"#000\",\"hasChild\":true,\"title\":\"Map\",\"external\":\"0\",\"link\":\"https:\\\/\\\/fusiontables.google.com\\\/embedviz?q=select+col11+from+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&viz=MAP&h=false&lat=-38.65652947395615&lng=157.63189828124996&t=1&z=5&l=col11&y=2&tmplt=3&hml=ONE_COL_LAT_LNG\"}]}},\"6291483\":{\"on\":true,\"name\":\"facebook\",\"title\":\"Facebook Feed\",\"icon\":\"104124832-6291483-icon.png\",\"icon_time\":\"2016-08-28 07:45:06\",\"order\":\"84\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:45:47\",\"data\":{\"facebook_feeds\":[\"https:\\\/\\\/www.facebook.com\\\/tayloredinstructionti\\\/\"]}},\"6291464\":{\"on\":true,\"name\":\"videos\",\"title\":\"Videos\",\"icon\":\"104124832-6291464-icon.png\",\"icon_time\":\"2016-08-28 07:57:10\",\"order\":\"93\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:37:09\",\"data\":{\"video\":{\"type\":\"rss\",\"value\":\"Taylored Instruction\"}}}}"); // jshint ignore:line
+				
+				//grid LAYOUT
+console.log("doing GRID layout");
+var cols = 16;
+var rows = 16;
+var mods_across = 5;
+//the total number of modules you could fit tightly side-by-side
+var mods_down = 5;
+//the total number of modules you could fit tightly side-by-side
+
+
+function creategrid(){
+	$("#container").html('');
+	//add the modules in starting positions
+	$.each(pages, function(i, value) {
+		//check iframe cdn 29-02-2016							
+		if(value.name=='facebook'){
+			if(window.self !== window.top){
+				//alert('1');
+				linkc = "javascript: alert('This feature will only work on a mobile device. Please publish your app to properly test it.');";
+			}else{
+				//alert('2');
+				linkc = "modules/" + value.name.toLowerCase() + "/" + value.name + ".php?fid="+i;
+				if(preview==1){
+					linkc += "&preview=1";
+				}
+			}
+		}else{
+			linkc = "modules/" + value.name.toLowerCase() + "/" + value.name + ".php?fid="+i;
+			if(preview==1){
+				linkc += "&preview=1";
+			}
+		}
+		
+								
+		imgc = "https://origin-files.infinitemonkeys.mobi/userfiles/" + value.icon;
+		if(app_copy == "fresh")
+			imgc += ("?r="+ Math.random());
+
+		sectionc = value.title;
+		data_tb = '<div id="mod'+i+'" class="module"><a id="dis' + i + '" rel="external" href="' + linkc + '" class="ui-link"><img src="' + imgc + '"></a><div class="module_text">' + sectionc + '</div></div>';
+		$("#container").append(data_tb);
+	});
+	$("#container").append('<div id="frame"></div>');	//add the frame
+	$(".module_text").css("color", col_text);
+
+	resizegrid();
+
+	//checks for updated data using update.js and does whatever actions are needed...
+	if(typeof(checkForNewData) == "function")
+		checkForNewData(pages);
+}
+
+var grid_space_width;
+var grid_space_height;
+
+function resizegrid() {
+	resizepage(); //first, resize the css based on the page
+
+	//hide titles if needed
+	if(show_title == 'false' || show_title == 'none'){
+		$("#homeimage").css("display", "none");
+	}else{
+		$("#homeimage").css("max-height",windowHeight * 0.12);
+		var dropdown = $("#homeimage").outerHeight() + 10;
+		console.log("bumping content down: " + dropdown);
+		$("#container").css("top",dropdown + "px");
+	}
+
+	var container_width = $("#container").outerWidth();
+	var module_width = container_width / mods_across;
+
+	var container_height = $("#container").outerHeight();
+	var text_height = module_width * 0.15;
+	var module_height = (container_height / mods_down);
+
+	var grid_width = container_width - module_width;
+	var grid_height = container_height - module_height;
+	grid_space_width = grid_width / (cols-1);
+	grid_space_height = (grid_height / (rows-1)); 	// remove a bit of padding
+
+	var positions = [];
+	var row = col = 0; // jshint ignore:line
+	var pos = 1;
+	var divData = "";
+	$(".testbox").remove();
+	for( row = 0; row < rows; row++) {
+		for( col = 0; col < cols; col++, pos++) {
+			pos_top = row * grid_space_height;// + (grid_space_height / 2);
+			pos_left = col * grid_space_width;// + (grid_space_width / 2);
+
+			positions[pos] = {
+				"top" : pos_top,
+				"left" : pos_left
+			};
+
+		}
+	}
+
+	$.each(pages, // $.each() looping on each Module
+	function(i, value) {
+		$("#mod"+i).css('top',positions[value.order].top);
+		$("#mod"+i).css('left',positions[value.order].left);
+	});
+
+	//format some stuff
+	$(".module").width(module_width * icon_scale);
+
+	$(".module_text").css("font-size", text_height * icon_scale);
+	$(".openclose").css("font-size", text_height * 1.2 * icon_scale);
+	$(".module img").css("width", module_width * 1 * icon_scale);
+
+	resizeFrame();
+
+}
+
+function resizeFrame() {
+	console.log("resizing frame");
+
+	var padding = grid_space_width/2;
+	var tops = [];
+	var lefts = [];
+	var rights = [];
+	var bottoms = [];
+	$(".module").each(function() {
+		var m = $(this);
+		var pos = m.position();
+		lefts.push(pos.left);
+		tops.push(pos.top);
+		var right = pos.left + m.outerWidth();
+		var bottom = pos.top + m.outerHeight();
+		rights.push(right);
+		bottoms.push(bottom);
+	});
+	lefts.sort(function(a, b) {
+		return a - b;
+	});
+	tops.sort(function(a, b) {
+		return a - b;
+	});
+
+	rights.sort(function(a, b) {
+		return b - a;
+	});
+	bottoms.sort(function(a, b) {
+		return b - a;
+	});
+
+// below adustment to set height for iframe
+	$("#frame").css("left", lefts[0]);
+	$("#frame").css("width", rights[0] - lefts[0]);
+	$("#frame").css("height", bottoms[0]);
+
+	var frame_col_string = "rgba("+hexToRGB(col_back)+","+bg_opacity+")";  //added by David Hoare for frame background formatting
+	$("#frame").css("background-color",frame_col_string);   //added by David Hoare for frame background formatting
+
+}
+
+
+creategrid();
+
+setTimeout(function() { resizegrid() }, 1000); //temporary fix for resizing grid
+			});
+	    </script>
+
+    </head>
+    <body>
+			<script async type="text/javascript" src="./js/browser_function_tests.js"></script>
+
+			<div data-role="page" id="index">
+
+				
+				<div id="content" data-role="content" class="bg-home" style="padding:0px;">
+					<div id="header-index" class="ui-btn-corner-all">
+							<div><img src="" id="homeimage"/></div>
+							<!-- <div id="homesubtitle"></div> -->
+					</div>
+
+										<div id="container" role="main" class="" data-inset="false" data-wow-delay="0.2s"></div>
+					
+					
+					<!-- FOR GRID LAYOUT ONLY -->
+					
+						<div id="footer" data-role="footer" data-position="fixed" data-id="myfooter" class="wow fadeIn">
+							<a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="fa fa-bars fa-2x"></i></a>
+						</div>
+
+						<!-- panel left -->
+						<div data-role="panel" id="leftpanel" data-display="overlay" data-position-fixed="true" >
+							<h3>Main Menu</h3>
+								<ul data-role="listview" data-inset="false" data-icon="false">
+									<li>
+			              <a rel="external" data-ajax='false' data-icon="false" href="modules/messages/messages.php">Messages</a>
+			            </li>
+									<li>
+			              <a rel="external" data-ajax='false' data-icon="false" href="modules/moreinfo/moreinfo.php">More Info</a>
+			            </li>
+									<li>
+			              <a rel="external" data-ajax='false' data-icon="false" id="fmail" href="mailto:tayloredinstruction@gmail.com?subject=Check out this great app: http://theapp.mobi/tayloredinstruction">Send to a Friend</a>
+			            </li>
+								</ul>
+						</div>
+						<!-- /panel left -->
+					
+					
+				</div>
+		</div>
+
+    </body>
 </html>
