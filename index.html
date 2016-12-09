@@ -1,490 +1,223 @@
-<html class="ui-mobile"><head><base href="http://h.fanapp.mobi/tayloredinstruction">
-       	<meta charset="utf-8">
-<script async="" src="//www.google-analytics.com/analytics.js"></script><script type="application/javascript">
-
-//added to only show console info on local-hosts
-var DEBUG = (location.hostname.search("test") > -1 || location.hostname.search("local") > -1 || location.hostname.search("staging") > -1) ? true : false;
-if(!DEBUG){
-    if(!window.console) window.console = {};
-    var methods = ["log", "debug", "warn", "info"];
-    for(var i=0;i<methods.length;i++){
-    	console[methods[i]] = function(){};
-    }
-}
-
-	//global variable definitions that are convenient to have on each page
-	var preview = "0";
-	if(preview==1) console.log("*** PREVIEW ***");
-	
-	console.log("using vars copy: tayloredinstruction-vars - cached");
-	var generated = "2016-08-28 08:08:53";
-	var config_file_url = "https://origin-files.infinitemonkeys.mobi/userfiles/tayloredinstruction-var2.json";
-	console.log("config file: " + config_file_url + " - - " + generated);
-	console.log("last fetched: 1480396841");
-
-	var app_name = "tayloredinstruction";
-	var app_id = "104124832";
-	var app_userID = "d8a8d853-0cd8-4e14-a626-156812d4cc82";
-	console.log("app_userID: " + app_userID);
-	var app_copy = "cached";
-
-	var published = true;
-	var html_version = "1";
-	
-	var app_title = "Taylored Instruction";
-	var show_title = "text";
-	var col_back = "#ffffff";
-	var col_text = "#000000";
-	var col_title = "#000055";
-	var bg_opacity = "0.50";
-	var icon_scale = "1.0";
-	
-	var header_file = "104124832-title.png";
-	
-	var ads_on = "0";
-	
-	var fid = "6291468";
-	var home_link = "/index.php?app=tayloredinstruction";
-	
-	var userfiles_path = "https://origin-files.infinitemonkeys.mobi/userfiles/";
-	var publish_type = "6";
-	
-	var menu_style = "grid";
-	
-</script> 
-	<!-- //ios7 app-view link overrides -->
-	<script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
-<meta name="viewport" content="initial-scale=1.0,maximum-scale=1, user-scalable=no">
-
-        <meta charset="utf-8">
-        <link rel="canonical" href="http://h.fanapp.mobi/tayloredinstruction">
-        <meta name="description" content="View river heights across Australia on a live map.">
-        <meta name="keywords" content="kayak,rafting,whitewater">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-        <meta name="wot-verification" content="8069a6211313e4b1dcab">
-
-        <!-- added by david hoare to force refresh of index page each time  -->
-        <meta http-equiv="Expires" content="Mon, 26 Jul 1997 05:00:00 GMT">
-        <meta http-equiv="Cache-Control" content="no-cache">
-        <meta http-equiv="Pragma" content="no-cache">
-				<meta name="viewport" content="initial-scale=1.0,maximum-scale=1, user-scalable=no">
-				<meta name="mobile-web-app-capable" content="yes">
-				<meta name="apple-mobile-web-app-capable" content="yes">
-
-        <title>Taylored Instruction</title>
-
-        <!-- favicons for various platforms -->
-<link rel="shortcut icon" type="image/png" href="https://fileadmin.infinitemonkeys.mobi/utils/resize_image.php?url=https%3A%2F%2Forigin-files.infinitemonkeys.mobi%2Fuserfiles%2F104124832-icon.png&amp;w=16&amp;h=16&amp;filetype=png">
-
-<link rel="apple-touch-icon" href="https://fileadmin.infinitemonkeys.mobi/utils/resize_image.php?url=https%3A%2F%2Forigin-files.infinitemonkeys.mobi%2Fuserfiles%2F104124832-icon.png&amp;w=152&amp;h=152&amp;filetype=png">
-     	<link rel="icon" sizes="196x196" href="https://fileadmin.infinitemonkeys.mobi/utils/resize_image.php?url=https%3A%2F%2Forigin-files.infinitemonkeys.mobi%2Fuserfiles%2F104124832-icon.png&amp;w=196&amp;h=196&amp;filetype=png">
-
-    <!-- browser detection		 -->
-   	<link href="js/browser-detection/browser-detection.css" rel="stylesheet" type="text/css" media="screen">
-		<script async="" type="text/javascript" src="/js/browser-detection/browser-detection.js"></script>
-
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
-		<link rel="stylesheet" href="/theme/vendor/waves/waves.min.css">
-		<link rel="stylesheet" href="/theme/vendor/wow/animate.css">
-		<link rel="stylesheet" href="/theme/css/nativedroid2.css">
-
-		<!--our custom or overridden styles-->
-	<!--- 	<link rel="stylesheet" type="text/css"  href="/css/style.css" /> -->
-		<link rel="stylesheet" href="/theme/css/theme_style.css">
-
-
-		<!-- php-based style overrides -->
-		<style>
-	body, html, p, a:not(.ui-btn), li .rowDescription{
-		color:#000000 !important;
-	}
-		.ui-mobile .ui-page {
-	    padding-bottom: 0px !important;
-	}
-	
-	/*.dataList li a{ 	color:#000000 !important;  text-shadow: none !important;}*/
-	.dataList li, .nd2-card{
-		background-color:rgb(255,255,255) !important;
-		border-color:rgb(0,0,0) !important;
-		color:#000000 !important;
-	}
-
-	.rowTitle, .ui-li-heading, .card-primary-title, .card-primary-title a, .card-subtitle{
-		color:#000055 !important;
-	}
-
-	a,.default_btn{
-		color:#000055 !important;
-	}
-
-	.ui-header, .ui-footer, #leftpanel.ui-panel.ui-panel-open{
-		background-color:#ffffff !important;
-		/*background-color:#ddd !important;*/
-		color:#000055 !important;
-		/*color:#333 !important;*/
-	}
-	.custom_select option{
-		color:#000055 !important;
-		}
-	.ui-header > .ui-btn {
-		color:#000055 !important;
-	}
-
-	.col_title {
-		color: #000055 !important;
-	}
-	.module_custom_li > li:first-child
-	{border-color:#000055 !important;
-	border-top:1px solid
-	}
-	.col_text {
-		color: #000000 !important;
-	}
-	.col_back {
-		background-color:rgba(255,255,255,1) !important;
-	}
-	.col_back_without_opacity {
-		background-color:rgb(255,255,255) !important;
-	}
-	.col_back_without_opacity li a {
-		border-color:rgba(0,0,0,0.5) !important;
-	}
-	.classifiedList li a.ui-btn{border-color:#000000 !important;}
-	.direction_address{
-		background-color:rgb(255,255,255) !important;
-		text-shadow: none !important;
-		color:#000055 !important;
-	}
-	.openclose { color:#000000 !important; }
-
-	#html_content p{color:#000 !important;}
-
-	.dataList li a.more_but{
-		color:#000055 !important;
-		}
-
-	.ui-input-text.ui-focus::after, .ui-input-search.ui-focus::after{ background-color : #000055; }
-	.licustombible li a{color:#000000 !important;}
-	.ui-content .licustombible .ui-li-divider{border-bottom:1px solid;}
-	.card-subtitle{color:#000000 !important;}
-	#ad_type-button span{
-		color:#000055;
-	}
-
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+/* Set the width of the sidenav to 120px */
+.w3-sidenav {width: 120px;background: #222;}
+/* Add a left margin to the "page content" that matches the width of the sidenav (120px) */
+#main {margin-left: 120px}
+/* Remove margins from "page content" on small screens */
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
 </style>
+<body class="w3-black">
 
-		<!--jq-mobile scripts-->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+<!-- Icon Bar (Sidenav - hidden on small screens) -->
+<nav class="w3-sidenav w3-center w3-small w3-hide-small">
+  <!-- Avatar image in top left corner -->
+  <img src="/w3images/avatar_smoke.jpg" style="width:100%">
+  <a class="w3-padding-large w3-black" href="#">
+    <i class="fa fa-home w3-xxlarge"></i>
+    <p>HOME</p>
+  </a>
+  <a class="w3-padding-large w3-hover-black" href="#about">
+    <i class="fa fa-user w3-xxlarge"></i>
+    <p>ABOUT</p>
+  </a>
+  <a class="w3-padding-large w3-hover-black" href="#photos">
+    <i class="fa fa-eye w3-xxlarge"></i>
+    <p>PHOTOS</p>
+  </a>
+  <a class="w3-padding-large w3-hover-black" href="#contact">
+    <i class="fa fa-envelope w3-xxlarge"></i>
+    <p>CONTACT</p>
+  </a>
+</nav>
 
-		<!--- new js -->
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-		<script src="/theme/vendor/waves/waves.min.js"></script>
-		<script src="/theme/js/nativedroid2.js"></script>
-		<script src="/theme/js/nd2settings.js"></script>
+<!-- Navbar on small screens (Hidden on medium and large screens) -->
+<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+  <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+    <li class="w3-left" style="width:25% !important"><a href="#">HOME</a></li>
+    <li class="w3-left" style="width:25% !important"><a href="#about">ABOUT</a></li>
+    <li class="w3-left" style="width:25% !important"><a href="#photos">PHOTOS</a></li>
+    <li class="w3-left" style="width:25% !important"><a href="#contact">CONTACT</a></li>
+  </ul>
+</div>
 
+<!-- Page Content -->
+<div class="w3-padding-large" id="main">
+  <!-- Header/Home -->
+  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
+    <h1 class="w3-jumbo"><span class="w3-hide-small">I'm</span> John Doe.</h1>
+    <p>Photographer and Web Designer.</p>
+    <img src="/w3images/man_smoke.jpg" alt="boy" class="w3-image" width="992" height="1108">
+  </header>
 
-		<!--Script for fancy box-->
-		<script type="text/javascript" src="./fancybox/jquery.fancybox.pack.js"></script>
-		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox.css" media="screen">
-
-		<!--custom functions-->
-		<script type="text/javascript" src="./js/functions.js"></script>
-		<script type="text/javascript" src="./js/update.js"></script>
-
-		<style>
-		/*.module {
-			position:absolute;
-		}*/
-		</style>
-
-        <script type="text/javascript">
-
-				//added by David Hoare for frame background formatting
-			function hexToRGB(h){
-				h = (h.charAt(0)=="#") ? h.substring(1,7):h;
-				if ( h.length == 3 ) {
-			        h = h.substr(0,1) + h.substr(0,1) + h.substr(1,2) + h.substr(1,2) + h.substr(2,3) + h.substr(2,3);
-			    }
-				var rgb = parseInt(h.substring(0,2),16);
-				rgb += "," + parseInt(h.substring(2,4),16);
-				rgb += "," + parseInt(h.substring(4,6),16);
-				return rgb;
-			}
-			//end added
-
-			function getCookie(c_name)
-			{
-				var i,x,y,ARRcookies=document.cookie.split(";");
-				for (i=0;i<ARRcookies.length;i++)
-				{
-					x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-					y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-					x=x.replace(/^\s+|\s+$/g,"");
-					if (x==c_name)
-					{
-						return unescape(y);
-					}
-				}
-			}
-
-			$(document).ready(function() {
-
-				$(".various1").fancybox({
-					beforeLoad : function() {
-				        window.console && console.log("opening menu");
-				        return;
-				    }
-				});
-
-
-				//if the app is UNPUBLISHED - then redirect to error page:
-				if(published === false || published === "false"){
-					window.console && console.log("Unpublished app - redirecting: " + published);
-					document.location.href='unpublished.php?app='+app_name + "&email=" + "tayloredinstruction@gmail.com&url="+encodeURI(document.location.href);
-				}else if(html_version == "0"){
-					window.console && console.log("NO HTML_VERSION: " + html_version);
-					document.location.href='unpublished.php?app='+app_name + "&email=" + "tayloredinstruction@gmail.com&url="+encodeURI(document.location.href);
-				}else{
-					window.console && console.log("published app  & html version - continuing: " + published + " - " + html_version);
-				}
-
-
-
-				//title image
-				$("#homeimage").on("error", function(){
-					$(this).attr("src", "/images/empty.png");
-				});
-				var app_image = "https://origin-files.infinitemonkeys.mobi/userfiles/"+header_file;
-				if(app_copy == "fresh"){app_image += "?random="+Math.random();}
-				$("#homeimage").attr("src",app_image);
-
-
-
-				// Set background image for site
-				path = "https://origin-files.infinitemonkeys.mobi/userfiles";
-				var bg_image = path+"/"+"104124832-background.jpg";
-				if(app_copy == "fresh"){
-					bg_image += "?random="+Math.random();
-				}
-				$('#content').css("background-image", "url("+bg_image+")");
-
-				$( "#homeimage" ).load(function() {
-					console.log("image loaded - calling resize");
-					if(menu_style == "grid") resizegrid();
-				});
-
-				var pages = jQuery.parseJSON("{\"6291471\":{\"on\":true,\"name\":\"contacts\",\"title\":\"Contact Us\",\"icon\":\"104124832-6291471-icon.png\",\"icon_time\":\"2016-08-28 07:43:32\",\"order\":\"4\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:43:52\",\"data\":{\"contacts\":[{\"name\":\"Taylored Instruction\",\"address\":\"\",\"phone\":\"0431033970\",\"email\":\"tayloredinstruction@gmail.com\"}]}},\"6291468\":{\"on\":true,\"name\":\"websites\",\"title\":\"River Map\",\"icon\":\"104124832-6291468-icon.png\",\"icon_time\":\"2016-08-28 07:56:49\",\"order\":\"13\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:39:29\",\"data\":{\"web_links\":[{\"backgroundColor\":\"transparent\",\"color\":\"#000\",\"hasChild\":true,\"title\":\"Map\",\"external\":\"0\",\"link\":\"https:\\\/\\\/fusiontables.google.com\\\/embedviz?q=select+col11+from+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&viz=MAP&h=false&lat=-38.65652947395615&lng=157.63189828124996&t=1&z=5&l=col11&y=2&tmplt=3&hml=ONE_COL_LAT_LNG\"}]}},\"6291483\":{\"on\":true,\"name\":\"facebook\",\"title\":\"Facebook Feed\",\"icon\":\"104124832-6291483-icon.png\",\"icon_time\":\"2016-08-28 07:45:06\",\"order\":\"84\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:45:47\",\"data\":{\"facebook_feeds\":[\"https:\\\/\\\/www.facebook.com\\\/tayloredinstructionti\\\/\"]}},\"6291464\":{\"on\":true,\"name\":\"videos\",\"title\":\"Videos\",\"icon\":\"104124832-6291464-icon.png\",\"icon_time\":\"2016-08-28 07:57:10\",\"order\":\"93\",\"image\":\"self-bg.png\",\"image_time\":\"2016-08-28 07:37:09\",\"data\":{\"video\":{\"type\":\"rss\",\"value\":\"Taylored Instruction\"}}}}"); // jshint ignore:line
-				
-				//grid LAYOUT
-console.log("doing GRID layout");
-var cols = 16;
-var rows = 16;
-var mods_across = 5;
-//the total number of modules you could fit tightly side-by-side
-var mods_down = 5;
-//the total number of modules you could fit tightly side-by-side
-
-
-function creategrid(){
-	$("#container").html('');
-	//add the modules in starting positions
-	$.each(pages, function(i, value) {
-		//check iframe cdn 29-02-2016							
-		if(value.name=='facebook'){
-			if(window.self !== window.top){
-				//alert('1');
-				linkc = "javascript: alert('This feature will only work on a mobile device. Please publish your app to properly test it.');";
-			}else{
-				//alert('2');
-				linkc = "modules/" + value.name.toLowerCase() + "/" + value.name + ".php?fid="+i;
-				if(preview==1){
-					linkc += "&preview=1";
-				}
-			}
-		}else{
-			linkc = "modules/" + value.name.toLowerCase() + "/" + value.name + ".php?fid="+i;
-			if(preview==1){
-				linkc += "&preview=1";
-			}
-		}
-		
-								
-		imgc = "https://origin-files.infinitemonkeys.mobi/userfiles/" + value.icon;
-		if(app_copy == "fresh")
-			imgc += ("?r="+ Math.random());
-
-		sectionc = value.title;
-		data_tb = '<div id="mod'+i+'" class="module"><a id="dis' + i + '" rel="external" href="' + linkc + '" class="ui-link"><img src="' + imgc + '"></a><div class="module_text">' + sectionc + '</div></div>';
-		$("#container").append(data_tb);
-	});
-	$("#container").append('<div id="frame"></div>');	//add the frame
-	$(".module_text").css("color", col_text);
-
-	resizegrid();
-
-	//checks for updated data using update.js and does whatever actions are needed...
-	if(typeof(checkForNewData) == "function")
-		checkForNewData(pages);
-}
-
-var grid_space_width;
-var grid_space_height;
-
-function resizegrid() {
-	resizepage(); //first, resize the css based on the page
-
-	//hide titles if needed
-	if(show_title == 'false' || show_title == 'none'){
-		$("#homeimage").css("display", "none");
-	}else{
-		$("#homeimage").css("max-height",windowHeight * 0.12);
-		var dropdown = $("#homeimage").outerHeight() + 10;
-		console.log("bumping content down: " + dropdown);
-		$("#container").css("top",dropdown + "px");
-	}
-
-	var container_width = $("#container").outerWidth();
-	var module_width = container_width / mods_across;
-
-	var container_height = $("#container").outerHeight();
-	var text_height = module_width * 0.15;
-	var module_height = (container_height / mods_down);
-
-	var grid_width = container_width - module_width;
-	var grid_height = container_height - module_height;
-	grid_space_width = grid_width / (cols-1);
-	grid_space_height = (grid_height / (rows-1)); 	// remove a bit of padding
-
-	var positions = [];
-	var row = col = 0; // jshint ignore:line
-	var pos = 1;
-	var divData = "";
-	$(".testbox").remove();
-	for( row = 0; row < rows; row++) {
-		for( col = 0; col < cols; col++, pos++) {
-			pos_top = row * grid_space_height;// + (grid_space_height / 2);
-			pos_left = col * grid_space_width;// + (grid_space_width / 2);
-
-			positions[pos] = {
-				"top" : pos_top,
-				"left" : pos_left
-			};
-
-		}
-	}
-
-	$.each(pages, // $.each() looping on each Module
-	function(i, value) {
-		$("#mod"+i).css('top',positions[value.order].top);
-		$("#mod"+i).css('left',positions[value.order].left);
-	});
-
-	//format some stuff
-	$(".module").width(module_width * icon_scale);
-
-	$(".module_text").css("font-size", text_height * icon_scale);
-	$(".openclose").css("font-size", text_height * 1.2 * icon_scale);
-	$(".module img").css("width", module_width * 1 * icon_scale);
-
-	resizeFrame();
-
-}
-
-function resizeFrame() {
-	console.log("resizing frame");
-
-	var padding = grid_space_width/2;
-	var tops = [];
-	var lefts = [];
-	var rights = [];
-	var bottoms = [];
-	$(".module").each(function() {
-		var m = $(this);
-		var pos = m.position();
-		lefts.push(pos.left);
-		tops.push(pos.top);
-		var right = pos.left + m.outerWidth();
-		var bottom = pos.top + m.outerHeight();
-		rights.push(right);
-		bottoms.push(bottom);
-	});
-	lefts.sort(function(a, b) {
-		return a - b;
-	});
-	tops.sort(function(a, b) {
-		return a - b;
-	});
-
-	rights.sort(function(a, b) {
-		return b - a;
-	});
-	bottoms.sort(function(a, b) {
-		return b - a;
-	});
-
-// below adustment to set height for iframe
-	$("#frame").css("left", lefts[0]);
-	$("#frame").css("width", rights[0] - lefts[0]);
-	$("#frame").css("height", bottoms[0]);
-
-	var frame_col_string = "rgba("+hexToRGB(col_back)+","+bg_opacity+")";  //added by David Hoare for frame background formatting
-	$("#frame").css("background-color",frame_col_string);   //added by David Hoare for frame background formatting
-
-}
-
-
-creategrid();
-
-setTimeout(function() { resizegrid() }, 1000); //temporary fix for resizing grid
-			});
-	    </script>
-
-    <style type="text/css">.fancybox-margin{margin-right:0px;}</style></head>
-    <body class="ui-mobile-viewport ui-overlay-a nd2-ready">
-			<script async="" type="text/javascript" src="./js/browser_function_tests.js"></script>
-
-			<div data-role="page" id="index" data-url="index" tabindex="0" class="ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" style="padding-bottom: 53px; max-width: 989px; width: 490.137px; min-height: 717px;">
-
-				
-				<div id="content" data-role="content" class="bg-home ui-content" style="padding: 0px; height: 663px; background-position: 249.438px 0px; background-size: 491px 663px; background-image: url(&quot;https://origin-files.infinitemonkeys.mobi/userfiles/104124832-background.jpg&quot;);" role="main">
-					<div id="header-index" class="ui-btn-corner-all">
-							<div><img src="https://origin-files.infinitemonkeys.mobi/userfiles/104124832-title.png" id="homeimage" style="max-height: 86.04px;"></div>
-							<!-- <div id="homesubtitle"></div> -->
-					</div>
-
-										<div id="container" role="main" class="" data-inset="false" data-wow-delay="0.2s" style="top: 68px;"><div id="mod6291464" class="module" style="top: 156px; left: 300.8px; width: 94px;"><a id="dis6291464" rel="external" href="modules/videos/videos.php?fid=6291464" class="ui-link"><img src="https://origin-files.infinitemonkeys.mobi/userfiles/104124832-6291464-icon.png" style="width: 94px;"></a><div class="module_text" style="color: rgb(0, 0, 0); font-size: 14.1px;">Videos</div></div><div id="mod6291468" class="module" style="top: 0px; left: 300.8px; width: 94px;"><a id="dis6291468" rel="external" href="modules/websites/websites.php?fid=6291468" class="ui-link"><img src="https://origin-files.infinitemonkeys.mobi/userfiles/104124832-6291468-icon.png" style="width: 94px;"></a><div class="module_text" style="color: rgb(0, 0, 0); font-size: 14.1px;">River Map</div></div><div id="mod6291471" class="module" style="top: 0px; left: 75.2px; width: 94px;"><a id="dis6291471" rel="external" href="modules/contacts/contacts.php?fid=6291471" class="ui-link"><img src="https://origin-files.infinitemonkeys.mobi/userfiles/104124832-6291471-icon.png" style="width: 94px;"></a><div class="module_text" style="color: rgb(0, 0, 0); font-size: 14.1px;">Contact Us</div></div><div id="mod6291483" class="module" style="top: 156px; left: 75.2px; width: 94px;"><a id="dis6291483" rel="external" href="modules/facebook/facebook.php?fid=6291483" class="ui-link"><img src="https://origin-files.infinitemonkeys.mobi/userfiles/104124832-6291483-icon.png" style="width: 94px;"></a><div class="module_text" style="color: rgb(0, 0, 0); font-size: 14.1px;">Facebook Feed</div></div><div id="frame" style="left: 75.1875px; width: 319.609px; height: 291px; background-color: rgba(255, 255, 255, 0.498039);"></div></div>
-					
-					
-					<!-- FOR GRID LAYOUT ONLY -->
-					
-						<div id="footer" data-role="footer" data-position="fixed" data-id="myfooter" class="wow fadeIn ui-footer ui-bar-inherit ui-footer-fixed slideup" role="contentinfo" style="width: 490.137px; max-width: 989px;">
-							<a href="#leftpanel" class="ui-btn-left wow fadeIn ui-btn waves-effect waves-button" data-wow-delay="0.8s" data-role="button" role="button"><i class="fa fa-bars fa-2x"></i></a>
-						</div>
-
-						<!-- panel left -->
-						<div data-role="panel" id="leftpanel" data-display="overlay" data-position-fixed="true" class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-panel-closed ui-body-inherit ui-panel-fixed ui-panel-animate">
-							<div class="ui-panel-inner"><h3>Main Menu</h3><ul data-role="listview" data-inset="false" data-icon="false" class="ui-listview">
-									<li class="ui-first-child">
-			              <a rel="external" data-ajax="false" data-icon="false" href="modules/messages/messages.php" class="ui-btn waves-effect waves-button">Messages</a>
-			            </li>
-									<li>
-			              <a rel="external" data-ajax="false" data-icon="false" href="modules/moreinfo/moreinfo.php" class="ui-btn waves-effect waves-button">More Info</a>
-			            </li>
-									<li class="ui-last-child">
-			              <a rel="external" data-ajax="false" data-icon="false" id="fmail" href="mailto:tayloredinstruction@gmail.com?subject=Check out this great app: http://theapp.mobi/tayloredinstruction" class="ui-btn waves-effect waves-button">Send to a Friend</a>
-			            </li>
-								</ul></div>
-								
-						</div>
-						<!-- /panel left -->
-					
-					
-				</div>
-		</div>
-
+  <!-- About Section -->
+  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+    <h2 class="w3-text-light-grey">My Name</h2>
+    <hr style="width:200px" class="w3-opacity">
+    <p>Some text about me. Some text about me. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+      ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur
+      adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </p>
+    <h3 class="w3-padding-16 w3-text-light-grey">My Skills</h3>
+    <p class="w3-wide">Photography</p>
+    <div class="w3-progress-container">
+      <div class="w3-progressbar" style="width:95%"></div>
+    </div>
+    <p class="w3-wide">Web Design</p>
+    <div class="w3-progress-container">
+      <div class="w3-progressbar" style="width:85%"></div>
+    </div>
+    <p class="w3-wide">Photoshop</p>
+    <div class="w3-progress-container">
+      <div class="w3-progressbar" style="width:80%"></div>
+    </div><br>
     
+    <div class="w3-row w3-center w3-padding-16 w3-section w3-light-grey">
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">11+</span><br>
+        Partners
+      </div>
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">55+</span><br>
+        Projects Done
+      </div>
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">89+</span><br>
+        Happy Clients
+      </div>
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">150+</span><br>
+        Meetings
+      </div>
+    </div>
 
-<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div><div class="ui-panel-dismiss"></div></body><AutoScroll></AutoScroll></html>
+    <button class="w3-btn w3-light-grey w3-padding-large w3-section w3-hover-grey">
+      <i class="fa fa-download"></i> Download Resume
+    </button>
+    
+    <!-- Grid for pricing tables -->
+    <h3 class="w3-padding-16 w3-text-light-grey">My Price</h3>
+    <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-half w3-margin-bottom">
+        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
+          <li class="w3-dark-grey w3-xlarge w3-padding-32">Basic</li>
+          <li class="w3-padding-16">Web Design</li>
+          <li class="w3-padding-16">Photography</li>
+          <li class="w3-padding-16">5GB Storage</li>
+          <li class="w3-padding-16">Mail Support</li>
+          <li class="w3-padding-16">
+            <h2>$ 10</h2>
+            <span class="w3-opacity">per month</span>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <button class="w3-btn w3-white w3-padding-large w3-hover-black">Sign Up</button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="w3-half">
+        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
+          <li class="w3-dark-grey w3-xlarge w3-padding-32">Pro</li>
+          <li class="w3-padding-16">Web Design</li>
+          <li class="w3-padding-16">Photography</li>
+          <li class="w3-padding-16">50GB Storage</li>
+          <li class="w3-padding-16">Endless Support</li>
+          <li class="w3-padding-16">
+            <h2>$ 25</h2>
+            <span class="w3-opacity">per month</span>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <button class="w3-btn w3-white w3-padding-large w3-hover-black">Sign Up</button>
+          </li>
+        </ul>
+      </div>
+    <!-- End Grid/Pricing tables -->
+    </div>
+    
+    <!-- Testimonials -->
+    <h3 class="w3-padding-24 w3-text-light-grey">My Reputation</h3>  
+    <img src="/w3images/bandmember.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:80px">
+    <p><span class="w3-large w3-margin-right">Chris Fox.</span> CEO at Mighty Schools.</p>
+    <p>Jane Doe saved us from a web disaster.</p><br>
+    
+    <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:80px">
+    <p><span class="w3-large w3-margin-right">Rebecca Flex.</span> CEO at Company.</p>
+    <p>No one is better than Jane Doe.</p>
+  <!-- End About Section -->
+  </div>
+  
+  <!-- Portfolio Section -->
+  <div class="w3-padding-64 w3-content" id="photos">
+    <h2 class="w3-text-light-grey">My Photos</h2>
+    <hr style="width:200px" class="w3-opacity">
+
+    <!-- Grid for photos -->
+    <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-half">
+        <img src="/w3images/wedding.jpg" style="width:100%">
+        <img src="/w3images/rocks.jpg" style="width:100%">
+        <img src="/w3images/sailboat.jpg" style="width:100%">
+      </div>
+
+      <div class="w3-half">
+        <img src="/w3images/underwater.jpg" style="width:100%">
+        <img src="/w3images/chef.jpg" style="width:100%">
+        <img src="/w3images/wedding.jpg" style="width:100%">
+        <img src="/w3images/p6.jpg" style="width:100%">
+      </div>
+    <!-- End photo grid -->
+    </div>
+  <!-- End Portfolio Section -->
+  </div>
+
+  <!-- Contact Section -->
+  <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
+    <h2 class="w3-text-light-grey">Contact Me</h2>
+    <hr style="width:200px" class="w3-opacity">
+
+    <div class="w3-section">
+      <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Chicago, US</p>
+      <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: +00 151515</p>
+      <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com</p>
+    </div><br>
+    <p>Lets get in touch. Send me a message:</p>
+
+    <form action="form.asp" target="_blank">
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Email" required name="Email"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Subject" required name="Subject"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Message" required name="Message"></p>
+      <p>
+        <button class="w3-btn w3-light-grey w3-padding-large" type="submit">
+          <i class="fa fa-paper-plane"></i> SEND MESSAGE
+        </button>
+      </p>
+    </form>
+  <!-- End Contact Section -->
+  </div>
+  
+    <!-- Footer -->
+  <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+    <i class="fa fa-facebook-official w3-hover-text-indigo"></i>
+    <i class="fa fa-instagram w3-hover-text-purple"></i>
+    <i class="fa fa-snapchat w3-hover-text-yellow"></i>
+    <i class="fa fa-pinterest-p w3-hover-text-red"></i>
+    <i class="fa fa-twitter w3-hover-text-light-blue"></i>
+    <i class="fa fa-linkedin w3-hover-text-indigo"></i>
+    <p class="w3-medium">Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+  <!-- End footer -->
+  </footer>
+
+<!-- END PAGE CONTENT -->
+</div>
+
+</body>
+</html>
