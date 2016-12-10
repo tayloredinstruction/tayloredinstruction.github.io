@@ -104,7 +104,7 @@ function loadXMLDoc() {
     if (this.readyState == 4 && this.status == 200) {
     	var json = JSON.parse(this.responseText);
        localStorage.removeItem("json")
-       localStorage.json=JSON.stringify(this.responseText);
+       localStorage.json=JSON.stringify(json);
     }
     else{
       var json = JSON.parse(locastorage.json)
@@ -133,14 +133,12 @@ function loadXMLDoc() {
       }
   function update(){
   var i = document.getElementById("RivSec").value
-      
-      document.createElement("p").innerHTML =
-      localStorage.json
-      var json = JSON.parse(document.getElementById("p").innerHTML)
-
-      document.getElementById("Section").innerHTML =
-      "Section: "+json.rows[i][1]
+  var json = JSON.parse(localStorage.json)  
       document.getElementById("Character").innerHTML =
+      "River: "+json.rows[i][0]
+      document.getElementById("Character").innerHTML =
+      "Section: "+json.rows[i][1]
+	  document.getElementById("Character").innerHTML =
       "Character: "+json.rows[i][2]
       document.getElementById("Min. Level").innerHTML =
       "Min. Level: "+json.rows[i][3]
