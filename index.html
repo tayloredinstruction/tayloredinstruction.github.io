@@ -102,10 +102,10 @@ function loadXMLDoc() {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
     	var json = JSON.parse(this.responseText);
-      localstorage.json=json
+      localstorage.json=this.responseText
     }
     else{
-    var json = localstorage.json    }
+    var json = JSON.parse(localstorage.json)    }
     var elm = document.getElementById('RivSec'),
         df = document.createDocumentFragment();
     for (var i=0; i<json.rows.length ; i++){
@@ -127,7 +127,7 @@ function loadXMLDoc() {
 </script>
     <script>
       function refersher(){
-      var json = localstorage.json
+      var json = JSON.parse(localstorage.json)
       var i = document.getElementById("RivSec").value    
       
       document.getElementById("River").innerHTML =
