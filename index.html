@@ -135,8 +135,8 @@ function loadXMLDoc() {
   var i = document.getElementById("RivSec").value
       
       document.createElement("p").innerHTML =
-      JSON.parse(localStorage.json)
-      var json = document.getElementById("p").innerHTML
+      localStorage.json
+      var json = JSON.parse(document.getElementById("p").innerHTML)
 
       document.getElementById("Section").innerHTML =
       "Section: "+json.rows[i][1]
