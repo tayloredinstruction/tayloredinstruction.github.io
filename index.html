@@ -81,6 +81,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 <div id="demo">
 <button type="button" onclick="loadXMLDoc()">Change Content</button>
 </div>
+    <select id="RivSec">
+    </select>
 <div id="River"></div>
 <div id="Section"></div>
 <div id="Character"></div>
@@ -100,6 +102,21 @@ function loadXMLDoc() {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
     	var json = JSON.parse(this.responseText);
+    }
+    else{
+      //offline handling
+    }
+    var elm = document.getElementById('RivSec'),
+        df = document.createDocumentFragment();
+    for (var i=0; i<json.length ; i++){
+      var option = document.createElement('option');
+      option.value = i;
+      option.appendChild(document.createTextNode(json[i][0]+" - "+json[i][1]));
+      df.appendChild(option);
+    }
+    elm.appendChild(df);
+      
+      
       document.getElementById("River").innerHTML =
       "River: "+json.rows[i][0]
       document.getElementById("Section").innerHTML =
