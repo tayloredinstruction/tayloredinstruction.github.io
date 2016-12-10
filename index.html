@@ -70,7 +70,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
     <div class="google-maps">
 
-    <iframe src="https://fusiontables.google.com/embedviz?q=select+col11+from+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&viz=MAP&h=false&lat=-30.512128853681528&lng=150.79173417578113&t=1&z=6&l=col11&y=2&tmplt=3&hml=ONE_COL_LAT_LNG" width = "100%" height="450px" frameborder="0" style="border:0"></iframe>
+    <iframe src="https://fusiontables.google.com/embedviz?q=select+col11+from+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&viz=MAP&h=false&lat=-30.512128853681528&lng=150.79173417578113&t=1&z=6&l=col11&y=2&tmplt=3&hml=ONE_COL_LAT_LNG" height="450" frameborder="0" style="border:0"></iframe>
 
     </div></div>
   
@@ -80,9 +80,43 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
 <div id="demo">
 <p id="test"></p>
-<button type="button" onclick="loadXMLDoc()">Change Content</button>
+<p> State:
+<select id="State">
+<option selected value ="Any">Any</option>
+<option value ="NSW">NSW</option>
+<option value ="QLD">QLD</option>
+<option value ="VIC">VIC</option>
+<option value ="TAS">TAS</option>
+</select>
+Level:
+<select id="Level">
+<option selected value="Any">Any</option>
+<option value=0>Visual</option>
+<option value=1>Low</option>
+<option value=2>Good</option>
+<option value=3>High</option>
+</select>
+Min. Grade:
+<select id="Min. grade">
+  <option value=-1>None</option>
+  <option value=2>2</option>
+  <option value=3>3</option>
+  <option value=4>4</option>
+  <option value=5>5</option>
+  <option value=6>6</option>
+</select>
+Max.Grade: 
+<select id="Max. grade">
+  <option value=7 selected>None</option>
+  <option value=2>2</option>
+  <option value=3>3</option>
+  <option value=4>4</option>
+  <option value=5>5</option>
+  <option value=6>6</option>
+    </select></p>
+<button type="button" onclick="loadXMLDoc()">Apply</button>
 </div>
-    <select id="RivSec" onchange="update()" width = "100%">
+    <select id="RivSec" onchange="update()">
     </select>
 <div id="River"></div>
 <div id="Section"></div>
@@ -98,39 +132,6 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 <div id="Full Description"></div>
 
 <script>
-function loadXMLDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-    	var json = JSON.parse(this.responseText);
-       localStorage.removeItem("json")
-       localStorage.json=JSON.stringify(json);
-    }
-    else{
-      var json = JSON.parse(locastorage.json)
-    }
-    
-    var elm = document.getElementById('RivSec'),
-        df = document.createDocumentFragment();
-    for (var i=0; i<json.rows.length ; i++){
-    var div = document.createElement('div');
-    div.innerHTML= json.rows[i][1]
-      var option = document.createElement('option');
-      option.value = i;
-      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
-      df.appendChild(option);
-    }
-    elm.appendChild(df);
- 
-  
-    
-  };
-  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
-  xhttp.send();
-
-
-      
-      }
   function update(){
   var i = document.getElementById("RivSec").value
   var json = JSON.parse(localStorage.json)  
@@ -159,6 +160,49 @@ function loadXMLDoc() {
       document.getElementById("Full Description").innerHTML =
       "Full Description: "+json.rows[i][15] 
   }
+function removeOptions(selectbox)
+{
+    var i;
+    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+    {
+        selectbox.remove(i);
+    }
+}
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var json = JSON.parse(this.responseText);
+       localStorage.removeItem("json")
+       localStorage.json=JSON.stringify(json);
+    }
+    else{
+      var json = JSON.parse(locastorage.json)
+    }
+    removeOptions(document.getElementById("RivSec"));
+    var elm = document.getElementById('RivSec'),
+        df = document.createDocumentFragment();
+    for (var i=0; i<json.rows.length ; i++){
+    if ((document.getElementById("State").value == json.rows[i][11] || document.getElementById("State").value == "Any") && ( document.getElementById("Level").value == json.rows[i][12] || document.getElementById("Level").value == "Any" ) && (document.getElementById("Min. grade").value <= json.rows[i][13]) && (document.getElementById("Max. grade").value >= json.rows[i][14]) ){
+    var div = document.createElement('div');
+    div.innerHTML= json.rows[i][1]
+      var option = document.createElement('option');
+      option.value = i;
+      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
+      df.appendChild(option);}
+      else{
+      }
+    }
+    elm.appendChild(df);
+    update()
+ 
+  
+    
+  };
+  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
+  xhttp.send();
+      }
+
     </script>
   </div>
 
