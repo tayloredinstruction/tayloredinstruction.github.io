@@ -106,6 +106,7 @@ function loadXMLDoc() {
        localStorage.json=JSON.stringify(this.responseText);
     }
     else{
+      var json = JSON.parse(locastorage.json)
     }
     
     var elm = document.getElementById('RivSec'),
