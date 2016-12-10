@@ -101,7 +101,7 @@ function loadXMLDoc() {
     if (this.readyState == 4 && this.status == 200) {
     	var json = JSON.parse(this.responseText);
       document.getElementById("River").innerHTML =
-      "River : "+json.rows[i][0]
+      "River : "+json.rows[2][0]
       document.getElementById("Section").innerHTML =
       json.rows[2][1]
       document.getElementById("Character").innerHTML =
