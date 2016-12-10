@@ -81,7 +81,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 <div id="demo">
 <button type="button" onclick="loadXMLDoc()">Change Content</button>
 </div>
-    <select id="RivSec">
+    <select id="RivSec" onchange="loadXMLDoc()">
     </select>
 <div id="River"></div>
 <div id="Section"></div>
@@ -120,7 +120,7 @@ function loadXMLDoc() {
       df.appendChild(option);
     }
     elm.appendChild(df);
-var i = 1    
+var i = document.getElementById("RivSec").value    
       
       document.getElementById("River").innerHTML =
       "River: "+json.rows[i][0]
