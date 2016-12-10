@@ -79,6 +79,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <h2>River Selector</h2>
 
 <div id="demo">
+<p id="test"></p>
 <button type="button" onclick="loadXMLDoc()">Change Content</button>
 </div>
     <select id="RivSec" onchange="update()">
@@ -131,11 +132,12 @@ function loadXMLDoc() {
       
       }
   function update(){
-    var json = JSON.parse(localstorage.json)
-  var i = document.getElementById("RivSec").value    
+  var i = document.getElementById("RivSec").value
       
-      document.getElementById("River").innerHTML =
-      "River: "+json.rows[i][0]
+      document.createElement("p").innerHTML =
+      JSON.parse(localStorage.json)
+      var json = document.getElementById("p").innerHTML
+
       document.getElementById("Section").innerHTML =
       "Section: "+json.rows[i][1]
       document.getElementById("Character").innerHTML =
