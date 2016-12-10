@@ -127,8 +127,7 @@ function loadXMLDoc() {
   xhttp.send();
 
 
-      function refresher(){
-      var i = document.getElementById("RivSec").value    
+      var i = 1    
       
       document.getElementById("River").innerHTML =
       "River: "+json.rows[i][0]
@@ -154,7 +153,7 @@ function loadXMLDoc() {
       "Shuttle (min): "+json.rows[i][10]
       document.getElementById("Full Description").innerHTML =
       "Full Description: "+json.rows[i][15]  
-      }}
+      }
     </script>
   </div>
 
