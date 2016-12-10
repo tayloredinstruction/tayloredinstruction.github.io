@@ -108,10 +108,10 @@ function loadXMLDoc() {
     }
     var elm = document.getElementById('RivSec'),
         df = document.createDocumentFragment();
-    for (var i=0; i<json.length ; i++){
+    for (var i=0; i<json.rows.length ; i++){
       var option = document.createElement('option');
       option.value = i;
-      option.appendChild(document.createTextNode(json[i][0]+" - "+json[i][1]));
+      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+json.rows[i][1]));
       df.appendChild(option);
     }
     elm.appendChild(df);
