@@ -131,7 +131,7 @@ function loadXMLDoc() {
       
       }
   function update(){
-    var json = JSON.stringify(localstorage.json)
+    var json = JSON.parse(localstorage.json)
   var i = document.getElementById("RivSec").value    
       
       document.getElementById("River").innerHTML =
