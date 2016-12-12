@@ -2,6 +2,12 @@
 <html>
 <title>Taylored Instruction</title>
 <head>
+<style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
 <link rel="icon" sizes="192x192" href="images/icon.png">
 	<link rel="apple-touch-icon" href="images/icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -200,7 +206,7 @@ function loadXMLDoc() {
        localStorage.json=JSON.stringify(json);
     }
   }
-  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
+  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
   xhttp.send();
   }
   function populate(){
@@ -270,6 +276,32 @@ function loadXMLDoc() {
 
 <!-- END PAGE CONTENT -->
 </div>
-
+<h3>My Google Maps Demo</h3>
+<p id = "dem"></p>
+<button type="button" onclick = "initMap()">Load</button>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var json = JSON.parse(localStorage.json)
+        for (var i=0; i<json.rows.length; i++){
+        var coords= json.rows[i][16].split(",")
+        var location = {lat: parseFloat(coords[0]), lng: parseFloat(coords[1])};
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+      }}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew&callback=initMap">
+    </script>
 </body>
 </html>
+
+
+
