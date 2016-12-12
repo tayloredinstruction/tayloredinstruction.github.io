@@ -247,6 +247,30 @@ function loadXMLDoc() {
 	  <br>
 	  <br>
 	  <br>
+	  <h3>My Google Maps Demo</h3>
+<p id = "dem"></p>
+<button type="button" onclick = "initMap()">Load</button>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var json = JSON.parse(localStorage.json)
+        for (var i=0; i<json.rows.length; i++){
+        var coords= json.rows[i][16].split(",")
+        var location = {lat: parseFloat(coords[0]), lng: parseFloat(coords[1])};
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+      }}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew&callback=initMap">
+    </script>
   </div>
 
   <!-- Contact Section -->
@@ -276,30 +300,7 @@ function loadXMLDoc() {
 
 <!-- END PAGE CONTENT -->
 </div>
-<h3>My Google Maps Demo</h3>
-<p id = "dem"></p>
-<button type="button" onclick = "initMap()">Load</button>
-    <div id="map"></div>
-    <script>
-      function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var json = JSON.parse(localStorage.json)
-        for (var i=0; i<json.rows.length; i++){
-        var coords= json.rows[i][16].split(",")
-        var location = {lat: parseFloat(coords[0]), lng: parseFloat(coords[1])};
-        var marker = new google.maps.Marker({
-          position: location,
-          map: map
-        });
-      }}
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew&callback=initMap">
-    </script>
+
 </body>
 </html>
 
