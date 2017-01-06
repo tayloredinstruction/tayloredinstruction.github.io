@@ -2,15 +2,6 @@
 	<html>
 	<title>Taylored Instruction</title>
 	<head>
-<script type="text/javascript" src="https://github.com/tayloredinstruction/instafeed.min.js"></script>
-		<script type="text/javascript">
-    var feed = new Instafeed({
-        get: 'tagged',
-        tagName: 'tayloredinstruction',
-        clientId: 'f41a99ccb24945b0a0d1e9a92be7eda3'
-    });
-    feed.run();
-</script>
 
 	<link rel="icon" sizes="192x192" href="images/icon.png">
 		<link rel="apple-touch-icon" href="images/icon.png">
@@ -21,12 +12,6 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <style type="text/css">
-		  #instafeed {
-			  height: 60vh;
-			  width: 98wh;
-			  padding-right: 5px;
-	  padding-left:5px;
-		  }
 	html, body, #googft-mapCanvas {
 	  color: #000;
 	  height: 90vh;
@@ -191,6 +176,10 @@ function showHide() {
 	    <i class="fa fa-home w3-xxlarge"></i>
 	    <p>HOME</p>
 	  </a>
+	<a class="w3-padding-large w3-hover-black" href="#favsecs">
+	    <i class="fa fa-user w3-xxlarge"></i>
+	    <p>FAVOURITE SECTIONS</p>
+	  </a>
 	  <a class="w3-padding-large w3-hover-black" href="#about">
 	    <i class="fa fa-user w3-xxlarge"></i>
 	    <p>RIVER MAP</p>
@@ -208,10 +197,11 @@ function showHide() {
 	<!-- Navbar on small screens (Hidden on medium and large screens) -->
 	<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
 	  <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-	    <li class="w3-left" style="width:25% !important"><a href="#">HOME</a></li>
-	    <li class="w3-left" style="width:25% !important"><a href="#about">RIVER MAP</a></li>
-	    <li class="w3-left" style="width:25% !important"><a href="#photos">SECTION INFO</a></li>
-	    <li class="w3-left" style="width:25% !important"><a href="#contact">CONTACT</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#">HOME</a></li>
+		<li class="w3-left" style="width:20% !important"><a href="#favsecs">FAVOURITE SECTIONS</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#about">RIVER MAP</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#photos">SECTION INFO</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#contact">CONTACT</a></li>
 	  </ul>
 	</div>
 
@@ -221,8 +211,8 @@ function showHide() {
 	  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
 	    <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
 	    <p>Australian River Levels and Trips</p>
-<div id="instafeed"></div>
-		  <br>
+		  <img src="images/GOPR3079-0001.jpg" alt="yunowork" class="w3-image" width="1920" height="1080">
+	<br>
 		  <br>
 		  <br>
 		  <br>
@@ -236,6 +226,99 @@ function showHide() {
 		  <br>
 		</header>
 
+		
+		 <!-- Favourite Sections Section -->
+
+	<div id = "favsecs"> 
+		
+		<script>
+	function clearfavs() {
+	   localStorage.removeItem("favslist")
+       }
+        
+        
+	function addtofavs(){
+    var favslist = localStorage.favslist
+   	var n = document.getElementById("newfav").value
+    var count = 0;
+    for( var j = 0; j<favslist.length ; j++){
+    	if(n == favslist[j]){
+            count+=1
+            }
+    }
+    if (count == 0){     
+	  var json = JSON.parse(localStorage.json)
+      var favstring = n.toString()+";" 
+      localStorage.favslist=localStorage.favslist+favstring
+	  }
+      }
+      
+    function displayfavs(){
+    var json = JSON.parse(localStorage.json)  
+    var favsdiv = document.getElementById("favsdiv")
+    var favslist=localStorage.favslist
+    //var favslist= localStorage.favslist.split(";")
+   	var para = document.getElementById("pfav");
+    //var contents = new Array()
+    //for(var i = 0; i<favslist.length-1; i++){
+    //if (!isNaN(parseFloat(favslist[i]))){
+     	//var ref = parseFloat(favslist[i])
+		//var node = "River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][16]+"<br>Forecast: "+json.rows[ref][17];
+		//contents.push(node)
+        //}
+        //else{
+        //}
+    //}
+    //para.innerHTML=contents.join("<br>")
+    document.getElementById("test").innerHTML=favslist
+    }
+      
+      	function removeOptions(selectbox)
+	{
+	    var i;
+	    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+	    {
+		selectbox.remove(i);
+	    }
+	}
+	
+	  function favpopulate(){
+		var json = JSON.parse(localStorage.json)
+	    removeOptions(document.getElementById("newfav"));
+	    var elm = document.getElementById('newfav'),
+		df = document.createDocumentFragment();
+	    for (var i=0; i<json.rows.length; i++){	    
+	    var div = document.createElement('div');
+	    div.innerHTML= json.rows[i][1]
+	      var option = document.createElement('option');
+	      option.value = i;
+	      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
+	      df.appendChild(option);
+	    }
+	    elm.appendChild(df);
+}
+
+
+
+
+		</script>
+	<button type="button" onclick="favpopulate();displayfavs()">Get Latest Info</button><br>
+    <select id="newfav">
+	</select>  
+    <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
+	<div id = "favsdiv">
+    <p id = "pfav"></p>
+    </div>
+	<button type="button" id="test" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
+    </div> 
+		
+		
+		
+		
+		
+		
+		
+		
 
 	  <!-- About Section -->
 
@@ -343,6 +426,8 @@ function showHide() {
 	<div id="Time (hrs)"></div>
 	<div id="Shuttle (min)"></div>
 	<div id="Full Description"></div>
+	<div id="Weather"></div>
+	<div id="Forecast"></div>
 
 	<script>
 	  function update(){
@@ -371,7 +456,11 @@ function showHide() {
 	      document.getElementById("Shuttle (min)").innerHTML =
 	      "Shuttle (min): "+json.rows[i][10]
 	      document.getElementById("Full Description").innerHTML =
-	      "Full Description: "+json.rows[i][15] 
+	      "Full Description: "+json.rows[i][15] 	      
+		document.getElementById("Weather").innerHTML =
+	      "Weather: "+json.rows[i][16]
+	      document.getElementById("Forecast").innerHTML =
+	      "Forecast: "+json.rows[i][17] 
 	  }
 	function removeOptions(selectbox)
 	{
@@ -390,7 +479,7 @@ function showHide() {
 	       localStorage.json=JSON.stringify(json);
 	    }
 	  }
-	  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
+	  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
 	  xhttp.send();
 	  }
 	  function populate(){
