@@ -234,6 +234,7 @@ function showHide() {
 		<script>
 	function clearfavs() {
 	   localStorage.removeItem("favslist")
+       localStorage.favslist = ""
        }
         
         
@@ -257,20 +258,19 @@ function showHide() {
     var json = JSON.parse(localStorage.json)  
     var favsdiv = document.getElementById("favsdiv")
     var favslist=localStorage.favslist
-    //var favslist= localStorage.favslist.split(";")
+    var favslist= localStorage.favslist.split(";")
    	var para = document.getElementById("pfav");
-    //var contents = new Array()
-    //for(var i = 0; i<favslist.length-1; i++){
-    //if (!isNaN(parseFloat(favslist[i]))){
-     	//var ref = parseFloat(favslist[i])
-		//var node = "River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][16]+"<br>Forecast: "+json.rows[ref][17];
-		//contents.push(node)
-        //}
-        //else{
-        //}
-    //}
-    //para.innerHTML=contents.join("<br>")
-    document.getElementById("test").innerHTML=favslist
+    var contents = new Array()
+    for(var i = 0; i<favslist.length-1; i++){
+    if (!isNaN(parseFloat(favslist[i]))){
+     	var ref = parseFloat(favslist[i])
+		var node = "River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][17]+"<br>Forecast: "+json.rows[ref][18]+"<br>";
+		contents.push(node)
+        }
+        else{
+        }
+    }
+    para.innerHTML=contents.join("<br>")
     }
       
       	function removeOptions(selectbox)
@@ -309,7 +309,7 @@ function showHide() {
 	<div id = "favsdiv">
     <p id = "pfav"></p>
     </div>
-	<button type="button" id="test" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
+	<button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
     </div> 
 		
 		
