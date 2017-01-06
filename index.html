@@ -166,7 +166,7 @@ function showHide() {
 	  google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	</head>
-	<body class="w3-black">
+	<body class="w3-black" onload="favpopulate();displayfavs()">
 
 	<!-- Icon Bar (Sidenav - hidden on small screens) -->
 	<nav class="w3-sidenav w3-center w3-small w3-hide-small">
@@ -175,6 +175,10 @@ function showHide() {
 	  <a class="w3-padding-large w3-black" href="#">
 	    <i class="fa fa-home w3-xxlarge"></i>
 	    <p>HOME</p>
+	  </a>
+	<a class="w3-padding-large w3-hover-black" href="#favsecs">
+	    <i class="fa fa-user w3-xxlarge"></i>
+	    <p>FAVOURITE SECTIONS</p>
 	  </a>
 	  <a class="w3-padding-large w3-hover-black" href="#about">
 	    <i class="fa fa-user w3-xxlarge"></i>
@@ -193,15 +197,16 @@ function showHide() {
 	<!-- Navbar on small screens (Hidden on medium and large screens) -->
 	<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
 	  <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-	    <li class="w3-left" style="width:25% !important"><a href="#">HOME</a></li>
-	    <li class="w3-left" style="width:25% !important"><a href="#about">RIVER MAP</a></li>
-	    <li class="w3-left" style="width:25% !important"><a href="#photos">SECTION INFO</a></li>
-	    <li class="w3-left" style="width:25% !important"><a href="#contact">CONTACT</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#">HOME</a></li>
+		<li class="w3-left" style="width:20% !important"><a href="#favsecs">FAVOURITE SECTIONS</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#about">RIVER MAP</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#photos">SECTION INFO</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#contact">CONTACT</a></li>
 	  </ul>
 	</div>
 
 	<!-- Page Content -->
-	<div class="w3-padding-large" id="main">
+	<div class="w3-padding-large" id="main" onload="displayfavs()">
 	  <!-- Header/Home -->
 	  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
 	    <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
@@ -221,6 +226,111 @@ function showHide() {
 		  <br>
 		</header>
 
+		
+		 <!-- Favourite Sections Section -->
+
+	<div id = "favsecs"> 
+		
+		<script>
+	function clearfavs() {
+	   localStorage.removeItem("favslist")
+       localStorage.favslist = ""
+       }    
+	function addtofavs(){
+    if(localStorage.favslist=== undefined){
+    localStorage.favslist=""
+    }
+    var favslist = localStorage.favslist
+   	var n = document.getElementById("newfav").value
+    var count = 0;
+    for( var j = 0; j<favslist.split(";").length-1; j++){
+    	if(n.toString() == favslist.split(";")[j]){
+            count+=1
+            }
+    }
+    if (count == 0){     
+	  var json = JSON.parse(localStorage.json)
+      var favstring = n.toString()+";" 
+      localStorage.favslist=localStorage.favslist+favstring
+	  }
+      }
+      
+    function displayfavs(){
+    var json = JSON.parse(localStorage.json)  
+    var favsdiv = document.getElementById("favsdiv")
+    var favslist= localStorage.favslist.split(";")
+   	var para = document.getElementById("pfav");
+    var contents = new Array()
+    for(var i = 0; i<favslist.length-1; i++){
+    if (!isNaN(parseFloat(favslist[i]))){
+     	var ref = parseFloat(favslist[i])
+	if (isNaN(json.rows[ref][5])){
+		var colour = "yellow !important"
+		}
+        else if(json.rows[ref][5]>json.rows[ref][4]){
+        var colour = "blue !important"
+        }
+        else if(json.rows[ref][5]<json.rows[ref][3]){
+        var colour = "red !important"
+        }
+        else{
+        var colour = "green !important"
+        }
+		var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][17]+"<br>Forecast: "+json.rows[ref][18]+"</p><br>";
+		contents.push(node)
+        }
+        else{
+        }
+    }
+    para.innerHTML=contents.join("<br>")
+    }
+      
+      	function removeOptions(selectbox)
+	{
+	    var i;
+	    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+	    {
+		selectbox.remove(i);
+	    }
+	}
+	
+	  function favpopulate(){
+		var json = JSON.parse(localStorage.json)
+	    removeOptions(document.getElementById("newfav"));
+	    var elm = document.getElementById('newfav'),
+		df = document.createDocumentFragment();
+	    for (var i=0; i<json.rows.length; i++){	    
+	    var div = document.createElement('div');
+	    div.innerHTML= json.rows[i][1]
+	      var option = document.createElement('option');
+	      option.value = i;
+	      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
+	      df.appendChild(option);
+	    }
+	    elm.appendChild(df);
+}
+
+
+
+
+		</script>
+	<button type="button" onclick="loadXMLDoc();favpopulate();displayfavs()">Get Latest Info</button><br>
+    <select id="newfav">
+	</select>  
+    <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
+	<div id = "favsdiv">
+    <p id = "pfav"></p>
+    </div>
+	<button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
+    </div> 
+		
+		
+		
+		
+		
+		
+		
+		
 
 	  <!-- About Section -->
 
@@ -328,6 +438,8 @@ function showHide() {
 	<div id="Time (hrs)"></div>
 	<div id="Shuttle (min)"></div>
 	<div id="Full Description"></div>
+	<div id="Weather"></div>
+	<div id="Forecast"></div>
 
 	<script>
 	  function update(){
@@ -356,7 +468,11 @@ function showHide() {
 	      document.getElementById("Shuttle (min)").innerHTML =
 	      "Shuttle (min): "+json.rows[i][10]
 	      document.getElementById("Full Description").innerHTML =
-	      "Full Description: "+json.rows[i][15] 
+	      "Full Description: "+json.rows[i][15] 	      
+		document.getElementById("Weather").innerHTML =
+	      "Weather: "+json.rows[i][16]
+	      document.getElementById("Forecast").innerHTML =
+	      "Forecast: "+json.rows[i][17] 
 	  }
 	function removeOptions(selectbox)
 	{
@@ -375,7 +491,7 @@ function showHide() {
 	       localStorage.json=JSON.stringify(json);
 	    }
 	  }
-	  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
+	  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
 	  xhttp.send();
 	  }
 	  function populate(){
