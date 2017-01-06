@@ -177,7 +177,7 @@ function showHide() {
 	    <p>HOME</p>
 	  </a>
 	<a class="w3-padding-large w3-hover-black" href="#favsecs">
-	    <i class="fa fa-star w3-xxlarge"></i>
+	    <i class="fa fa-user w3-xxlarge"></i>
 	    <p>FAVOURITE SECTIONS</p>
 	  </a>
 	  <a class="w3-padding-large w3-hover-black" href="#about">
@@ -235,9 +235,7 @@ function showHide() {
 	function clearfavs() {
 	   localStorage.removeItem("favslist")
        localStorage.favslist = ""
-       }
-        
-        
+       }    
 	function addtofavs(){
     if(localStorage.favslist=== undefined){
     localStorage.favslist=""
@@ -245,8 +243,8 @@ function showHide() {
     var favslist = localStorage.favslist
    	var n = document.getElementById("newfav").value
     var count = 0;
-    for( var j = 0; j<favslist.length ; j++){
-    	if(n == favslist[j]){
+    for( var j = 0; j<favslist.split(";").length-1; j++){
+    	if(n.toString() == favslist.split(";")[j]){
             count+=1
             }
     }
@@ -266,7 +264,7 @@ function showHide() {
     for(var i = 0; i<favslist.length-1; i++){
     if (!isNaN(parseFloat(favslist[i]))){
      	var ref = parseFloat(favslist[i])
-		var node = "River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][17]+"<br>Forecast: "+json.rows[ref][18]+"<br>";
+		var node = "<p>River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][17]+"<br>Forecast: "+json.rows[ref][18]+"</p<<br>";
 		contents.push(node)
         }
         else{
