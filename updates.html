@@ -166,7 +166,7 @@ function showHide() {
 	  google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	</head>
-	<body class="w3-black" onload="displayfavs()">
+	<body class="w3-black" onload="favpopulate();displayfavs()">
 
 	<!-- Icon Bar (Sidenav - hidden on small screens) -->
 	<nav class="w3-sidenav w3-center w3-small w3-hide-small">
@@ -273,7 +273,7 @@ function showHide() {
         else{
         var colour = "green !important"
         }
-		var node = "<p {border-left: 6px solid "+colour+";}>River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][17]+"<br>Forecast: "+json.rows[ref][18]+"</p<<br>";
+		var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][17]+"<br>Forecast: "+json.rows[ref][18]+"</p><br>";
 		contents.push(node)
         }
         else{
