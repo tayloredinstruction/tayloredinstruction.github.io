@@ -239,6 +239,9 @@ function showHide() {
         
         
 	function addtofavs(){
+    if(localStorage.favslist=== undefined){
+    localStorage.favslist=""
+    }
     var favslist = localStorage.favslist
    	var n = document.getElementById("newfav").value
     var count = 0;
