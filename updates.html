@@ -2,6 +2,15 @@
 	<html>
 	<title>Taylored Instruction</title>
 	<head>
+<script type="text/javascript" src="https://github.com/tayloredinstruction/instafeed.js"></script>
+		<script type="text/javascript">
+    var feed = new Instafeed({
+        get: 'tagged',
+        tagName: 'tayloredinstruction',
+        clientId: 'f41a99ccb24945b0a0d1e9a92be7eda3'
+    });
+    feed.run();
+</script>
 
 	<link rel="icon" sizes="192x192" href="images/icon.png">
 		<link rel="apple-touch-icon" href="images/icon.png">
@@ -12,6 +21,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <style type="text/css">
+		  #instafeed {
+			  height: 60vh;
+			  width: 98wh;
+			  padding-right: 5px;
+	  padding-left:5px;
+		  }
 	html, body, #googft-mapCanvas {
 	  color: #000;
 	  height: 90vh;
@@ -206,8 +221,8 @@ function showHide() {
 	  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
 	    <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
 	    <p>Australian River Levels and Trips</p>
-		  <img src="images/GOPR3079-0001.jpg" alt="yunowork" class="w3-image" width="1920" height="1080">
-	<br>
+<div id="instafeed"></div>
+		  <br>
 		  <br>
 		  <br>
 		  <br>
