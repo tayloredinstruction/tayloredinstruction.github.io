@@ -177,15 +177,15 @@ function showHide() {
 	    <p>HOME</p>
 	  </a>
 	<a class="w3-padding-large w3-hover-black" href="#favsecs">
-	    <i class="fa fa-user w3-xxlarge"></i>
+	    <i class="fa fa-star w3-xxlarge"></i>
 	    <p>FAVOURITE SECTIONS</p>
 	  </a>
 	  <a class="w3-padding-large w3-hover-black" href="#about">
-	    <i class="fa fa-user w3-xxlarge"></i>
+	    <i class="fa fa-globe w3-xxlarge"></i>
 	    <p>RIVER MAP</p>
 	  </a>
 	  <a class="w3-padding-large w3-hover-black" href="#photos">
-	    <i class="fa fa-eye w3-xxlarge"></i>
+	    <i class="fa fa-book w3-xxlarge"></i>
 	    <p>SECTION INFO</p>
 	  </a>
 	  <a class="w3-padding-large w3-hover-black" href="#contact">
@@ -197,11 +197,11 @@ function showHide() {
 	<!-- Navbar on small screens (Hidden on medium and large screens) -->
 	<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
 	  <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-	    <li class="w3-left" style="width:20% !important"><a href="#">HOME</a></li>
-		<li class="w3-left" style="width:20% !important"><a href="#favsecs">FAVOURITE SECTIONS</a></li>
-	    <li class="w3-left" style="width:20% !important"><a href="#about">RIVER MAP</a></li>
-	    <li class="w3-left" style="width:20% !important"><a href="#photos">SECTION INFO</a></li>
-	    <li class="w3-left" style="width:20% !important"><a href="#contact">CONTACT</a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
+		<li class="w3-left" style="width:20% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
+	    <li class="w3-left" style="width:20% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
 	  </ul>
 	</div>
 
@@ -276,7 +276,7 @@ function showHide() {
         else{
         var colour = "green !important"
         }
-		var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+"<br>Section: "+json.rows[ref][1]+"<br>Min. Level: "+json.rows[ref][3]+"<br>Max. Level: "+json.rows[ref][4]+"<br>Current Level: "+json.rows[ref][5]+"<br>12 hr Previous: "+json.rows[ref][6]+"<br>Weather: "+json.rows[ref][17]+"<br>Forecast: "+json.rows[ref][18]+"</p><br>";
+		var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+json.rows[ref][5]+" Previous: "+json.rows[ref][6]+"<br>Forecast: "+json.rows[ref][18]+"</p><br>";
 		contents.push(node)
         }
         else{
@@ -310,12 +310,23 @@ function showHide() {
 	    elm.appendChild(df);
 }
 
-
+	function loadXMLDoc() {
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+		var json = JSON.parse(this.responseText);
+	       localStorage.removeItem("json")
+	       localStorage.json=JSON.stringify(json);
+	    }
+	  }
+	  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
+	  xhttp.send();
+	  }
 
 
 		</script>
 	<button type="button" onclick="loadXMLDoc();favpopulate();displayfavs()">Get Latest Info</button><br>
-    <select id="newfav">
+    <select id="newfav" style="max-width:90%">
 	</select>  
     <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
 	<div id = "favsdiv">
