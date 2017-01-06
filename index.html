@@ -466,12 +466,13 @@ function showHide() {
 	      "Time (hrs): "+json.rows[i][9]
 	      document.getElementById("Shuttle (min)").innerHTML =
 	      "Shuttle (min): "+json.rows[i][10]
+	document.getElementById("Weather").innerHTML =
+	      "Weather: "+json.rows[i][17]
+	      document.getElementById("Forecast").innerHTML =
+	      "Forecast: "+json.rows[i][18] 
 	      document.getElementById("Full Description").innerHTML =
 	      "Full Description: "+json.rows[i][15] 	      
-		document.getElementById("Weather").innerHTML =
-	      "Weather: "+json.rows[i][16]
-	      document.getElementById("Forecast").innerHTML =
-	      "Forecast: "+json.rows[i][17] 
+
 	  }
 	function removeOptions(selectbox)
 	{
