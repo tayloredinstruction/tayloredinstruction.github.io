@@ -34,6 +34,29 @@
       
    </head>
    <body class="w3-black">
+      
+<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
+    authDomain: "taylored-instruction.firebaseapp.com",
+    databaseURL: "https://taylored-instruction.firebaseio.com",
+    storageBucket: "taylored-instruction.appspot.com",
+    messagingSenderId: "1091342339175"
+  };
+  firebase.initializeApp(config);
+     var database = firebase.database();
+   
+function writeTripInformation(userId, tripName, contactEmail, contactPhone) {
+  firebase.database().ref('users/' + userId).set({
+    username: userId,
+    trip: tripName,
+    email: contactEmail,
+    phone : contactPhone
+  });
+}
+</script>
             
       
       
@@ -72,8 +95,16 @@
          </header>
          <!-- Add Trip Section -->
          <div class="w3-padding-64 w3-content" id = "addtrip" style="min-height:95vh">
-            <h2>Add a Trip</h2>
-            
+           <h2>Add a Trip</h2>
+            <p>
+           Trip Name:<br>
+           <input type="text" name="tripname" value="">
+           <br>
+           Section:<br>
+           <input type="select" name="section" value="">
+           <br><br>
+           <input type="button" value="Submit" onclick="formsubmit()">
+            </p>
          </div>
          <!-- Delete Trip Section -->
          <div class="w3-padding-64 w3-content" id = "deltrip" style="min-height:95vh">
