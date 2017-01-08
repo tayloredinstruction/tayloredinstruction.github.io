@@ -49,6 +49,7 @@
      var database = firebase.database();
    var userId = firebase.auth().currentUser;
 function writeTripInformation(userId) {
+   document.getElementById("userid").value=userId
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
   firebase.database().ref('users/' + userId).set({
@@ -142,6 +143,8 @@ function writeTripInformation(userId) {
          <div class="w3-padding-64 w3-content" id = "addtrip" style="min-height:95vh">
            <h2>Add a Trip</h2>
             <p>
+                          <input type="text" id="userId" value="">
+
            Trip Name:<br>
            <input type="text" id="tripname" value="">
            <br>
