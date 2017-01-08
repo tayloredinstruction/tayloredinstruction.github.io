@@ -49,7 +49,7 @@
      var database = firebase.database();
    var userId = firebase.auth().currentUser;
 function writeTripInformation(userId) {
-   document.getElementById("userid").value=userId
+   document.getElementById("userid").value=userId.uid
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
   firebase.database().ref('users/' + userId).set({
@@ -125,7 +125,7 @@ function writeTripInformation(userId) {
                    }
                    elm.appendChild(df);
                   var userId = firebase.auth().currentUser;
-   document.getElementById("userid").value=userId
+   document.getElementById("userid").value=userId.uid
                }
                
                function loadXMLDoc() {
