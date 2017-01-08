@@ -161,47 +161,7 @@
       </script>
    </head>
    <body class="w3-black" onload="favpopulate();displayfavs()">
-            <script>
-         // Initialize Firebase
-         var config = {
-           apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
-           authDomain: "taylored-instruction.firebaseapp.com",
-           databaseURL: "https://taylored-instruction.firebaseio.com",
-           storageBucket: "taylored-instruction.appspot.com",
-           messagingSenderId: "1091342339175"
-         };
-         firebase.initializeApp(config);
-         
-         firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-});
-         
-         
-var provider = new firebase.auth.GoogleAuthProvider();
-firebase.auth().signInWithRedirect(provider);
-firebase.auth().getRedirectResult().then(function(result) {
-  if (result.credential) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // ...
-  }
-  // The signed-in user info.
-  var user = result.user;
-}).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  // ...
-});
-      </script>
+            
       
       
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
@@ -224,6 +184,10 @@ firebase.auth().getRedirectResult().then(function(result) {
             <i class="fa fa-book w3-xxlarge"></i>
             <p>SECTION INFO</p>
          </a>
+         <a class="w3-padding-large w3-hover-black" href="#trips">
+            <i class="fa fa-calendar w3-xxlarge"></i>
+            <p>UPCOMING TRIPS</p>
+         </a>
          <a class="w3-padding-large w3-hover-black" href="#contact">
             <i class="fa fa-envelope w3-xxlarge"></i>
             <p>CONTACT</p>
@@ -232,11 +196,12 @@ firebase.auth().getRedirectResult().then(function(result) {
       <!-- Navbar on small screens (Hidden on medium and large screens) -->
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
          <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-            <li class="w3-left" style="width:20% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.6% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.6% !important"><a href="#trips"><i class="fa fa-calendar w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
          </ul>
       </div>
       <!-- Page Content -->
@@ -547,6 +512,14 @@ firebase.auth().getRedirectResult().then(function(result) {
                  
             </script>
          </div>
+                  <!-- TRIP Section -->
+         <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
+            <h2 class="w3-text-light-grey">Upcoming Trips</h2>
+            <hr style="width:200px" class="w3-opacity">
+            <a href="https://tayloredinstruction.github.io/login.html" target="_blank" class="w3-hover-text-green">Add/Delete a Trip</a>
+           </div>
+            <br>
+            <!-- End Contact Section -->
          <!-- Contact Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
             <h2 class="w3-text-light-grey">Contact Us</h2>
