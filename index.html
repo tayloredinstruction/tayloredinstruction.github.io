@@ -1,570 +1,545 @@
-	<!DOCTYPE html>
-	<html>
-	<title>Taylored Instruction</title>
-	<head>
-
-	<link rel="icon" sizes="192x192" href="images/icon.png">
-		<link rel="apple-touch-icon" href="images/icon.png">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="mobile-web-app-capable" content="yes">
-	<link rel="stylesheet" href="lib/w3.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	  <style type="text/css">
-	html, body, #googft-mapCanvas {
-	  color: #000;
-	  height: 90vh;
-	  margin: 0;
-	  padding-right: 5px;
-	  padding-left:5px;
-	  width: 98wh;
-	}
-	      #legend {
-		color: #000 !important;
-		background: #FFF;
-		padding: 10px;
-		margin: 5px;
-		font-size: 12px;
-		font-family: Arial, sans-serif;
-	      }
-
-	      .color {
-		border: 1px solid;
-		height: 12px;
-		width: 12px;
-		margin-right: 3px;
-		float: left;
-	      }
-
-	      .red {
-		background: #C00;
-	      }
-
-	      .yellow {
-		background: #FF3;
-	      }
-
-	      .green {
-		background: #6F0;
-	      }
-
-	      .blue {
-		background: #06C;
-	      }
-	      .white{
-	      background:#FFF;
-	      }
-	      .box{
-		border: 1px;
-		height: 12px;
-		width: 12px;
-		margin-right: 3px;
-		float: left;
-		}
-		  #googft-mapCanvas a { color: #00F;}
-
-
-	</style>
-		<style>
-	body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-	.w3-row-padding img {margin-bottom: 12px}
-	/* Set the width of the sidenav to 120px */
-	.w3-sidenav {width: 120px;background: #222;}
-	/* Add a left margin to the "page content" that matches the width of the sidenav (120px) */
-	#main {margin-left: 120px}
-	/* Remove margins from "page content" on small screens */
-	@media only screen and (max-width: 600px) {#main {margin-left: 0}}
-	</style>
-
-	<style>
-
-	    body { 
-	      background-color: black;
-	  }
-	</style>
-		<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
-    authDomain: "taylored-instruction.firebaseapp.com",
-    databaseURL: "https://taylored-instruction.firebaseio.com",
-    storageBucket: "taylored-instruction.appspot.com",
-    messagingSenderId: "1091342339175"
-  };
-  firebase.initializeApp(config);
-</script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
-	<script type="text/javascript">
-
-	  function initialize() {
-	    google.maps.visualRefresh = true;
-
-
-	    var mapDiv = document.getElementById('googft-mapCanvas');
-	    var map = new google.maps.Map(mapDiv, {
-	      center: new google.maps.LatLng(-30.3333, 152.7167),
-	      zoom: 4,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    });
-
-	    var mini = document.getElementById("min. level");
-	    var miniVal = mini.options[mini.selectedIndex].value;
-	    var maxi = document.getElementById("max. level");
-	    var maxiVal = maxi.options[maxi.selectedIndex].value;
-	    var minig = document.getElementById("min. grade");
-	    var miniValg = minig.options[minig.selectedIndex].value;
-	    var maxig = document.getElementById("max. grade");
-	    var maxiValg = maxig.options[maxig.selectedIndex].value;
-	    var mults = document.getElementById("type");
-	    var mult = mults.options[mults.selectedIndex].value;
-	    var sid = mult*2
-	    var tid = mult*3
-	    var layer = new google.maps.FusionTablesLayer({
-	      map: map,
-	      heatmap: { enabled: false },
-	      query: {
-		select: "col11",
-		from: "1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke",
-		where:  "col15 \x3e\x3d "+miniVal+" and col15 \x3c\x3d "+maxiVal+" and col14 \x3e\x3d "+miniValg+" and col16 \x3c\x3d "+maxiValg
-	      },
-	      options: {
-		styleId: sid,
-		templateId: tid
-	      }
-	    });
-
-		// Create the legend and display on the map
-		if(mult==1){
-		var redtext = "Low Level"
-		var yeltext = "Visual"
-		var gretext = "Good Level"
-		var blutext = "High Level"
-		}
-		else{
-		var redtext = "24h < 10mm OR <br><div class='box white'></div> 5-day < 30mm"
-		var yeltext = "24h < 20mm OR <br><div class='box white'></div> 5-day < 50mm"
-		var gretext = "24h < 40mm OR <br><div class='box white'></div> 5-day < 80mm"
-		var blutext = "24h > 40mm OR <br><div class='box white'></div> 5-day > 80mm"
-		}
-		var legend = document.createElement('div');
-		legend.id = 'legend';
-		var content = [];
-		content.push('<p><input type="checkbox" name="hide" value = 1 onclick = "showHide()"> Hide </p>')
-		content.push('<h3>Legend</h3>');
-		content.push('<p><div class="color red"></div>'+redtext+'</p>');
-		content.push('<p><div class="color yellow"></div>'+yeltext+'</p>');
-		content.push('<p><div class="color green"></div>'+gretext+'</p>');
-		content.push('<p><div class="color blue"></div>'+blutext+'</p>');
-		legend.innerHTML = content.join('');
-		legend.index = 1;
-		map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-
-	  }
-function showHide() {
-    var el = document.getElementById('legend');
-	el.value+=1
-	if (el.value % 2 ===0){
-        el.style.display = 'block';
-	}
-	else{
-		el.style.display = 'none';
-	}
-
-}
-
-
-	  google.maps.event.addDomListener(window, 'load', initialize);
-	</script>
-	</head>
-	<body class="w3-black" onload="favpopulate();displayfavs()">
-
-	<!-- Icon Bar (Sidenav - hidden on small screens) -->
-	<nav class="w3-sidenav w3-center w3-small w3-hide-small">
-	  <!-- Avatar image in top left corner -->
-	  <img src="images/GOPR3079-0001.jpg" style="width:100%">
-	  <a class="w3-padding-large w3-black" href="#">
-	    <i class="fa fa-home w3-xxlarge"></i>
-	    <p>HOME</p>
-	  </a>
-	<a class="w3-padding-large w3-hover-black" href="#favsecs">
-	    <i class="fa fa-star w3-xxlarge"></i>
-	    <p>FAVOURITE SECTIONS</p>
-	  </a>
-	  <a class="w3-padding-large w3-hover-black" href="#about">
-	    <i class="fa fa-globe w3-xxlarge"></i>
-	    <p>RIVER MAP</p>
-	  </a>
-	  <a class="w3-padding-large w3-hover-black" href="#photos">
-	    <i class="fa fa-book w3-xxlarge"></i>
-	    <p>SECTION INFO</p>
-	  </a>
-	  <a class="w3-padding-large w3-hover-black" href="#contact">
-	    <i class="fa fa-envelope w3-xxlarge"></i>
-	    <p>CONTACT</p>
-	  </a>
-	</nav>
-
-	<!-- Navbar on small screens (Hidden on medium and large screens) -->
-	<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-	  <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-	    <li class="w3-left" style="width:20% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
-		<li class="w3-left" style="width:20% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
-	    <li class="w3-left" style="width:20% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
-	    <li class="w3-left" style="width:20% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
-	    <li class="w3-left" style="width:20% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
-	  </ul>
-	</div>
-
-	<!-- Page Content -->
-	<div class="w3-padding-large" id="main">
-	  <!-- Header/Home -->
-	  <header class="w3-container w3-padding-32 w3-center w3-black" id="home" style="min-height:95vh">
-	    <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-	    <p>Australian River Levels and Trips</p>
-		  <img src="images/GOPR3079-0001.jpg" alt="yunowork" class="w3-image" width="1920" height="1080">
-	
-		</header>
-
-		
-		 <!-- Favourite Sections Section -->
-	<div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh"> 
-	    <h2>Favourite Sections</h2>
-	
-		<script>
-	function clearfavs() {
-	   localStorage.removeItem("favslist")
-       localStorage.favslist = ""
-       }    
-	function addtofavs(){
-    if(localStorage.favslist=== undefined){
-    localStorage.favslist=""
-    }
-    var favslist = localStorage.favslist
-   	var n = document.getElementById("newfav").value
-    var count = 0;
-    for( var j = 0; j<favslist.split(";").length-1; j++){
-    	if(n.toString() == favslist.split(";")[j]){
-            count+=1
-            }
-    }
-    if (count == 0){     
-	  var json = JSON.parse(localStorage.json)
-      var favstring = n.toString()+";" 
-      localStorage.favslist=localStorage.favslist+favstring
-	  }
-      }
-      
-    function displayfavs(){
-    var json = JSON.parse(localStorage.json)  
-    var favsdiv = document.getElementById("favsdiv")
-    var favslist= localStorage.favslist.split(";")
-   	var para = document.getElementById("pfav");
-    var contents = new Array()
-    for(var i = 0; i<favslist.length-1; i++){
-    if (!isNaN(parseFloat(favslist[i]))){
-     	var ref = parseFloat(favslist[i])
-	if (isNaN(json.rows[ref][5])){
-		var colour = "yellow !important"
-		}
-        else if(json.rows[ref][5]>json.rows[ref][4]){
-        var colour = "blue !important"
-        }
-        else if(json.rows[ref][5]<json.rows[ref][3]){
-        var colour = "red !important"
-        }
-        else{
-        var colour = "green !important"
-        }
-		var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
-		contents.push(node)
-        }
-        else{
-        }
-    }
-    para.innerHTML=contents.join("")
-    }
-      
-      	function removeOptions(selectbox)
-	{
-	    var i;
-	    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
-	    {
-		selectbox.remove(i);
-	    }
-	}
-	
-	  function favpopulate(){
-		var json = JSON.parse(localStorage.json)
-	    removeOptions(document.getElementById("newfav"));
-	    var elm = document.getElementById('newfav'),
-		df = document.createDocumentFragment();
-	    for (var i=0; i<json.rows.length; i++){	    
-	    var div = document.createElement('div');
-	    div.innerHTML= json.rows[i][1]
-	      var option = document.createElement('option');
-	      option.value = i;
-	      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
-	      df.appendChild(option);
-	    }
-	    elm.appendChild(df);
-}
-
-	function loadXMLDoc() {
-	  var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-		var json = JSON.parse(this.responseText);
-	       localStorage.removeItem("json")
-	       localStorage.json=JSON.stringify(json);
-	    }
-	  }
-	  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
-	  xhttp.send();
-	favpopulate();
-	displayfavs();
-	  }
-
-
-		</script>
-	<button type="button" onclick="loadXMLDoc();favpopulate();displayfavs()">Get Latest Info</button><br>
-    <select id="newfav" style="max-width:90%">
-	</select>  
-    <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
-	<div id = "favsdiv">
-    <p id = "pfav"></p>
-    </div>
-	<button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
-    </div> 
-		
-		
-		
-		
-		
-		
-		
-		
-
-	  <!-- Map Section -->
-
-	<div class="w3-padding-64 w3-content" id = "about" style="min-height:95vh"> 
-	    <h2>River Map</h2>
-		<p style="text-align:center;color:white">Map&nbsp;Type:&nbsp;<select id="type" onchange="initialize()">
-	  <option value=1 selected>River Levels</option>
-	  <option value=2>Forecast Rainfall</option>
-	</select>
-	Min.&nbsp;Level:&nbsp;<select id="min. level" onchange="initialize()">
-	  <option value=-1 selected>Any</option>
-	  <option value=0>Visual</option>
-	  <option value=1>Low Level</option>
-	  <option value=2>Good Level</option>
-	  <option value=3>High Level</option>
-	</select>
-	 Max.&nbsp;Level:&nbsp;<select id="max. level" onchange="initialize()" default>
-	  <option value=0>Visual</option>
-	  <option value=1>Low Level</option>
-	  <option value=2>Good Level</option>
-	  <option value=3>High Level</option>
-	  <option value=4 selected>Any</option>
-	</select>
-	Min.&nbsp;Grade:&nbsp;<select id="min. grade" onchange="initialize()" default>
-	  <option value=-1>None</option>
-	  <option value=2 selected>2</option>
-	  <option value=3>3</option>
-	  <option value=4>4</option>
-	  <option value=5>5</option>
-	  <option value=6>6</option>
-	</select>
-	Max.&nbsp;Grade:&nbsp;<select id="max. grade" onchange="initialize()" default>
-	  <option value=7>None</option>
-	  <option value=2>2</option>
-	  <option value=3>3</option>
-	  <option value=4>4</option>
-	  <option value=5>5</option>
-	  <option value=6 selected>6</option>
-	    </select></p>
-
-	  <div id="googft-mapCanvas"></div>
-		</div>
-
-	  <!-- Portfolio Section -->
-	  <div class="w3-padding-64 w3-content" id="photos" style="min-height:95vh">
-		  
-	    <h2>Section Info</h2>
-
-	<div id="demo">
-	<p id="test"></p>
-	<button type="button" onclick="loadXMLDoc()">Get Latest Info</button>
-	<p> State:
-	<select id="State">
-	<option selected value ="Any">Any</option>
-	<option value ="NSW">NSW</option>
-	<option value ="QLD">QLD</option>
-	<option value ="VIC">VIC</option>
-	<option value ="TAS">TAS</option>
-	</select>
-	Level:
-	<select id="Level">
-	<option selected value="Any">Any</option>
-	<option value=0>Visual</option>
-	<option value=1>Low</option>
-	<option value=2>Good</option>
-	<option value=3>High</option>
-	</select>
-		<p>
-	Min. Grade:
-	<select id="Min. grade">
-	  <option value=-1>None</option>
-	  <option value=2>2</option>
-	  <option value=3>3</option>
-	  <option value=4>4</option>
-	  <option value=5>5</option>
-	  <option value=6>6</option>
-	</select>
-		</p>
-		<p>
-	Max.Grade: 
-	<select id="Max. grade">
-	  <option value=7 selected>None</option>
-	  <option value=2>2</option>
-	  <option value=3>3</option>
-	  <option value=4>4</option>
-	  <option value=5>5</option>
-	  <option value=6>6</option>
-	    </select></p>
-	<button type="button" onclick="populate()">Apply</button>
-	</div>
-	    <select id="RivSec" onchange="update()" style="max-width:90%;">
-	    </select>
-	<div id="River"></div>
-	<div id="Section"></div>
-	<div id="Character"></div>
-	<div id="Min. Level"></div>
-	<div id="Max. Level"></div>
-	<div id="Current Level"></div>
-	<div id="12 hr Previous"></div>
-	<div id="Average Grade"></div>
-	<div id="Length (km)"></div>
-	<div id="Time (hrs)"></div>
-	<div id="Shuttle (min)"></div>
-	<div id="Weather"></div>
-	<div id="Forecast"></div>
-	<div id="Full Description"></div>
-
-
-	<script>
-	  function update(){
-	  var i = document.getElementById("RivSec").value
-	  var json = JSON.parse(localStorage.json)  
-	      document.getElementById("River").innerHTML =
-	      "River: "+json.rows[i][0]
-	      document.getElementById("Section").innerHTML =
-	      "Section: "+json.rows[i][1]
-		  document.getElementById("Character").innerHTML =
-	      "Character: "+json.rows[i][2]
-	      document.getElementById("Min. Level").innerHTML =
-	      "Min. Level: "+json.rows[i][3]
-	      document.getElementById("Max. Level").innerHTML =
-	      "Max. Level: "+json.rows[i][4]
-	      document.getElementById("Current Level").innerHTML =
-	      "Current Level: "+json.rows[i][5]
-	      document.getElementById("12 hr Previous").innerHTML =
-	      "12 hr Previous: "+json.rows[i][6]
-	      document.getElementById("Average Grade").innerHTML =
-	      "Average Grade: "+json.rows[i][7]
-	      document.getElementById("Length (km)").innerHTML =
-	      "Length (km): "+json.rows[i][8]
-	      document.getElementById("Time (hrs)").innerHTML =
-	      "Time (hrs): "+json.rows[i][9]
-	      document.getElementById("Shuttle (min)").innerHTML =
-	      "Shuttle (min): "+json.rows[i][10]
-	document.getElementById("Weather").innerHTML =
-	      "Weather: "+json.rows[i][17]
-	      document.getElementById("Forecast").innerHTML =
-	      "Forecast: "+json.rows[i][18] 
-	      document.getElementById("Full Description").innerHTML =
-	      "Full Description: "+json.rows[i][15] 	      
-
-	  }
-	function removeOptions(selectbox)
-	{
-	    var i;
-	    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
-	    {
-		selectbox.remove(i);
-	    }
-	}
-	function loadXMLDoc() {
-	  var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-		var json = JSON.parse(this.responseText);
-	       localStorage.removeItem("json")
-	       localStorage.json=JSON.stringify(json);
-	    }
-	  }
-	  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
-	  xhttp.send();
-	  }
-	  function populate(){
-		  var json = JSON.parse(localStorage.json)
-	    removeOptions(document.getElementById("RivSec"));
-	    var elm = document.getElementById('RivSec'),
-		df = document.createDocumentFragment();
-	    for (var i=0; i<json.rows.length ; i++){
-	    if ((document.getElementById("State").value == json.rows[i][11] || document.getElementById("State").value == "Any") && ( document.getElementById("Level").value == json.rows[i][12] || document.getElementById("Level").value == "Any" ) && (document.getElementById("Min. grade").value <= json.rows[i][13]) && (document.getElementById("Max. grade").value >= json.rows[i][14]) ){
-	    var div = document.createElement('div');
-	    div.innerHTML= json.rows[i][1]
-	      var option = document.createElement('option');
-	      option.value = i;
-	      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
-	      df.appendChild(option);}
-	      else{
-	      }
-	    }
-	    elm.appendChild(df);
-	    update()
-
-
-
-
-
-	      }
-
-	    </script>
-	
-	  </div>
-
-	  <!-- Contact Section -->
-	  <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
-		  <h2 class="w3-text-light-grey">Contact Us</h2>
-	    <hr style="width:200px" class="w3-opacity">
-
-	    <div class="w3-section">
-	      <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
-	      <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
-	      <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
-	    </div><br>
-	  <!-- End Contact Section -->
-	  </div>
-
-	    <!-- Footer -->
-	  <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
-	    <i class="fa fa-facebook-official w3-hover-text-indigo"></i>
-	    <i class="fa fa-instagram w3-hover-text-purple"></i>
-	    <i class="fa fa-snapchat w3-hover-text-yellow"></i>
-	    <i class="fa fa-pinterest-p w3-hover-text-red"></i>
-	    <i class="fa fa-twitter w3-hover-text-light-blue"></i>
-	    <i class="fa fa-linkedin w3-hover-text-indigo"></i>
-	    <p class="w3-medium">Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-	  <!-- End footer -->
-	  </footer>
-
-	<!-- END PAGE CONTENT -->
-	</div>
-
-	</body>
-	</html>
-
-
+<!DOCTYPE html>
+<html>
+   <title>Taylored Instruction</title>
+   <head>
+      <link rel="icon" sizes="192x192" href="images/icon.png">
+      <link rel="apple-touch-icon" href="images/icon.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="mobile-web-app-capable" content="yes">
+      <link rel="stylesheet" href="lib/w3.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <style type="text/css">
+         html, body, #googft-mapCanvas {
+         color: #000;
+         height: 90vh;
+         margin: 0;
+         padding-right: 5px;
+         padding-left:5px;
+         width: 98wh;
+         }
+         #legend {
+         color: #000 !important;
+         background: #FFF;
+         padding: 10px;
+         margin: 5px;
+         font-size: 12px;
+         font-family: Arial, sans-serif;
+         }
+         .color {
+         border: 1px solid;
+         height: 12px;
+         width: 12px;
+         margin-right: 3px;
+         float: left;
+         }
+         .red {
+         background: #C00;
+         }
+         .yellow {
+         background: #FF3;
+         }
+         .green {
+         background: #6F0;
+         }
+         .blue {
+         background: #06C;
+         }
+         .white{
+         background:#FFF;
+         }
+         .box{
+         border: 1px;
+         height: 12px;
+         width: 12px;
+         margin-right: 3px;
+         float: left;
+         }
+         #googft-mapCanvas a { color: #00F;}
+      </style>
+      <style>
+         body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+         .w3-row-padding img {margin-bottom: 12px}
+         /* Set the width of the sidenav to 120px */
+         .w3-sidenav {width: 120px;background: #222;}
+         /* Add a left margin to the "page content" that matches the width of the sidenav (120px) */
+         #main {margin-left: 120px}
+         /* Remove margins from "page content" on small screens */
+         @media only screen and (max-width: 600px) {#main {margin-left: 0}}
+      </style>
+      <style>
+         body { 
+         background-color: black;
+         }
+      </style>
+      <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+      <script>
+         // Initialize Firebase
+         var config = {
+           apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
+           authDomain: "taylored-instruction.firebaseapp.com",
+           databaseURL: "https://taylored-instruction.firebaseio.com",
+           storageBucket: "taylored-instruction.appspot.com",
+           messagingSenderId: "1091342339175"
+         };
+         firebase.initializeApp(config);
+         
+      </script>
+      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
+      <script type="text/javascript">
+         function initialize() {
+           google.maps.visualRefresh = true;
+         
+         
+           var mapDiv = document.getElementById('googft-mapCanvas');
+           var map = new google.maps.Map(mapDiv, {
+             center: new google.maps.LatLng(-30.3333, 152.7167),
+             zoom: 4,
+             mapTypeId: google.maps.MapTypeId.ROADMAP
+           });
+         
+           var mini = document.getElementById("min. level");
+           var miniVal = mini.options[mini.selectedIndex].value;
+           var maxi = document.getElementById("max. level");
+           var maxiVal = maxi.options[maxi.selectedIndex].value;
+           var minig = document.getElementById("min. grade");
+           var miniValg = minig.options[minig.selectedIndex].value;
+           var maxig = document.getElementById("max. grade");
+           var maxiValg = maxig.options[maxig.selectedIndex].value;
+           var mults = document.getElementById("type");
+           var mult = mults.options[mults.selectedIndex].value;
+           var sid = mult*2
+           var tid = mult*3
+           var layer = new google.maps.FusionTablesLayer({
+             map: map,
+             heatmap: { enabled: false },
+             query: {
+         select: "col11",
+         from: "1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke",
+         where:  "col15 \x3e\x3d "+miniVal+" and col15 \x3c\x3d "+maxiVal+" and col14 \x3e\x3d "+miniValg+" and col16 \x3c\x3d "+maxiValg
+             },
+             options: {
+         styleId: sid,
+         templateId: tid
+             }
+           });
+         
+         // Create the legend and display on the map
+         if(mult==1){
+         var redtext = "Low Level"
+         var yeltext = "Visual"
+         var gretext = "Good Level"
+         var blutext = "High Level"
+         }
+         else{
+         var redtext = "24h < 10mm OR <br><div class='box white'></div> 5-day < 30mm"
+         var yeltext = "24h < 20mm OR <br><div class='box white'></div> 5-day < 50mm"
+         var gretext = "24h < 40mm OR <br><div class='box white'></div> 5-day < 80mm"
+         var blutext = "24h > 40mm OR <br><div class='box white'></div> 5-day > 80mm"
+         }
+         var legend = document.createElement('div');
+         legend.id = 'legend';
+         var content = [];
+         content.push('<p><input type="checkbox" name="hide" value = 1 onclick = "showHide()"> Hide </p>')
+         content.push('<h3>Legend</h3>');
+         content.push('<p><div class="color red"></div>'+redtext+'</p>');
+         content.push('<p><div class="color yellow"></div>'+yeltext+'</p>');
+         content.push('<p><div class="color green"></div>'+gretext+'</p>');
+         content.push('<p><div class="color blue"></div>'+blutext+'</p>');
+         legend.innerHTML = content.join('');
+         legend.index = 1;
+         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+         
+         }
+         function showHide() {
+          var el = document.getElementById('legend');
+         el.value+=1
+         if (el.value % 2 ===0){
+              el.style.display = 'block';
+         }
+         else{
+         el.style.display = 'none';
+         }
+         
+         }
+         
+         
+         google.maps.event.addDomListener(window, 'load', initialize);
+      </script>
+   </head>
+   <body class="w3-black" onload="favpopulate();displayfavs()">
+      <!-- Icon Bar (Sidenav - hidden on small screens) -->
+      <nav class="w3-sidenav w3-center w3-small w3-hide-small">
+         <!-- Avatar image in top left corner -->
+         <img src="images/GOPR3079-0001.jpg" style="width:100%">
+         <a class="w3-padding-large w3-black" href="#">
+            <i class="fa fa-home w3-xxlarge"></i>
+            <p>HOME</p>
+         </a>
+         <a class="w3-padding-large w3-hover-black" href="#favsecs">
+            <i class="fa fa-star w3-xxlarge"></i>
+            <p>FAVOURITE SECTIONS</p>
+         </a>
+         <a class="w3-padding-large w3-hover-black" href="#about">
+            <i class="fa fa-globe w3-xxlarge"></i>
+            <p>RIVER MAP</p>
+         </a>
+         <a class="w3-padding-large w3-hover-black" href="#photos">
+            <i class="fa fa-book w3-xxlarge"></i>
+            <p>SECTION INFO</p>
+         </a>
+         <a class="w3-padding-large w3-hover-black" href="#contact">
+            <i class="fa fa-envelope w3-xxlarge"></i>
+            <p>CONTACT</p>
+         </a>
+      </nav>
+      <!-- Navbar on small screens (Hidden on medium and large screens) -->
+      <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+         <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+            <li class="w3-left" style="width:20% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:20% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:20% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:20% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:20% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
+         </ul>
+      </div>
+      <!-- Page Content -->
+      <div class="w3-padding-large" id="main">
+         <!-- Header/Home -->
+         <header class="w3-container w3-padding-32 w3-center w3-black" id="home" style="min-height:95vh">
+            <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
+            <p>Australian River Levels and Trips</p>
+            <img src="images/GOPR3079-0001.jpg" alt="yunowork" class="w3-image" width="1920" height="1080">
+         </header>
+         <!-- Favourite Sections Section -->
+         <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
+            <h2>Favourite Sections</h2>
+            <script>
+               function clearfavs() {
+                  localStorage.removeItem("favslist")
+                     localStorage.favslist = ""
+                     }    
+               function addtofavs(){
+                  if(localStorage.favslist=== undefined){
+                  localStorage.favslist=""
+                  }
+                  var favslist = localStorage.favslist
+                 	var n = document.getElementById("newfav").value
+                  var count = 0;
+                  for( var j = 0; j<favslist.split(";").length-1; j++){
+                  	if(n.toString() == favslist.split(";")[j]){
+                          count+=1
+                          }
+                  }
+                  if (count == 0){     
+                 var json = JSON.parse(localStorage.json)
+                    var favstring = n.toString()+";" 
+                    localStorage.favslist=localStorage.favslist+favstring
+                 }
+                    }
+                    
+                  function displayfavs(){
+                  var json = JSON.parse(localStorage.json)  
+                  var favsdiv = document.getElementById("favsdiv")
+                  var favslist= localStorage.favslist.split(";")
+                 	var para = document.getElementById("pfav");
+                  var contents = new Array()
+                  for(var i = 0; i<favslist.length-1; i++){
+                  if (!isNaN(parseFloat(favslist[i]))){
+                   	var ref = parseFloat(favslist[i])
+               if (isNaN(json.rows[ref][5])){
+               	var colour = "yellow !important"
+               	}
+                      else if(json.rows[ref][5]>json.rows[ref][4]){
+                      var colour = "blue !important"
+                      }
+                      else if(json.rows[ref][5]<json.rows[ref][3]){
+                      var colour = "red !important"
+                      }
+                      else{
+                      var colour = "green !important"
+                      }
+               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
+               	contents.push(node)
+                      }
+                      else{
+                      }
+                  }
+                  para.innerHTML=contents.join("")
+                  }
+                    
+                    	function removeOptions(selectbox)
+               {
+                   var i;
+                   for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+                   {
+               	selectbox.remove(i);
+                   }
+               }
+               
+                 function favpopulate(){
+               	var json = JSON.parse(localStorage.json)
+                   removeOptions(document.getElementById("newfav"));
+                   var elm = document.getElementById('newfav'),
+               	df = document.createDocumentFragment();
+                   for (var i=0; i<json.rows.length; i++){	    
+                   var div = document.createElement('div');
+                   div.innerHTML= json.rows[i][1]
+                     var option = document.createElement('option');
+                     option.value = i;
+                     option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
+                     df.appendChild(option);
+                   }
+                   elm.appendChild(df);
+               }
+               
+               function loadXMLDoc() {
+                 var xhttp = new XMLHttpRequest();
+                 xhttp.onreadystatechange = function() {
+                   if (this.readyState == 4 && this.status == 200) {
+               	var json = JSON.parse(this.responseText);
+                      localStorage.removeItem("json")
+                      localStorage.json=JSON.stringify(json);
+                   }
+                 }
+                 xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
+                 xhttp.send();
+               favpopulate();
+               displayfavs();
+                 }
+               
+               
+               	
+            </script>
+            <button type="button" onclick="loadXMLDoc();favpopulate();displayfavs()">Get Latest Info</button><br>
+            <select id="newfav" style="max-width:90%">
+            </select>  
+            <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
+            <div id = "favsdiv">
+               <p id = "pfav"></p>
+            </div>
+            <button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
+         </div>
+         <!-- Map Section -->
+         <div class="w3-padding-64 w3-content" id = "about" style="min-height:95vh">
+            <h2>River Map</h2>
+            <p style="text-align:center;color:white">
+               Map&nbsp;Type:&nbsp;
+               <select id="type" onchange="initialize()">
+                  <option value=1 selected>River Levels</option>
+                  <option value=2>Forecast Rainfall</option>
+               </select>
+               Min.&nbsp;Level:&nbsp;
+               <select id="min. level" onchange="initialize()">
+                  <option value=-1 selected>Any</option>
+                  <option value=0>Visual</option>
+                  <option value=1>Low Level</option>
+                  <option value=2>Good Level</option>
+                  <option value=3>High Level</option>
+               </select>
+               Max.&nbsp;Level:&nbsp;
+               <select id="max. level" onchange="initialize()" default>
+                  <option value=0>Visual</option>
+                  <option value=1>Low Level</option>
+                  <option value=2>Good Level</option>
+                  <option value=3>High Level</option>
+                  <option value=4 selected>Any</option>
+               </select>
+               Min.&nbsp;Grade:&nbsp;
+               <select id="min. grade" onchange="initialize()" default>
+                  <option value=-1>None</option>
+                  <option value=2 selected>2</option>
+                  <option value=3>3</option>
+                  <option value=4>4</option>
+                  <option value=5>5</option>
+                  <option value=6>6</option>
+               </select>
+               Max.&nbsp;Grade:&nbsp;
+               <select id="max. grade" onchange="initialize()" default>
+                  <option value=7>None</option>
+                  <option value=2>2</option>
+                  <option value=3>3</option>
+                  <option value=4>4</option>
+                  <option value=5>5</option>
+                  <option value=6 selected>6</option>
+               </select>
+            </p>
+            <div id="googft-mapCanvas"></div>
+         </div>
+         <!-- Portfolio Section -->
+         <div class="w3-padding-64 w3-content" id="photos" style="min-height:95vh">
+            <h2>Section Info</h2>
+            <div id="demo">
+               <p id="test"></p>
+               <button type="button" onclick="loadXMLDoc()">Get Latest Info</button>
+               <p>
+                  State:
+                  <select id="State">
+                     <option selected value ="Any">Any</option>
+                     <option value ="NSW">NSW</option>
+                     <option value ="QLD">QLD</option>
+                     <option value ="VIC">VIC</option>
+                     <option value ="TAS">TAS</option>
+                  </select>
+                  Level:
+                  <select id="Level">
+                     <option selected value="Any">Any</option>
+                     <option value=0>Visual</option>
+                     <option value=1>Low</option>
+                     <option value=2>Good</option>
+                     <option value=3>High</option>
+                  </select>
+               <p>
+                  Min. Grade:
+                  <select id="Min. grade">
+                     <option value=-1>None</option>
+                     <option value=2>2</option>
+                     <option value=3>3</option>
+                     <option value=4>4</option>
+                     <option value=5>5</option>
+                     <option value=6>6</option>
+                  </select>
+               </p>
+               <p>
+                  Max.Grade: 
+                  <select id="Max. grade">
+                     <option value=7 selected>None</option>
+                     <option value=2>2</option>
+                     <option value=3>3</option>
+                     <option value=4>4</option>
+                     <option value=5>5</option>
+                     <option value=6>6</option>
+                  </select>
+               </p>
+               <button type="button" onclick="populate()">Apply</button>
+            </div>
+            <select id="RivSec" onchange="update()" style="max-width:90%;">
+            </select>
+            <div id="River"></div>
+            <div id="Section"></div>
+            <div id="Character"></div>
+            <div id="Min. Level"></div>
+            <div id="Max. Level"></div>
+            <div id="Current Level"></div>
+            <div id="12 hr Previous"></div>
+            <div id="Average Grade"></div>
+            <div id="Length (km)"></div>
+            <div id="Time (hrs)"></div>
+            <div id="Shuttle (min)"></div>
+            <div id="Weather"></div>
+            <div id="Forecast"></div>
+            <div id="Full Description"></div>
+            <script>
+               function update(){
+               var i = document.getElementById("RivSec").value
+               var json = JSON.parse(localStorage.json)  
+                   document.getElementById("River").innerHTML =
+                   "River: "+json.rows[i][0]
+                   document.getElementById("Section").innerHTML =
+                   "Section: "+json.rows[i][1]
+                document.getElementById("Character").innerHTML =
+                   "Character: "+json.rows[i][2]
+                   document.getElementById("Min. Level").innerHTML =
+                   "Min. Level: "+json.rows[i][3]
+                   document.getElementById("Max. Level").innerHTML =
+                   "Max. Level: "+json.rows[i][4]
+                   document.getElementById("Current Level").innerHTML =
+                   "Current Level: "+json.rows[i][5]
+                   document.getElementById("12 hr Previous").innerHTML =
+                   "12 hr Previous: "+json.rows[i][6]
+                   document.getElementById("Average Grade").innerHTML =
+                   "Average Grade: "+json.rows[i][7]
+                   document.getElementById("Length (km)").innerHTML =
+                   "Length (km): "+json.rows[i][8]
+                   document.getElementById("Time (hrs)").innerHTML =
+                   "Time (hrs): "+json.rows[i][9]
+                   document.getElementById("Shuttle (min)").innerHTML =
+                   "Shuttle (min): "+json.rows[i][10]
+               document.getElementById("Weather").innerHTML =
+                   "Weather: "+json.rows[i][17]
+                   document.getElementById("Forecast").innerHTML =
+                   "Forecast: "+json.rows[i][18] 
+                   document.getElementById("Full Description").innerHTML =
+                   "Full Description: "+json.rows[i][15] 	      
+               
+               }
+               function removeOptions(selectbox)
+               {
+                 var i;
+                 for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+                 {
+               selectbox.remove(i);
+                 }
+               }
+               function loadXMLDoc() {
+               var xhttp = new XMLHttpRequest();
+               xhttp.onreadystatechange = function() {
+                 if (this.readyState == 4 && this.status == 200) {
+               var json = JSON.parse(this.responseText);
+                    localStorage.removeItem("json")
+                    localStorage.json=JSON.stringify(json);
+                 }
+               }
+               xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
+               xhttp.send();
+               }
+               function populate(){
+                var json = JSON.parse(localStorage.json)
+                 removeOptions(document.getElementById("RivSec"));
+                 var elm = document.getElementById('RivSec'),
+               df = document.createDocumentFragment();
+                 for (var i=0; i<json.rows.length ; i++){
+                 if ((document.getElementById("State").value == json.rows[i][11] || document.getElementById("State").value == "Any") && ( document.getElementById("Level").value == json.rows[i][12] || document.getElementById("Level").value == "Any" ) && (document.getElementById("Min. grade").value <= json.rows[i][13]) && (document.getElementById("Max. grade").value >= json.rows[i][14]) ){
+                 var div = document.createElement('div');
+                 div.innerHTML= json.rows[i][1]
+                   var option = document.createElement('option');
+                   option.value = i;
+                   option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
+                   df.appendChild(option);}
+                   else{
+                   }
+                 }
+                 elm.appendChild(df);
+                 update()
+               
+               
+               
+               
+               
+                   }
+               
+                 
+            </script>
+         </div>
+         <!-- Contact Section -->
+         <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
+            <h2 class="w3-text-light-grey">Contact Us</h2>
+            <hr style="width:200px" class="w3-opacity">
+            <div class="w3-section">
+               <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
+               <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
+               <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
+            </div>
+            <br>
+            <!-- End Contact Section -->
+         </div>
+         <!-- Footer -->
+         <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+            <i class="fa fa-facebook-official w3-hover-text-indigo"></i>
+            <i class="fa fa-instagram w3-hover-text-purple"></i>
+            <i class="fa fa-snapchat w3-hover-text-yellow"></i>
+            <i class="fa fa-pinterest-p w3-hover-text-red"></i>
+            <i class="fa fa-twitter w3-hover-text-light-blue"></i>
+            <i class="fa fa-linkedin w3-hover-text-indigo"></i>
+            <p class="w3-medium">Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+            <!-- End footer -->
+         </footer>
+         <!-- END PAGE CONTENT -->
+      </div>
+   </body>
+</html>
