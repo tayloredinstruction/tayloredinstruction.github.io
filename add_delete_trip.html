@@ -47,13 +47,19 @@
   };
   firebase.initializeApp(config);
      var database = firebase.database();
-   
-function writeTripInformation(userId, tripName, contactEmail, contactPhone) {
+   var userId = firebase.auth().currentUser;
+function writeTripInformation(userId) {
+   var json = JSON.parse(localStorage.json)
+   var i = document.getElementById("rivsecs").value
   firebase.database().ref('users/' + userId).set({
     username: userId,
-    trip: tripName,
-    email: contactEmail,
-    phone : contactPhone
+    trip: document.getElementById("tripname").value,
+    section: json.rows[i][0]+" - "+json.rows[i][1],
+    datetime: document.getElementById("datetime").value,
+    groupsize: document.getElementById("groupsize").value,
+    email: document.getElementById("email").value,
+    phone : document.getElementById("phone").value,
+    info : document.getElementById("info").value
   });
 }
 </script>
@@ -137,22 +143,22 @@ function writeTripInformation(userId, tripName, contactEmail, contactPhone) {
            <h2>Add a Trip</h2>
             <p>
            Trip Name:<br>
-           <input type="text" name="tripname" value="">
+           <input type="text" id="tripname" value="">
            <br>
            Section:<br>
                <select id="rivsecs"></select>
                <br>
            Date and Time:<br>
-           <input type="datetime-local" name="datetime" value="">
+           <input type="datetime-local" id="datetime" value="">
            <br>
            Max. Group Size:<br>
-           <input type="number" name="groupsize" value="">
+           <input type="number" id="groupsize" value="">
            <br>
            Contact Email:<br>
-           <input type="text" name="email" value="">
+           <input type="text" id="email" value="">
            <br>
            Contact Phone Number:<br>
-           <input type="text" name="phone" value="">
+           <input type="text" id="phone" value="">
            <br>
            Additional Information:<br>
                <textarea id="info" style="width:75wh"></textarea>
