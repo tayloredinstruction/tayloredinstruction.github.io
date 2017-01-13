@@ -526,7 +526,7 @@
             <script>
                function triplist(){
                return firebase.database().ref('trips/').once('value').then(function(snapshot) {
-                  console.log(snapshot);
+                  console.log(snapshot.val());
                });
                }
             </script>
