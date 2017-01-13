@@ -21,6 +21,7 @@
       
       firebase.auth().onAuthStateChanged(function(user) {
         var user = firebase.auth().currentUser;
+        console.log(firebase.auth().currentUser);
   if (!(user)===null) {
     window.location.href = 'https://tayloredinstruction.github.io/add_delete_trip.html'
   } else {
