@@ -525,7 +525,7 @@
          <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
             <script>
                function triplist(){
-               return firebase.database().ref('/trips/').once('value').then(function(snapshot) {
+               return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   console.log(snapshot);
                });
                }
