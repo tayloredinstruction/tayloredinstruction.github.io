@@ -161,8 +161,17 @@
       </script>
    </head>
    <body class="w3-black" onload="favpopulate();displayfavs()">
-            
-      
+        <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
+    authDomain: "taylored-instruction.firebaseapp.com",
+    databaseURL: "https://taylored-instruction.firebaseio.com",
+    storageBucket: "taylored-instruction.appspot.com",
+    messagingSenderId: "1091342339175"
+  };
+  firebase.initializeApp(config);
+      </script>   
       
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
       <nav class="w3-sidenav w3-center w3-small w3-hide-small">
