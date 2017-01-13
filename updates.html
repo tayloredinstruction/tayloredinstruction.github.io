@@ -527,8 +527,7 @@
                function triplist(){
                return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
-                     var childKey = childSnapshot.key();
-                     var childData = childSnapshot.val();
+                     console.log(childSnapshot.val());
                      });
                   });
                }
