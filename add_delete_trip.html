@@ -57,7 +57,7 @@ function writeTripInformation() {
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
   firebase.database().ref('users/' + userId.uid).set({
-    username: userId.uid,
+    organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
     datetime: document.getElementById("datetime").value,
@@ -149,9 +149,9 @@ function writeTripInformation() {
          </script>
          <div class="w3-padding-64 w3-content" id = "addtrip" style="min-height:95vh">
            <h2>Add a Trip</h2>
-            <p>
+            <p>Trip Organiser:<br>
                           <input type="text" id="userId" value="">
-
+            <br>
            Trip Name:<br>
            <input type="text" id="tripname" value="">
            <br>
