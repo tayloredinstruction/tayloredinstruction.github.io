@@ -47,7 +47,9 @@
   };
   firebase.initializeApp(config);
      var database = firebase.database();
-   firebase.auth().onAuthStateChanged(loadXMLDoc())
+   firebase.auth().onAuthStateChanged(function() {
+      loadXMLDoc()
+   });
    
 function writeTripInformation(userId) {
    document.getElementById("userId").value=userId.uid
