@@ -53,10 +53,10 @@
    
 function writeTripInformation() {
    var userId = firebase.auth().currentUser;
-   document.getElementById("userId").value=userId.uid
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
-  var newtrip = firebase.database().ref('users/' + newtrip.key).push({   
+   var newtripref = firebase.database().ref().child('users').push().key
+  firebase.database().ref('users/' + newtripref).set({   
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
@@ -66,7 +66,7 @@ function writeTripInformation() {
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value
   });
-     firebase.database().ref('trips/' + newtrip.key).set({
+  firebase.database().ref('trips/' + newtripref).set({
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
