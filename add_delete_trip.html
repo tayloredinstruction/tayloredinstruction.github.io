@@ -47,7 +47,10 @@
   };
   firebase.initializeApp(config);
      var database = firebase.database();
-   var userId = firebase.auth().currentUser;
+   firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().currentUser;
+   }
+                                      )
 function writeTripInformation(userId) {
    document.getElementById("userid").value=userId.uid
    var json = JSON.parse(localStorage.json)
