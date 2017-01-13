@@ -56,11 +56,21 @@ function writeTripInformation() {
    document.getElementById("userId").value=userId.uid
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
-  firebase.database().ref('users/' + userId.uid).set({
+  var newtrip = firebase.database().ref('users/' + newtrip.key).push({   
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
-    datetime: document.getElementById("datetime").value,
+    date: document.getElementById("date").value,
+    groupsize: document.getElementById("groupsize").value,
+    email: document.getElementById("email").value,
+    phone : document.getElementById("phone").value,
+    info : document.getElementById("info").value
+  });
+     firebase.database().ref('trips/' + newtrip.key).set({
+    organiser: userId.displayName,
+    trip: document.getElementById("tripname").value,
+    section: json.rows[i][0]+" - "+json.rows[i][1],
+    date: document.getElementById("date").value,
     groupsize: document.getElementById("groupsize").value,
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
@@ -159,7 +169,7 @@ function writeTripInformation() {
                <select id="rivsecs"></select>
                <br>
            Date and Time:<br>
-           <input type="datetime-local" id="datetime" value="">
+           <input type="date" id="date" value="">
            <br>
            Max. Group Size:<br>
            <input type="number" id="groupsize" value="">
