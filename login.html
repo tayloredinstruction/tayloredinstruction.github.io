@@ -19,7 +19,14 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
     <script type="text/javascript">
       
-      
+      firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    window.location.href = 'https://tayloredinstruction.github.io/add_delete_trip.html'
+
+  } else {
+    // No user is signed in.
+  }
+});
       
      function facebooklogin(){
        
@@ -51,8 +58,8 @@
       
       
       function emailpasslogin(){
-       var email = document.getElementById("lusername").value()
-       var password = document.getElementById("lpassword").value()
+       var email = document.getElementById("lusername").value
+       var password = document.getElementById("lpassword").value
         firebaseref.authWithPassword({
                     email: email,
                     password: password,
@@ -60,8 +67,8 @@
       }
       
      function register(){
-       var email = document.getElementById("susername").value()
-       var password = document.getElementById("spassword").value()
+       var email = document.getElementById("susername").value
+       var password = document.getElementById("spassword").value
         firebaseref.createUser({
             email: email,
             password: password
