@@ -47,10 +47,8 @@
   };
   firebase.initializeApp(config);
      var database = firebase.database();
-   firebase.auth().onAuthStateChanged(function(user) {
-      loadXMLDoc()
-   }
-                                      )
+   firebase.auth().onAuthStateChanged(loadXMLDoc())
+   
 function writeTripInformation(userId) {
    document.getElementById("userId").value=userId.uid
    var json = JSON.parse(localStorage.json)
@@ -132,6 +130,7 @@ function writeTripInformation(userId) {
                }
                
                function loadXMLDoc() {
+                 var userId = firebase.auth().currentUser;
                  var xhttp = new XMLHttpRequest();
                  xhttp.onreadystatechange = function() {
                    if (this.readyState == 4 && this.status == 200) {
