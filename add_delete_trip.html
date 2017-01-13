@@ -33,7 +33,7 @@
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
       
    </head>
-   <body class="w3-black" onload="loadXMLDoc()">
+   <body class="w3-black">
       
 <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
 <script>
@@ -48,7 +48,7 @@
   firebase.initializeApp(config);
      var database = firebase.database();
    firebase.auth().onAuthStateChanged(function(user) {
-      firebase.auth().currentUser;
+      loadXMLDoc()
    }
                                       )
 function writeTripInformation(userId) {
