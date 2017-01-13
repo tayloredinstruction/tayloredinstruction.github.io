@@ -51,7 +51,8 @@
       loadXMLDoc()
    });
    
-function writeTripInformation(userId) {
+function writeTripInformation() {
+   var userId = firebase.auth().currentUser;
    document.getElementById("userId").value=userId.uid
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
