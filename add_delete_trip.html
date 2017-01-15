@@ -57,12 +57,12 @@ function writeTripInformation() {
    var i = document.getElementById("rivsecs").value
    var newtripref = firebase.database().ref().child('users').push().key
   firebase.database().ref('users/' + userId.uid + '/' + newtripref).set({
-    oid: userId.email,
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
     date: document.getElementById("date").value,
     groupsize: document.getElementById("groupsize").value,
+    space: document.getElementById("groupsize").value,
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value
@@ -74,12 +74,12 @@ function writeTripInformation() {
                }
                });
   firebase.database().ref('trips/' + newtripref).set({
-    oid: userId.email,
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
     date: document.getElementById("date").value,
     groupsize: document.getElementById("groupsize").value,
+    space: document.getElementById("groupsize").value,
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value
@@ -88,8 +88,8 @@ function writeTripInformation() {
                   alert("Trip was not added" + error)
                   }
                   else{
-                  popDeleteTrip()
                   alert("Trip added successfully.")
+                  popDeleteTrip()
                }
                });
 }
@@ -179,7 +179,7 @@ function writeTripInformation() {
                var keys = new Array()
                var trips = new Array()
                console.log(trips.length)
-               return firebase.database().ref('trips/').once('value').then(function(snapshot) {
+               return firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
                      keys.push(data.getKey())
@@ -214,8 +214,8 @@ function writeTripInformation() {
                   alert("Trip could not be deleted" + error)
                   }
                   else{
-                  popDeleteTrip()
                   alert("Trip deleted.")
+                  popDeleteTrip()
                }
                });
             }
