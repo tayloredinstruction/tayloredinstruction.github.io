@@ -33,7 +33,7 @@
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
       
    </head>
-   <body class="w3-black">
+   <body class="w3-black" onload="popDeleteTrip()">
       
 <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
 <script>
@@ -185,7 +185,6 @@ function writeTripInformation() {
                console.log(list)
                   });
             }
-            popDeleteTrip()
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
                firebase.database().ref('trips/' + key).remove()
