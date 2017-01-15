@@ -6,6 +6,8 @@
    <head>
       <link rel="icon" sizes="192x192" href="images/icon.png">
       <link rel="apple-touch-icon" href="images/icon.png">
+      <link rel="stylesheet" type="text/css" href="css/zocial.css" />
+	<link href='http://fonts.googleapis.com/css?family=Pompiere' rel='stylesheet' type='text/css'>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="mobile-web-app-capable" content="yes">
@@ -139,14 +141,7 @@ firebase.auth().getRedirectResult().then(function(result) {
     </script>
    </head>
    <body class="w3-black">
-      <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=122878559243";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+      
 
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
       <nav class="w3-sidenav w3-center w3-small w3-hide-small">
@@ -156,10 +151,7 @@ firebase.auth().getRedirectResult().then(function(result) {
             <i class="fa fa-home w3-xxlarge"></i>
             <p>HOME</p>
          </a>
-         <a class="w3-padding-large w3-hover-black" href="#login">
-            <i class="fa fa-check-square-o w3-xxlarge"></i>
-            <p>LOGIN</p>
-         </a>
+
 
          
       </nav>
@@ -167,28 +159,21 @@ firebase.auth().getRedirectResult().then(function(result) {
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
          <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
             <li class="w3-left" style="width:50% !important"><a href="https://tayloredinstruction.github.io/"><i class="fa fa-home w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:50% !important"><a href="#login"><i class="fa fa-check-square-o w3-xxlarge"></i></a></li>
          </ul>
       </div>
       <!-- Page Content -->
       <div class="w3-padding-large" id="main">
          <!-- Header/Home -->
          <header class="w3-container w3-padding-32 w3-center w3-black" id="home" style="min-height:95vh">
-            <h2 class="w3-text-light-grey" align = "center">Trip Management</h2>
-            <p>Add and remove trips for other paddlers to join.</p>
-         </header>
+            <h2 class="w3-text-light-grey" align = "center">Login</h2>
+<div id = "login">
+   <a href="#" class="zocial facebook">Sign in with Facebook</a>
+	<a href="#" class="zocial googleplus">Sign in with Google+</a>
+      <button type="button" onclick="facebooklogin()" class = "zocial facebook"></button><br>
+      <button type="button" onclick="googlelogin()" class = "zocial googleplus"></button><br>
+    </div>         </header>
          <!-- Add Trip Section -->
 
-         <div class="w3-padding-64 w3-content" id = "login" style="min-height:95vh">
-           <h2>Login</h2>
-      <div id = "login">
-      <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
-      <button type="button" onclick="facebooklogin()" style="background: url(images/fsignin.png)">Facebook</button><br>
-      <button type="button" onclick="googlelogin()" style="background: url(images/gsignin.png)">Google</button><br>
-    </div>
-
-           
-        </div>
         
        
         
