@@ -74,7 +74,7 @@ function writeTripInformation() {
                   popDeleteTrip()
                   alert("Trip added successfully.")
                }
-               }););
+               });
   firebase.database().ref('trips/' + newtripref).set({
     oid: userId.email,
     organiser: userId.displayName,
@@ -93,7 +93,7 @@ function writeTripInformation() {
                   popDeleteTrip()
                   alert("Trip added successfully.")
                }
-               }););
+               });
 }
 </script>
             
