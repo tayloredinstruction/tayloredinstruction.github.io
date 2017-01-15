@@ -178,7 +178,7 @@ function writeTripInformation() {
                for (var i = 0; i<trips.length; i++){
                   var option = document.createElement('option');
                      option.value = keys[i];
-                     option.appendChild(trips[i]);
+                     option.appendChild(document.createTextNode(trips[i]));
                      df.appendChild(option);
                }
                list.appendChild(df)
