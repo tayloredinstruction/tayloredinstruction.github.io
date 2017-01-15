@@ -66,7 +66,7 @@ function writeTripInformation() {
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value
-  }, function(){
+  }, function(error){
                   if(error){
                   alert("Trip could not be added" + error)
                   }
@@ -85,7 +85,7 @@ function writeTripInformation() {
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value
-  }, function(){
+  }, function(error){
                   if(error){
                   alert("Trip was not added" + error)
                   }
@@ -203,7 +203,7 @@ function writeTripInformation() {
             }
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
-               firebase.database().ref('trips/' + key).set(null, function(){
+               firebase.database().ref('trips/' + key).set(null, function(error){
                   if(error){
                   alert("Trip could not be deleted" + error)
                   }
@@ -212,7 +212,7 @@ function writeTripInformation() {
                   alert("Trip deleted.")
                }
                });  
-               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).set(null, function(){
+               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).set(null, function(error){
                   if(error){
                   alert("Trip could not be deleted" + error)
                   }
