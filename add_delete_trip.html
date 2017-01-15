@@ -163,6 +163,7 @@ function writeTripInformation() {
                var list = document.getElementById('deletelist');
                var keys = new Array()
                var trips = new Array()
+               console.log(trips.length)
                return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
@@ -172,6 +173,7 @@ function writeTripInformation() {
                      console.log(data.getKey())
                      });                 
                   });
+               console.log(trips.length)
                var df = document.createDocumentFragment();
                for (var i = 0; i<trips.length; i++){
                   var option = document.createElement('option');
