@@ -164,7 +164,9 @@ function writeTripInformation() {
                return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
-                     console.log(data)
+                     console.log(data.getKey())
+                     console.log(data.key)
+
                      });
                   
                   });
