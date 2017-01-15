@@ -172,7 +172,7 @@ function writeTripInformation() {
                      console.log(data.val().trip)
                      console.log(data.getKey())
                      });                 
-                  });
+                  
                console.log(trips.length)
                var df = document.createDocumentFragment();
                for (var i = 0; i<trips.length; i++){
@@ -183,6 +183,7 @@ function writeTripInformation() {
                }
                list.appendChild(df)
                console.log(list)
+                  });
             }
             popDeleteTrip()
             function deleteTrip(){
