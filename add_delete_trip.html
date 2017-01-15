@@ -167,7 +167,9 @@ function writeTripInformation() {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
                      keys.push(data.getKey())
-                     trips.push(data.val().trip)                                          
+                     trips.push(data.val().trip) 
+                     console.log(trips.push(data.val().trip))
+                     console.log(keys.push(data.getKey()))
                      });                 
                   });
                var df = document.createDocumentFragment();
@@ -178,10 +180,11 @@ function writeTripInformation() {
                      df.appendChild(option);
                }
                list.append(df)
+               console.log(list)
             }
             popDeleteTrip()
             function deleteTrip(){
-               var key = document.getElementById('deletelist').value()
+               var key = document.getElementById('deletelist').value
                firebase.database().ref('trips/' + key).remove()
                firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).remove()
             }
