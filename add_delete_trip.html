@@ -66,7 +66,14 @@ function writeTripInformation() {
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value
-  });
+  }, function(){
+                  if(error){
+                  alert("Trip could not be added" + error)
+                  else{
+                  popDeleteTrip()
+                  alert("Trip added successfully.")
+               }
+               }););
   firebase.database().ref('trips/' + newtripref).set({
     oid: userId.email,
     organiser: userId.displayName,
@@ -77,7 +84,14 @@ function writeTripInformation() {
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value
-  });
+  }, function(){
+                  if(error){
+                  alert("Trip was not added" + error)
+                  else{
+                  popDeleteTrip()
+                  alert("Trip added successfully.")
+               }
+               }););
 }
 </script>
             
@@ -187,8 +201,22 @@ function writeTripInformation() {
             }
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
-               firebase.database().ref('trips/' + key).remove()
-               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).remove()
+               firebase.database().ref('trips/' + key).set(null, function(){
+                  if(error){
+                  alert("Trip could not be deleted" + error)
+                  else{
+                  popDeleteTrip()
+                  alert("Trip deleted.")
+               }
+               });  
+               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).set(null, function(){
+                  if(error){
+                  alert("Trip could not be deleted" + error)
+                  else{
+                  popDeleteTrip()
+                  alert("Trip deleted.")
+               }
+               });
             }
             
          </script>
