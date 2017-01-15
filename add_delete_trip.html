@@ -87,6 +87,7 @@ function writeTripInformation() {
   }, function(){
                   if(error){
                   alert("Trip was not added" + error)
+                  }
                   else{
                   popDeleteTrip()
                   alert("Trip added successfully.")
@@ -204,6 +205,7 @@ function writeTripInformation() {
                firebase.database().ref('trips/' + key).set(null, function(){
                   if(error){
                   alert("Trip could not be deleted" + error)
+                  }
                   else{
                   popDeleteTrip()
                   alert("Trip deleted.")
@@ -212,6 +214,7 @@ function writeTripInformation() {
                firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).set(null, function(){
                   if(error){
                   alert("Trip could not be deleted" + error)
+                  }
                   else{
                   popDeleteTrip()
                   alert("Trip deleted.")
