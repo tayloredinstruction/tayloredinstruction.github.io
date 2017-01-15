@@ -56,7 +56,8 @@ function writeTripInformation() {
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
    var newtripref = firebase.database().ref().child('users').push().key
-  firebase.database().ref('users/' + userId.uid + '/' + newtripref).set({   
+  firebase.database().ref('users/' + userId.uid + '/' + newtripref).set({
+    oid: userId.email,
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
@@ -67,6 +68,7 @@ function writeTripInformation() {
     info : document.getElementById("info").value
   });
   firebase.database().ref('trips/' + newtripref).set({
+    oid: userId.email,
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
@@ -157,6 +159,16 @@ function writeTripInformation() {
                  xhttp.send();
                favpopulate();
                }
+            function deleteTrip(){
+               var contents = new Array()
+               return firebase.database().ref('trips/').once('value').then(function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+                     var data = childSnapshot.val();
+                     console.log(data.children)
+                     });
+                  
+                  });
+            }
          </script>
          <div class="w3-padding-64 w3-content" id = "addtrip" style="min-height:95vh">
            <h2>Add a Trip</h2>
@@ -191,7 +203,8 @@ function writeTripInformation() {
          <!-- Delete Trip Section -->
          <div class="w3-padding-64 w3-content" id = "deltrip" style="min-height:95vh">
             <h2>Delete a Trip</h2>
-            
+            <select id = "deletelist" style = "max-width:90%"></select>
+            <input type = "button" id = "delete" onclick = "deleteTrip()">
          </div>
          
          <!-- Footer -->
