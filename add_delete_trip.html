@@ -159,18 +159,33 @@ function writeTripInformation() {
                  xhttp.send();
                favpopulate();
                }
-            function deleteTrip(){
-               var contents = new Array()
+            function popDeleteTrip(){
+               var list = document.getElementById('deletelist');
+               var keys = new Array()
+               var trips = new Array()
                return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
-                     console.log(data.getKey())
-                     console.log(data.key)
-
-                     });
-                  
+                     keys.push(data.getKey()))
+                     trips.push(data.val().trip)                                          
+                     });                 
                   });
+               var df = document.createDocumentFragment();
+               for (var i = 0; i<trips.length; i++){
+                  var option = document.createElement('option');
+                     option.value = keys[i];
+                     option.appendChild(trips[i]);
+                     df.appendChild(option);
+               }
+               list.append(df)
             }
+            popDeleteTrip()
+            function deleteTrip(){
+               var key = document.getElementById('deletelist').value()
+               firebase.database().ref('trips/' + key).remove()
+               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).remove()
+            }
+            
          </script>
          <div class="w3-padding-64 w3-content" id = "addtrip" style="min-height:95vh">
            <h2>Add a Trip</h2>
