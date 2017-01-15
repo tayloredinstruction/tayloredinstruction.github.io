@@ -140,6 +140,7 @@ function writeTripInformation() {
                    elm.appendChild(df);
                   var userId = firebase.auth().currentUser;
    document.getElementById("userId").value=userId.displayName
+                  document.getElementById("email").value=userId.email
                }
                
                function loadXMLDoc() {
