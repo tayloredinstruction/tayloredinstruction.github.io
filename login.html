@@ -6,8 +6,6 @@
    <head>
       <link rel="icon" sizes="192x192" href="images/icon.png">
       <link rel="apple-touch-icon" href="images/icon.png">
-      <link rel="stylesheet" type="text/css" href="css/zocial.css" />
-	<link href='http://fonts.googleapis.com/css?family=Pompiere' rel='stylesheet' type='text/css'>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="mobile-web-app-capable" content="yes">
@@ -169,6 +167,7 @@ firebase.auth().getRedirectResult().then(function(result) {
 <div id = "login">
    <a href="#" class="zocial facebook">Sign in with Facebook</a>
 	<a href="#" class="zocial googleplus">Sign in with Google+</a>
+	<input type="image" src="images/gsignin.png" onclick="facebooklogin()">
       <button type="button" onclick="facebooklogin()" style="background:url(images/gsignin.png);width:191;height:46 !important"></button><br>
       <button type="button" onclick="googlelogin()" class = "zocial googleplus"></button><br>
     </div>         </header>
