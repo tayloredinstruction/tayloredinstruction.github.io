@@ -589,34 +589,25 @@
                return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot.val();
-                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onclick=\"join('+childSnapshot.key()+')\"</p>'
                      contents.push(node);
                      });
                      para.innerHTML=contents.join("")
                   
                   });
                }
-               function addDelete(){
-                  var user=firebase.auth().currentUser
-                  if(user){
-                     window.location.href = 'https://tayloredinstruction.github.io/add_delete_trip.html'
-                  }
-                  else {
-                     window.location.href = 'https://tayloredinstruction.github.io/login.html'
-                  }
                   function joinTrip(){
                      var user=firebase.auth().currentUser
                   if(user){
                   //some action that allows a trip join
                   }
                   else {
-                     window.location.href = 'https://tayloredinstruction.github.io/login.html'
+                     window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html#trips'
                   }
             </script>
             <h2 class="w3-text-light-grey">Upcoming Trips</h2>
             <hr style="width:200px" class="w3-opacity">
-            <button onclick="addDelete()">Add/Delete a Trip</button>
-            <a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trips" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
+            <a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
             <p id="tripp"></p>
            </div>
             <br>
