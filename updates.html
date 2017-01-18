@@ -599,8 +599,7 @@
                   function joinTrip(key){
                      var user=firebase.auth().currentUser
                   if(user){
-                     var newwaitref = firebase.database().ref().child('users').push().key
-                     firebase.database().ref('trips/' + key + '/waiting/'+ newwaitref).set({
+                     firebase.database().ref('trips/' + key + '/waiting/'+ user.uid).set({
                           name: user.displayName,
                           id: user.uid,
                           email: user.email
