@@ -74,7 +74,12 @@ function writeTripInformation() {
                   else{
                }
                });
-  firebase.database().ref('trips/' + newtripref).set({
+  firebase.database().ref('trips/' + newtripref + '/confirmed').set({
+     person1_name: userId.displayName,
+     person1_id: userId.uid,
+     person1_email: userId.email
+  });
+  firebase.database().ref('trips/' + newtripref + '/details').set({
     organiser: userId.displayName,
     trip: document.getElementById("tripname").value,
     section: json.rows[i][0]+" - "+json.rows[i][1],
