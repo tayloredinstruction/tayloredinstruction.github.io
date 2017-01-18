@@ -241,6 +241,9 @@
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
             <h2>Favourite Sections</h2>
             <script>
+               firebase.auth().onAuthStateChanged(function() {
+      usertriplist()
+   });
             function usertriplist(){
                var para = document.getElementById("mytrips");
                var contents = new Array()
