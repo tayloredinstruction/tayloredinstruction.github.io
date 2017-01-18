@@ -212,21 +212,11 @@ function writeTripInformation() {
             }
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
-               firebase.database().ref('trips/' + key+'/confirmed').set(null, function(error){
-                  if(error){
-                  alert("Trip could not be deleted" + error)
-                  }
-                  else{
-               }
-               }); 
-               firebase.database().ref('trips/' + key+'/details').set(null, function(error){
-                  if(error){
-                  alert("Trip could not be deleted" + error)
-                  }
-                  else{
-               }
-               }); 
-               firebase.database().ref('trips/' + key+'/waiting').set(null, function(error){
+               firebase.database().ref('trips/' + key).update({
+                   confirmed: null,
+                  details: null,
+                  waiting: null
+                  },function(error){
                   if(error){
                   alert("Trip could not be deleted" + error)
                   }
