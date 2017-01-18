@@ -34,6 +34,13 @@
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
       <script>
+function getUrlVars() {
+var vars = {};
+var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+vars[key] = value;
+});
+return vars;
+}
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
@@ -46,7 +53,8 @@
   firebase.auth().onAuthStateChanged(function(user) {
         var user = firebase.auth().currentUser;
   if (user) {
-    window.location.href = 'https://tayloredinstruction.github.io/add_delete_trip.html'
+	  getUrlVars()
+    window.location.href = 'https://tayloredinstruction.github.io/'+vars[target]
   } else {
     // No user is signed in.
   }
