@@ -50,6 +50,7 @@
    firebase.auth().onAuthStateChanged(function() {
       loadXMLDoc()
       popDeleteTrip()
+      popUsers()
    });
    
 function writeTripInformation() {
@@ -76,7 +77,12 @@ function writeTripInformation() {
                   else{
                }
                });
-  firebase.database().ref('trips/' + newtripref + '/confirmed/'+newtripref).set({
+  firebase.database().ref('trips/' + newtripref + '/confirmed/'+userId.uid).set({
+     name: userId.displayName,
+     id: userId.uid,
+     email: userId.email
+  });
+  firebase.database().ref('trips/' + newtripref + '/invited/'+userId.uid).set({
      name: userId.displayName,
      id: userId.uid,
      email: userId.email
@@ -103,6 +109,28 @@ function writeTripInformation() {
                }
                });
 }
+               function popUsers(){
+               var list = document.getElementById('userlist');
+               removeOptions(list);
+               var users = new Array()
+               return firebase.database().ref('users').once('value').then(function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+                     var data = childSnapshot;
+                     users.push([data.displayName,data.uid])
+                     });
+               users.sort(function(a, b) { 
+                  return a[0] > b[0] ? 1 : -1;
+               });
+               var df = document.createDocumentFragment();
+               for (var i = 0; i<users.length; i++){
+                  var option = document.createElement('option');
+                     option.value = users[i][1];
+                     option.appendChild(document.createTextNode(users[i][0]));
+                     df.appendChild(option);
+               }
+               list.appendChild(df)
+                  });
+            }
 </script>
             
       
@@ -188,17 +216,12 @@ function writeTripInformation() {
                removeOptions(list);
                var keys = new Array()
                var trips = new Array()
-               console.log(trips.length)
                return firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
                      keys.push(data.getKey())
                      trips.push(data.val().trip) 
-                     console.log(data.val().trip)
-                     console.log(data.getKey())
                      });                 
-                  
-               console.log(trips.length)
                var df = document.createDocumentFragment();
                for (var i = 0; i<trips.length; i++){
                   var option = document.createElement('option');
@@ -207,7 +230,6 @@ function writeTripInformation() {
                      df.appendChild(option);
                }
                list.appendChild(df)
-               console.log(list)
                   });
             }
             function deleteTrip(){
@@ -261,6 +283,9 @@ function writeTripInformation() {
            Contact Phone Number:<br>
            <input type="text" id="phone" value="">
            <br>
+           Invite Paddlers:<br>
+               <select id="userlist" multiple = "multiple" style="max-width:90%"></select>
+               <br>
            Additional Information:<br>
                <textarea id="info" style="width:75wh"></textarea>
            <br>
