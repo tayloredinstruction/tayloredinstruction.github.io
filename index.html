@@ -76,9 +76,25 @@
       <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
-      <script async src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js" onload="triplist()">
-      </script>
+                  <script>
+               function triplist(){
+               var para = document.getElementById("tripp");
+               var contents = new Array()
+               return firebase.database().ref('trips/').once('value').then(function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+                     var data = childSnapshot.val();
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
+                     contents.push(node);
+                     });
+                     para.innerHTML=contents.join("")
+                  
+                  });
+               }
+            </script>
+      <script async src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js" onload="triplist()"></script>
       <script async src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
+      <script>
+         
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
       <script type="text/javascript">
          function initialize() {
