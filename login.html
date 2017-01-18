@@ -39,9 +39,8 @@ var vars = {};
 var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
 	console.log(parts)
 vars[key] = value;
-	console.log(vars[target])
 });
-window.location.href = 'https://tayloredinstruction.github.io/'+vars[target]
+window.location.href = 'https://tayloredinstruction.github.io/'+vars["target"]
 
 }
   // Initialize Firebase
