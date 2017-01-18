@@ -113,12 +113,12 @@ function writeTripInformation() {
                var list = document.getElementById('userlist');
                removeOptions(list);
                var users = new Array()
-               return firebase.database().ref('users').once('value').then(function(snapshot) {
+               return firebase.database().ref('userlist').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
                      users.push([data.displayName,data.uid])
                      });
-               users.sort(function(a, b) { 
+        users.sort(function(a, b) { 
                   return a[0] > b[0] ? 1 : -1;
                });
                var df = document.createDocumentFragment();
