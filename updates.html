@@ -596,9 +596,26 @@
                   
                   });
                }
+               function addDelete(){
+                  var user=firebase.auth().currentUser
+                  if(user){
+                     window.location.href = 'https://tayloredinstruction.github.io/add_delete_trip.html'
+                  }
+                  else {
+                     window.location.href = 'https://tayloredinstruction.github.io/login.html'
+                  }
+                  function joinTrip(){
+                     var user=firebase.auth().currentUser
+                  if(user){
+                  //some action that allows a trip join
+                  }
+                  else {
+                     window.location.href = 'https://tayloredinstruction.github.io/login.html'
+                  }
             </script>
             <h2 class="w3-text-light-grey">Upcoming Trips</h2>
             <hr style="width:200px" class="w3-opacity">
+            <button onclick="addDelete()">Add/Delete a Trip</button>
             <a href="https://tayloredinstruction.github.io/login.html" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
             <p id="tripp"></p>
            </div>
