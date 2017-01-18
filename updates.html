@@ -599,8 +599,12 @@
                   function joinTrip(key){
                      var user=firebase.auth().currentUser
                   if(user){
-                  //some action that allows a trip join
-                  }
+                     var newwaitref = firebase.database().ref().child('users').push().key
+                     firebase.database().ref('trips/' + key + '/waiting/'+ newwaitref).set({
+                          name: user.displayName,
+                          id: user.uid,
+                          email: user.email
+                       });                  }
                   else {
                      window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html#trips'
                   }
