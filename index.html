@@ -70,14 +70,14 @@
       </style>
       <style>
          body { 
-         background-color: black;
+         background-color: Black;
          }
       </style>
       <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
-      <script async src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>         
+      <script async src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
       <script type="text/javascript">
          function initialize() {
@@ -161,7 +161,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="favpopulate();displayfavs();initialize();triplist()">
+   <body class="w3-black" onload="favpopulate();displayfavs();shortfavs();initialize();triplist()">
         <script>
   // Initialize Firebase
   var config = {
@@ -172,7 +172,6 @@
     messagingSenderId: "1091342339175"
   };
   firebase.initializeApp(config);
-           
       </script>   
       
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
@@ -180,8 +179,8 @@
          <!-- Avatar image in top left corner -->
          <img src="images/sidebar-icon.jpg" style="width:100%">
          <a class="w3-padding-large w3-black" href="#">
-            <i class="fa fa-home w3-xxlarge"></i>
-            <p>HOME</p>
+            <i class="fa fa-user w3-xxlarge"></i>
+            <p>USER</p>
          </a>
          <a class="w3-padding-large w3-hover-black" href="#favsecs">
             <i class="fa fa-star w3-xxlarge"></i>
@@ -207,7 +206,7 @@
       <!-- Navbar on small screens (Hidden on medium and large screens) -->
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
          <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-            <li class="w3-left" style="width:16.7% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#"><i class="fa fa-user w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:16.7% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:16.7% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:16.6% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
@@ -218,19 +217,111 @@
       <!-- Page Content -->
       <div class="w3-padding-large" id="main">
          <!-- Header/Home -->
-         <header class="w3-container w3-padding-32 w3-center w3-black" id="home" style="min-height:95vh">
+         <header class="w3-container w3-padding-32 w3-left w3-black" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-            <p>Australian River Levels and Trips</p>
-            <img src="images/splash-mobile.jpg" srcset="images/splash-desktop.jpg 600w" alt="yunowork" class="w3-image" style="max-width:90%wh">
+  <div class="w3-row">
+  <div id = "approve" class="w3-col  l4">
+  <h4>Approval Required</h4>
+</div>
+  <div class="w3-col  l4">
+  <h4>My Trips</h4>
+     <div id="mytrips"></div>  
+</div>
+  <div class="w3-col  l4">
+    <h4>Favourite Sections</h4>
+    <div id="shortfavs"></div>
+  </div>  
+</div>
+            
+            
+            
          </header>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
             <h2>Favourite Sections</h2>
             <script>
+               firebase.auth().onAuthStateChanged(function() {
+      usertriplist()
+                  var user = firebase.auth().currentUser
+      firebase.database().ref('users/'+user.uid+'/info').update({
+         name: user.displayName,
+         uid: user.uid})
+   });
+               function moveFbRecord(oldRef, newRef) {    
+     oldRef.once('value', function(snap)  {
+          newRef.set( snap.val(), function(error) {
+               if( !error ) {  oldRef.remove(); }
+               else if( typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
+          });
+     });
+}
+               function getUrlVars() {
+var vars = {};
+var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+	console.log(parts)
+vars[key] = value;
+});
+localStorage.uid=vars[uid]
+               }
+            function usertriplist(){
+               getUrlVars()
+               var user=localStorage.uid
+               //var user=firebase.auth().currentUser.uid
+               var para = document.getElementById("mytrips");
+               var contents = new Array()
+               return firebase.database().ref('users/' + user + '/trips' ).once('value').then(function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+                     if(childSnapshot.val().uid===undefined){
+                        var node = "<p>No upcoming trips</p>"
+                        contents.push(node)
+                     }
+                     else{
+                     var data = childSnapshot.val();
+                        if(Date.parse(data.date)<Date.now()){
+                         moveFbRecord(firebase.database().ref('users/' + user + '/trips/' +childSnapshot.key),firebase.database().ref('users/' + user + '/completed/' +childSnapshot.key))
+                        }
+                        else{
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
+                     contents.push(node);
+                        }
+                     }
+                     });
+                     para.innerHTML=contents.join("")
+                  
+                  });
+               }
                function clearfavs() {
                   localStorage.removeItem("favslist")
                      localStorage.favslist = ""
-                     }    
+                     }  
+                function shortfavs(){
+                var json = JSON.parse(localStorage.json)  
+                  var favsdiv = document.getElementById("shortfavs")
+                  var favslist= localStorage.favslist.split(";")
+                  var contents = new Array()
+                  for(var i = 0; i<favslist.length-1; i++){
+                  if (!isNaN(parseFloat(favslist[i]))){
+                   	var ref = parseFloat(favslist[i])
+               if (isNaN(json.rows[ref][5])){
+               	var colour = "yellow !important"
+               	}
+                      else if(json.rows[ref][5]>json.rows[ref][4]){
+                      var colour = "blue !important"
+                      }
+                      else if(json.rows[ref][5]<json.rows[ref][3]){
+                      var colour = "red !important"
+                      }
+                      else{
+                      var colour = "green !important"
+                      }
+               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
+               	contents.push(node)
+                      }
+                      else{
+                      }
+                  }
+                  favsdiv.innerHTML=contents.join("")
+                }
                function addtofavs(){
                   if(localStorage.favslist=== undefined){
                   localStorage.favslist=""
@@ -525,26 +616,37 @@
          </div>
                   <!-- TRIP Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
-           
-            <h2 class="w3-text-light-grey">Upcoming Trips</h2>
-            <hr style="width:200px" class="w3-opacity">
-            <a href="https://tayloredinstruction.github.io/login.html" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
-            <p id="tripp"></p>
             <script>
                function triplist(){
                var para = document.getElementById("tripp");
                var contents = new Array()
                return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
-                     var data = childSnapshot.val();
-                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
+                     var data = childSnapshot.child('details').val();
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onclick=\"joinTrip(\''+childSnapshot.key+'\')\">Request to Join</button></p>'
                      contents.push(node);
                      });
                      para.innerHTML=contents.join("")
                   
                   });
                }
+                  function joinTrip(key){
+                     var user=firebase.auth().currentUser
+                  if(user){
+                     firebase.database().ref('trips/' + key + '/waiting/'+ user.uid).set({
+                          name: user.displayName,
+                          id: user.uid,
+                          email: user.email
+                       });                  }
+                  else {
+                     window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html#trips'
+                  }
+                  }
             </script>
+            <h2 class="w3-text-light-grey">Upcoming Trips</h2>
+            <hr style="width:200px" class="w3-opacity">
+            <a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
+            <p id="tripp"></p>
            </div>
             <br>
             <!-- End Contact Section -->
