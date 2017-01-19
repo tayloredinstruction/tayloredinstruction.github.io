@@ -54,10 +54,9 @@ window.location.href = 'https://tayloredinstruction.github.io/'+vars["target"]
   firebase.initializeApp(config);
   firebase.auth().onAuthStateChanged(function(user) {
 	  firebase.auth().signInWithCustomToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJhdXRoLXRva2VuLXNlcnZpY2UtYWNjb3VudEBmaXJlYmFzZS1hc2Zkcy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6ImF1dGgtdG9rZW4tc2VydmljZS1hY2NvdW50QGZpcmViYXNlLWFzZmRzLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJpYXQiOjE0ODQ3OTM0MDgsImV4cCI6MTQ4NDc5NzAwOCwidWlkIjoidGF5bG9yZWRpbnN0cnVjdGlvbmdtYWlsY29tIiwiY2xhaW1zIjp7ImRvbWFpbiI6ImdtYWlsLWNvbSIsInVzZXJuYW1lIjoidGF5bG9yZWRpbnN0cnVjdGlvbiIsImVtYWlsQWRkcmVzcyI6InRheWxvcmVkaW5zdHJ1Y3Rpb25AZ21haWwuY29tIn19.TMe/HLkSWM0JoZM2ioBfAKwQlx0znT4XOfZA+wAVhVHR1UkxoeskqH3CrCacxHxsK7AqfATs+Xnd09qdm6TMhI6kTwrxfPCViD9q5HADMuesorumR699wkvKgJSgzdYtxrj3QDIOHRb4UvqhtN2pnoUvjy/EeBTjQnD4pC/5tBp0sVhxt8M5VVsQUX+H7NfpTcjvawN5wpE0mdD6Z5M3N/FpXlPIJ4p1oj2vyV3y7iJjZRqPgWbVqQFVF6GXENREZc8a1gKYIUuhD6CGvOzhLy9O8UKvcjBNVYiEh9QarLqPtezyloHNTO5RexjCiCHwGtujkmyiGqxV47uznSjQMA==").catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
+console.log(error)
+		  var errorCode = error.code;
   var errorMessage = error.message;
-  // ...
 });
         var user = firebase.auth().currentUser;
   if (user) {
