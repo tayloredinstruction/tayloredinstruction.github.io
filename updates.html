@@ -247,14 +247,32 @@
          name: user.displayName,
          uid: user.uid})
    });
+               function moveFbRecord(oldRef, newRef) {    
+     oldRef.once('value', function(snap)  {
+          newRef.set( snap.val(), function(error) {
+               if( !error ) {  oldRef.remove(); }
+               else if( typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
+          });
+     });
+}
             function usertriplist(){
                var para = document.getElementById("mytrips");
                var contents = new Array()
-               return firebase.database().ref('users/trips'+firebase.auth().currentUser.uid).once('value').then(function(snapshot) {
+               return firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/trips' ).once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
+                     if(childSnapshot.val().uid===undefined){
+                        var node = "<p>No upcoming trips</p>"
+                        contents.push(node)
+                        break
+                     else{
                      var data = childSnapshot.val();
+                        if(Date.parse(data.date)<Date.now()){
+                         moveFbRecord(firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/trips/' +childSnapshot),firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/completed/' +childSnapshot) )
+                        continue
+                        }
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
                      contents.push(node);
+                     }
                      });
                      para.innerHTML=contents.join("")
                   
