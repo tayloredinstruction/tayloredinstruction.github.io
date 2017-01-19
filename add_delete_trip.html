@@ -222,6 +222,7 @@ function writeTripInformation() {
                   if (data.val().details.uid === firebase.auth().currentUser.uid){
                      keys.push(data.getKey())
                      trips.push(data.val().details.trip) 
+                  }
                      });                 
                var df = document.createDocumentFragment();
                for (var i = 0; i<trips.length; i++){
@@ -229,7 +230,7 @@ function writeTripInformation() {
                      option.value = keys[i];
                      option.appendChild(document.createTextNode(trips[i]));
                      df.appendChild(option);
-               }
+               
                }
                list.appendChild(df)
                   });
