@@ -77,19 +77,7 @@
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
-      <script>
-         // Initialize Firebase
-         var config = {
-           apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
-           authDomain: "taylored-instruction.firebaseapp.com",
-           databaseURL: "https://taylored-instruction.firebaseio.com",
-           storageBucket: "taylored-instruction.appspot.com",
-           messagingSenderId: "1091342339175"
-         };
-         firebase.initializeApp(config);
-         
-      </script>
+      <script async src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>         
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
       <script type="text/javascript">
          function initialize() {
@@ -151,6 +139,7 @@
          content.push('<p><div class="color yellow"></div>'+yeltext+'</p>');
          content.push('<p><div class="color green"></div>'+gretext+'</p>');
          content.push('<p><div class="color blue"></div>'+blutext+'</p>');
+         content.push('<p><input type="checkbox" name="hide" value = 1 onclick = "showHide()"> Hide </p>')
          legend.innerHTML = content.join('');
          legend.index = 1;
          map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
@@ -172,11 +161,24 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="favpopulate();displayfavs()">
+   <body class="w3-black" onload="favpopulate();displayfavs();initialize();triplist()">
+        <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
+    authDomain: "taylored-instruction.firebaseapp.com",
+    databaseURL: "https://taylored-instruction.firebaseio.com",
+    storageBucket: "taylored-instruction.appspot.com",
+    messagingSenderId: "1091342339175"
+  };
+  firebase.initializeApp(config);
+           
+      </script>   
+      
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
       <nav class="w3-sidenav w3-center w3-small w3-hide-small">
          <!-- Avatar image in top left corner -->
-         <img src="images/GOPR3079-0001.jpg" style="width:100%">
+         <img src="images/sidebar-icon.jpg" style="width:100%">
          <a class="w3-padding-large w3-black" href="#">
             <i class="fa fa-home w3-xxlarge"></i>
             <p>HOME</p>
@@ -193,6 +195,10 @@
             <i class="fa fa-book w3-xxlarge"></i>
             <p>SECTION INFO</p>
          </a>
+         <a class="w3-padding-large w3-hover-black" href="#trips">
+            <i class="fa fa-calendar w3-xxlarge"></i>
+            <p>UPCOMING TRIPS</p>
+         </a>
          <a class="w3-padding-large w3-hover-black" href="#contact">
             <i class="fa fa-envelope w3-xxlarge"></i>
             <p>CONTACT</p>
@@ -201,11 +207,12 @@
       <!-- Navbar on small screens (Hidden on medium and large screens) -->
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
          <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-            <li class="w3-left" style="width:20% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:20% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#"><i class="fa fa-home w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.6% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.6% !important"><a href="#trips"><i class="fa fa-calendar w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.7% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
          </ul>
       </div>
       <!-- Page Content -->
@@ -214,7 +221,7 @@
          <header class="w3-container w3-padding-32 w3-center w3-black" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
             <p>Australian River Levels and Trips</p>
-            <img src="images/GOPR3079-0001.jpg" alt="yunowork" class="w3-image" width="1920" height="1080">
+            <img src="images/splash-mobile.jpg" srcset="images/splash-desktop.jpg 600w" alt="yunowork" class="w3-image" style="max-width:90%wh">
          </header>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
@@ -516,6 +523,31 @@
                  
             </script>
          </div>
+                  <!-- TRIP Section -->
+         <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
+           
+            <h2 class="w3-text-light-grey">Upcoming Trips</h2>
+            <hr style="width:200px" class="w3-opacity">
+            <a href="https://tayloredinstruction.github.io/login.html" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
+            <p id="tripp"></p>
+            <script>
+               function triplist(){
+               var para = document.getElementById("tripp");
+               var contents = new Array()
+               return firebase.database().ref('trips/').once('value').then(function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+                     var data = childSnapshot.val();
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
+                     contents.push(node);
+                     });
+                     para.innerHTML=contents.join("")
+                  
+                  });
+               }
+            </script>
+           </div>
+            <br>
+            <!-- End Contact Section -->
          <!-- Contact Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
             <h2 class="w3-text-light-grey">Contact Us</h2>
@@ -540,6 +572,6 @@
             <!-- End footer -->
          </footer>
          <!-- END PAGE CONTENT -->
-      </div>
+      </div>      
    </body>
 </html>
