@@ -267,7 +267,7 @@
                      else{
                      var data = childSnapshot.val();
                         if(Date.parse(data.date)<Date.now()){
-                         moveFbRecord(firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/trips/' +childSnapshot),firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/completed/' +childSnapshot) )
+                         moveFbRecord(firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/trips/' +childSnapshot).toString(),firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/completed/' +childSnapshot).toString() )
                         }
                         else{
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
