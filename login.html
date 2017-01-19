@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html id = "html" class = "w3-hide">
    <title>Taylored Instruction Login</title>
    <head>
       <link rel="icon" sizes="192x192" href="images/icon.png">
@@ -9,7 +9,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="mobile-web-app-capable" content="yes">
-      <link rel="stylesheet" href="lib/w3.css">
+      <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <style>
@@ -57,10 +57,8 @@ window.location.href = 'https://tayloredinstruction.github.io/'+vars["target"]
   if (user) {
 	  getUrlVars()
   } else {
-     //No user is signed in.
-  }
+document.getElementById("html").className=""  }
 });
-      
 </script>
          <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
@@ -147,7 +145,7 @@ firebase.auth().getRedirectResult().then(function(result) {
     </script>
    </head>
    <body class="w3-black">
-      
+
 
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
       <nav class="w3-sidenav w3-center w3-small w3-hide-small">
