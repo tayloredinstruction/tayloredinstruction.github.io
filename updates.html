@@ -264,6 +264,7 @@
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
                         break
+                     }
                      else{
                      var data = childSnapshot.val();
                         if(Date.parse(data.date)<Date.now()){
