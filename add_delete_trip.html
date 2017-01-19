@@ -77,17 +77,17 @@ function writeTripInformation() {
                   else{
                }
                });
-  firebase.database().ref('trips/' + newtripref + '/confirmed/'+userId.uid).set({
+  firebase.database().ref('trips/active/' + newtripref + '/confirmed/'+userId.uid).set({
      name: userId.displayName,
      id: userId.uid,
      email: userId.email
   });
-  firebase.database().ref('trips/' + newtripref + '/invited/'+userId.uid).set({
+  firebase.database().ref('trips/active/' + newtripref + '/invited/'+userId.uid).set({
      name: userId.displayName,
      id: userId.uid,
      email: userId.email
   });
-  firebase.database().ref('trips/' + newtripref + '/details').set({
+  firebase.database().ref('trips/active/' + newtripref + '/details').set({
     organiser: userId.displayName,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
@@ -216,11 +216,12 @@ function writeTripInformation() {
                removeOptions(list);
                var keys = new Array()
                var trips = new Array()
-               return firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value').then(function(snapshot) {
+               return firebase.database().ref('users/' + firebase.auth().currentUser.uid+'/trips).once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
+                  if (data.val().details.uid === firebase.auth().currentUser.uid){
                      keys.push(data.getKey())
-                     trips.push(data.val().trip) 
+                     trips.push(data.val().details.trip) 
                      });                 
                var df = document.createDocumentFragment();
                for (var i = 0; i<trips.length; i++){
@@ -229,12 +230,13 @@ function writeTripInformation() {
                      option.appendChild(document.createTextNode(trips[i]));
                      df.appendChild(option);
                }
+               }
                list.appendChild(df)
                   });
             }
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
-               firebase.database().ref('trips/' + key).update({
+               firebase.database().ref('trips/active/' + key).update({
                    confirmed: null,
                   details: null,
                   waiting: null
