@@ -219,9 +219,9 @@ function writeTripInformation() {
                return firebase.database().ref('users/' + firebase.auth().currentUser.uid+'/trips').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
-                  if (data.val().details.uid === firebase.auth().currentUser.uid){
+                  if (data.val().uid === firebase.auth().currentUser.uid){
                      keys.push(data.getKey())
-                     trips.push(data.val().details.trip) 
+                     trips.push(data.val().trip) 
                   }
                      });                 
                var df = document.createDocumentFragment();
