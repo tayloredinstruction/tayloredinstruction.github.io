@@ -215,10 +215,26 @@
          </ul>
       </div>
       <!-- Page Content -->
+	   <script>
+		   function signIn(){
+			window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html'
+		   }
+		   function signOut(){
+			   firebase.auth().signOut().then(function() {
+  console.log('Signed Out');
+}, function(error) {
+  console.error('Sign Out Error', error);
+});
+		   }
+		   
+	   </script>
       <div class="w3-padding-large" id="main">
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
+		 <p id="userino">Not signed in. <p>
+		 <button onclick="signIn()">Sign in</button>
+		 <button onclick="signOut()">Sign out</button>
   <div class="w3-row">
   <div id = "approve" class="w3-col  l4">
   <h4>Approval Required</h4>
@@ -241,6 +257,7 @@
                firebase.auth().onAuthStateChanged(function() {
       usertriplist()
                   var user = firebase.auth().currentUser
+		  document.getElementById("userino").innerHTML="Signed in as "+user.displayName+". "
       firebase.database().ref('users/'+user.uid+'/info').update({
          name: user.displayName,
          uid: user.uid})
