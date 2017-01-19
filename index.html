@@ -231,11 +231,9 @@
     <h4>Favourite Sections</h4>
     <div id="shortfavs"></div>
   </div>  
-</div>
-            
-            
-            
+</div>   
          </header>
+	   </div>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
             <h2>Favourite Sections</h2>
@@ -254,19 +252,9 @@
                else if( typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
           });
      });
-}
-               function getUrlVars() {
-var vars = {};
-var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-	console.log(parts)
-vars[key] = value;
-});
-localStorage.uid=vars[uid]
-               }
+}          
             function usertriplist(){
-               getUrlVars()
-               var user=localStorage.uid
-               //var user=firebase.auth().currentUser.uid
+               var user=firebase.auth().currentUser.uid
                var para = document.getElementById("mytrips");
                var contents = new Array()
                return firebase.database().ref('users/' + user + '/trips' ).once('value').then(function(snapshot) {
