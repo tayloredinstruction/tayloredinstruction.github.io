@@ -53,22 +53,12 @@ window.location.href = 'https://tayloredinstruction.github.io/'+vars["target"]
   };
   firebase.initializeApp(config);
   firebase.auth().onAuthStateChanged(function(user) {
-	  firebase.auth().signInWithCustomToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ0YXlsb3JlZC1pbnN0cnVjdGlvbkBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzdWIiOiJ0YXlsb3JlZC1pbnN0cnVjdGlvbkBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTQ4NDc5NDY2MSwiZXhwIjoxNDg0Nzk4MjYxLCJ1aWQiOiJ0YXlsb3JlZGluc3RydWN0aW9uZ21haWxjb20iLCJjbGFpbXMiOnsiZG9tYWluIjoiZ21haWwtY29tIiwidXNlcm5hbWUiOiJ0YXlsb3JlZGluc3RydWN0aW9uIiwiZW1haWxBZGRyZXNzIjoidGF5bG9yZWRpbnN0cnVjdGlvbkBnbWFpbC5jb20ifX0=.qco92EdJuUGiFwF60v9odPTY65ewbUz+ADKyQTGPwI+twDxycoceyrzjJxpsLax3zWyiFnK9Zu4HvCssKRWoekLCWJkOxjVva1qE8lkSS7A+esB8XsGFR00/ik/Z/Jyv2uSOyRwdD8Pkg6b3MxmXrHJWBpYnmgr/mtQnTiNLYh4j0uqOnFGDp4SZm789yjERK/TNVQHSkp+TqOu5aUmXlJuzrd3CoxpE6+6aiB9Mud1GAOtJUBEB0HjoOEJcyWgjGpk8tVATa7kGbjjmYI4sP6q9M0Sk8f+ZjYF31GKdTFSTWZqOhJ5MkTfsdp6fXIKl1CezQpfIicps4wrra2QXBA==").catch(function(error) {
-		  console.log(error)
-		  var errorCode = error.code;
-  var errorMessage = error.message;
-});
-	  firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(function(idToken) {
-console.log(idToken)
-}).catch(function(error) {
-   console.log(error)
-});
-       // var user = firebase.auth().currentUser;
-  //if (user) {
-	  //getUrlVars()
-  //} else {
-    // No user is signed in.
-  //}
+        var user = firebase.auth().currentUser;
+  if (user) {
+	  getUrlVars()
+  } else {
+     //No user is signed in.
+  }
 });
       
 </script>
