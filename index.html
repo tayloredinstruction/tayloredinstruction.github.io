@@ -273,7 +273,7 @@
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
                   about.push(snapshot.val().about)
 		  });
-		  document.getElementById("myinfo").value=about[0]
+		  document.getElementById("myinfo").innerHTML=about[0]
       firebase.database().ref('users/'+user.uid+'/info').update({
          name: user.displayName,
          uid: user.uid})
