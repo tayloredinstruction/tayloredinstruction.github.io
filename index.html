@@ -268,12 +268,12 @@
       usertriplist()
                   var user = firebase.auth().currentUser
 		  document.getElementById("userino").innerHTML="Signed in as "+user.displayName+". "
+		  document.getElementById("infodiv").className=""
 		       var about=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
                   about=snapshot.val().about
 		  });
 		  document.getElementById("myinfo").value=about
-		  document.getElementById("infodiv").className=""
       firebase.database().ref('users/'+user.uid+'/info').update({
          name: user.displayName,
          uid: user.uid})
