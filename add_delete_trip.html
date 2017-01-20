@@ -216,14 +216,19 @@ function writeTripInformation() {
                removeOptions(list);
                var keys = new Array()
                var trips = new Array()
-               return firebase.database().ref('users/' + firebase.auth().currentUser.uid+'/trips').once('value').then(function(snapshot) {
+               var subs = new Array()
+               return firebase.database().ref('trips/active').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
-                  if (data.val().uid === firebase.auth().currentUser.uid){
+                  if (data.val().details.uid === firebase.auth().currentUser.uid){
                      keys.push(data.getKey())
-                     trips.push(data.val().trip) 
+                     trips.push(data.val().details.trip)
+                     data.forEach(function(subchildSnapshot) {
+      subs.push(subchildSnapshot.key+";");
+  });
                   }
-                     });                 
+                     });
+                  localStorage.subs=subs.join(";")
                var df = document.createDocumentFragment();
                for (var i = 0; i<trips.length; i++){
                   var option = document.createElement('option');
@@ -237,6 +242,7 @@ function writeTripInformation() {
             }
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
+               var subs = localStorage.subs.split(",")
                firebase.database().ref('trips/active/' + key).update({
                   confirmed: null,
                   details: null,
@@ -248,15 +254,14 @@ function writeTripInformation() {
                   else{
                }
                }); 
-               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/trips/' + key).set(null, function(error){
+               for( var i = 0; i<subs.length; i++){
+               firebase.database().ref('users/' + subs[i] + '/trips/' + key).set(null, function(error){
                   if(error){
                   alert("Trip could not be deleted" + error)
                   }
-                  else{
-                  alert("Trip deleted.")
-                  popDeleteTrip()
-               }
                });
+               }
+                  popDeleteTrip()
             }
             
          </script>
