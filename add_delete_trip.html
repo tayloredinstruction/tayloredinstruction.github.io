@@ -225,11 +225,11 @@ function writeTripInformation() {
                      keys.push(data.getKey())
                      trips.push(data.val().details.trip)
                      console.log(childSnapshot)
-                     data.confirmed.forEach(function(subchildSnapshot) {
+                     data.val().confirmed.forEach(function(subchildSnapshot) {
                      console.log(subchildSnapshot)
                      subs.push(subchildSnapshot.key+";");
   });
-                     data.invited.forEach(function(subchildSnapshot) {
+                     data.val().invited.forEach(function(subchildSnapshot) {
                      console.log(subchildSnapshot)
                      subs.push(subchildSnapshot.key+";");
   });
