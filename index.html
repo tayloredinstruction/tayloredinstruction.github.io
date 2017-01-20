@@ -284,7 +284,8 @@
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 			snapshot.forEach(function(childSnapshot){
 				if(childSnapshot.val().uid === user){
-		       			contents.push(childSnapshot.key)
+		       			contents.push("<p>"+childSnapshot.key+"</p>")
+					console.log("yeeeeep")
 				}
 			});
                      
