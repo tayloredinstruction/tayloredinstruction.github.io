@@ -227,7 +227,7 @@ function writeTripInformation() {
                      data.forEach(function(subchildSnapshot) {
                         if(subchildSnapshot.key!="details"){
                      subchildSnapshot.forEach(function(subsubchildSnapshot){
-                     subs.push(subsubchildSnapshot.key+";");
+                     subs.push(subsubchildSnapshot.key);
                       });
                         }
                            });
