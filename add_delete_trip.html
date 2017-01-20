@@ -224,15 +224,14 @@ function writeTripInformation() {
                   if (data.val().details.uid === firebase.auth().currentUser.uid){
                      keys.push(data.getKey())
                      trips.push(data.val().details.trip)
-                     console.log(childSnapshot)
-                     data.val().confirmed.forEach(function(subchildSnapshot) {
-                     console.log(subchildSnapshot)
-                     subs.push(subchildSnapshot.key+";");
+                     data.forEach(function(subchildSnapshot) {
+                        console.log(subchildSnapshot.key)
+                        if(subchildSnapshot.key!="details"){
+                     subchildSnapshot.forEach(function(subsubchildSnapshot){
+                                                console.log(subsubchildSnapshot.key)
+                     subs.push(subsubchildSnapshot.key+";");
   });
-                     data.val().invited.forEach(function(subchildSnapshot) {
-                     console.log(subchildSnapshot)
-                     subs.push(subchildSnapshot.key+";");
-  });
+                           }
                   }
                      });
                   localStorage.subs=subs.join(";")
