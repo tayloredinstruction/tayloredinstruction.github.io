@@ -280,15 +280,11 @@
                var user=firebase.auth().currentUser.uid
                var para = document.getElementById("approve");
                var contents = new Array()
-               return firebase.database().ref('trips/active/').once('value').then(function(snapshot) {
+               return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 		       console.log(snapshot)
-                  snapshot.forEach(function(childSnapshot) {
-			  console.log(childSnapshot)
-			  console.log(childSnapshot.key)
-                     if(childSnapshot.key==="details"){
-                        var users = childSnapshot.val()
-			for (var i in users){
-				var node = i
+			console.log(snapshot.key)
+                     if(snapshot.val().uid===user){
+                        var node = snapshot.val()
                         contents.push(node)
 			}
                      }
