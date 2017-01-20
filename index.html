@@ -161,7 +161,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="favpopulate();displayfavs();initialize();approveList();triplist()">
+   <body class="w3-black" onload="favpopulate();displayfavs();initialize();triplist()">
         <script>
   // Initialize Firebase
   var config = {
@@ -264,6 +264,7 @@
    });    
 		    }
                firebase.auth().onAuthStateChanged(function() {
+		       approveList();
       usertriplist()
                   var user = firebase.auth().currentUser
 		  document.getElementById("userino").innerHTML="Signed in as "+user.displayName+". "
