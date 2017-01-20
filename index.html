@@ -267,14 +267,15 @@
 		       approveList();
       usertriplist()
                   var user = firebase.auth().currentUser
+		        firebase.database().ref('users/'+user.uid+'/info').update({
+         name: user.displayName,
+         uid: user.uid})
 		  document.getElementById("userino").innerHTML="Signed in as "+user.displayName+". "
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
 		  });
-      firebase.database().ref('users/'+user.uid+'/info').update({
-         name: user.displayName,
-         uid: user.uid})
+
    });
 		    function approveList(){
                var user=firebase.auth().currentUser.uid
