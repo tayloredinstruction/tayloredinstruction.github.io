@@ -225,9 +225,13 @@ function writeTripInformation() {
                      keys.push(data.getKey())
                      trips.push(data.val().details.trip)
                      console.log(childSnapshot)
-                     data.forEach(function(subchildSnapshot) {
+                     data.confirmed.forEach(function(subchildSnapshot) {
                      console.log(subchildSnapshot)
-      subs.push(subchildSnapshot.key+";");
+                     subs.push(subchildSnapshot.key+";");
+  });
+                     data.invited.forEach(function(subchildSnapshot) {
+                     console.log(subchildSnapshot)
+                     subs.push(subchildSnapshot.key+";");
   });
                   }
                      });
