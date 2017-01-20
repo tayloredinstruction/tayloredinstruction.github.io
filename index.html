@@ -282,8 +282,10 @@
                var contents = new Array()
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 		       console.log(snapshot)
-			console.log(snapshot.key)
-                     if(snapshot.val().uid===user){
+			console.log(snapshot.val().uid)
+		       console.log(snapshot.val().uid===user)
+		       console.log(snapshot.val().uid==user)
+		if(snapshot.val().uid===user){
                         var node = snapshot.val()
                         contents.push(node)
 			}
