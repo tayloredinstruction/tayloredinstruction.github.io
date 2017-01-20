@@ -262,7 +262,6 @@
 			    var info = document.getElementById("myinfo").value
 			firebase.database().ref('users/'+user.uid+'/info').update({
 			about: info
-			})
    });    
 		    }
                firebase.auth().onAuthStateChanged(function() {
