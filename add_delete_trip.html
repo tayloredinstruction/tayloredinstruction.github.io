@@ -225,10 +225,8 @@ function writeTripInformation() {
                      keys.push(data.getKey())
                      trips.push(data.val().details.trip)
                      data.forEach(function(subchildSnapshot) {
-                        console.log(subchildSnapshot.key)
                         if(subchildSnapshot.key!="details"){
                      subchildSnapshot.forEach(function(subsubchildSnapshot){
-                                                console.log(subsubchildSnapshot.key)
                      subs.push(subsubchildSnapshot.key+";");
                       });
                         }
@@ -250,6 +248,7 @@ function writeTripInformation() {
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
                var subs = localStorage.subs.split(",")
+               console.log(subs)
                firebase.database().ref('trips/active/' + key).update({
                   confirmed: null,
                   details: null,
