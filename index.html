@@ -242,8 +242,9 @@
 		<p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
 		 </div>
 	  </div>
-  <div id = "approve" class="w3-col  l4">
+  <div class="w3-col  l4">
   <h4>Approval Required</h4>
+	  <div id = "approve">/div>
 </div>
   <div class="w3-col  l4">
   <h4>My Trips</h4>
@@ -274,6 +275,29 @@
          name: user.displayName,
          uid: user.uid})
    });
+		    function approveList(){
+               var user=firebase.auth().currentUser.uid
+               var para = document.getElementById("approve");
+               var contents = new Array()
+               return firebase.database().ref('trips/active/').once('value').then(function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+                     if(childSnapshot.key==="details"){
+                        var users = childSnapshot.val()
+			for (var i in users){
+				var node = i
+                        contents.push(node)
+			}
+                     }
+                     
+                     });
+                     para.innerHTML=contents.join("")
+                  
+                  });
+               }
+		    
+		    
+		    
+		    
                function moveFbRecord(oldRef, newRef) {    
      oldRef.once('value', function(snap)  {
           newRef.set( snap.val(), function(error) {
