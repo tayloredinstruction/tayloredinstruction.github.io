@@ -232,13 +232,16 @@
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-		 <p id="userino">Not signed in. </p>
+		 
+  <div class="w3-row">
+	  <div id = "userdeets" class = "w3-col l4">
+		  <p id="userino">Not signed in. </p>
 		 <button onclick="signIn()">Sign in</button>
 		 <button onclick="signOut()">Sign out</button><br>
 		 <div id="infodiv" class = "w3-hide">
-			 <p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
+		<p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
 		 </div>
-  <div class="w3-row">
+	  </div>
   <div id = "approve" class="w3-col  l4">
   <h4>Approval Required</h4>
 </div>
@@ -246,12 +249,7 @@
   <h4>My Trips</h4>
      <div id="mytrips"></div>  
 </div>
-  <div class="w3-col  l4">
-    <h4>Favourite Sections</h4>
-    <div id="shortfavs"></div>
-  </div>  
-</div>   
-         </div>
+  
 	      <br>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
@@ -307,34 +305,7 @@
                   localStorage.removeItem("favslist")
                      localStorage.favslist = ""
                      }  
-                function shortfavs(){
-                var json = JSON.parse(localStorage.json)  
-                  var favsdiv = document.getElementById("shortfavs")
-                  var favslist= localStorage.favslist.split(";")
-                  var contents = new Array()
-                  for(var i = 0; i<favslist.length-1; i++){
-                  if (!isNaN(parseFloat(favslist[i]))){
-                   	var ref = parseFloat(favslist[i])
-               if (isNaN(json.rows[ref][5])){
-               	var colour = "yellow !important"
-               	}
-                      else if(json.rows[ref][5]>json.rows[ref][4]){
-                      var colour = "blue !important"
-                      }
-                      else if(json.rows[ref][5]<json.rows[ref][3]){
-                      var colour = "red !important"
-                      }
-                      else{
-                      var colour = "green !important"
-                      }
-               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"</p>";
-               	contents.push(node)
-                      }
-                      else{
-                      }
-                  }
-                  favsdiv.innerHTML=contents.join("")
-                }
+                
                function addtofavs(){
                   if(localStorage.favslist=== undefined){
                   localStorage.favslist=""
