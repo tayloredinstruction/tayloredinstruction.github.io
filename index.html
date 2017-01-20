@@ -161,7 +161,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="favpopulate();displayfavs();shortfavs();initialize();triplist()">
+   <body class="w3-black" onload="favpopulate();displayfavs();initialize();triplist()">
         <script>
   // Initialize Firebase
   var config = {
@@ -312,7 +312,8 @@
                var contents = new Array()
                return firebase.database().ref('users/' + user + '/trips' ).once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
-                     if(childSnapshot.val().uid===undefined){
+			var data = childSnapshot.val()
+                     if(data.uid===undefined){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
                      }
