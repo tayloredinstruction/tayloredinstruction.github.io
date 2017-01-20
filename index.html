@@ -232,9 +232,12 @@
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-		 <p id="userino">Not signed in. <p>
+		 <p id="userino">Not signed in. </p>
 		 <button onclick="signIn()">Sign in</button>
-		 <button onclick="signOut()">Sign out</button>
+		 <button onclick="signOut()">Sign out</button><br>
+		 <div id="infodiv" class = "w3-hide">
+		 <textarea id="myinfo"></textarea><button onclick="updateInfo()">Update</button><br>
+		 </div>
   <div class="w3-row">
   <div id = "approve" class="w3-col  l4">
   <h4>Approval Required</h4>
@@ -254,10 +257,24 @@
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
             <h2>Favourite Sections</h2>
             <script>
+		    function updateInfo(){
+			    var user = firebase.auth().currentUser
+			    var info = document.getElementById("myinfo").value
+			firebase.database().ref('users/'+user.uid+'/info').update({
+			about: info
+			})
+   });    
+		    }
                firebase.auth().onAuthStateChanged(function() {
       usertriplist()
                   var user = firebase.auth().currentUser
 		  document.getElementById("userino").innerHTML="Signed in as "+user.displayName+". "
+		       var about=""
+		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
+                  about=snapshot.val().about
+		  });
+		  document.getElementById("myinfo").value=about
+		  document.getElementById("infodiv").className=""
       firebase.database().ref('users/'+user.uid+'/info').update({
          name: user.displayName,
          uid: user.uid})
@@ -280,16 +297,10 @@
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
                      }
-                     else{
-                     var data = childSnapshot.val();
-                        if(Date.parse(data.date)<Date.now()){
-                         moveFbRecord(firebase.database().ref('users/' + user + '/trips/' +childSnapshot.key),firebase.database().ref('users/' + user + '/completed/' +childSnapshot.key))
-                        }
                         else{
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
                      contents.push(node);
                         }
-                     }
                      });
                      para.innerHTML=contents.join("")
                   
