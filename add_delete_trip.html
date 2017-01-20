@@ -238,7 +238,7 @@ function writeTripInformation() {
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
                firebase.database().ref('trips/active/' + key).update({
-                   confirmed: null,
+                  confirmed: null,
                   details: null,
                   waiting: null
                   },function(error){
@@ -248,7 +248,7 @@ function writeTripInformation() {
                   else{
                }
                }); 
-               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + key).set(null, function(error){
+               firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/trips/' + key).set(null, function(error){
                   if(error){
                   alert("Trip could not be deleted" + error)
                   }
