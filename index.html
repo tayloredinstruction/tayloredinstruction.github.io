@@ -236,7 +236,7 @@
 		 <button onclick="signIn()">Sign in</button>
 		 <button onclick="signOut()">Sign out</button><br>
 		 <div id="infodiv" class = "w3-hide">
-			 <p>About me: </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
+			 <p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
 		 </div>
   <div class="w3-row">
   <div id = "approve" class="w3-col  l4">
@@ -327,7 +327,7 @@
                       else{
                       var colour = "green !important"
                       }
-               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
+               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"</p>;
                	contents.push(node)
                       }
                       else{
