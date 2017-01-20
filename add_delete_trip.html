@@ -230,9 +230,11 @@ function writeTripInformation() {
                      subchildSnapshot.forEach(function(subsubchildSnapshot){
                                                 console.log(subsubchildSnapshot.key)
                      subs.push(subsubchildSnapshot.key+";");
-  });
+                      });
+                        }
+                           });
                            }
-                  }
+                  });
                      });
                   localStorage.subs=subs.join(";")
                var df = document.createDocumentFragment();
