@@ -244,6 +244,7 @@ function writeTripInformation() {
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
                var subs = localStorage.subs.split(",")
+               console.log(subs)
                firebase.database().ref('trips/active/' + key).update({
                   confirmed: null,
                   details: null,
