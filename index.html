@@ -305,7 +305,7 @@
                var user=firebase.auth().currentUser.uid
                var para = document.getElementById("approve");
                var contents = new Array()
-               return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {				
+               firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {				
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
