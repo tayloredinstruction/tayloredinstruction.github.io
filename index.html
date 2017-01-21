@@ -281,27 +281,31 @@
                var user=firebase.auth().currentUser.uid
                var para = document.getElementById("approve");
                var contents = new Array()
-               return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
+               return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {				
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
-				var trip = i
-				var tripName = item.trip
-				var details= new Array()
-				firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot) {
+				var trip=i
+				
+				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
+					console.log(snapshot.val())
+					console.log(snapshot.val().waiting)						
 					snapshot.forEach(function(childSnapshot){
-						console.log(tripName)
-						details=[childSnapshot.val().name, childSnapshot.val().about, childSnapshot.val().email, childSnapshot.val().id]
+						var name = childSnapshot.val().name;
+						var about = childSnapshot.val().about;
+						var email =childSnapshot.val().email;
+						var id= childSnapshot.val().id;
 					
-					});
-						var node = "<p>"+details[0] + " would like to join " + tripName +". <br> About: "+details[1]+"<br> Email: "+details[2]+"<br><button onClick=\"appReq("+trip+","+details[3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[3]+")\">Deny</button></p>"
+					
+						var node = "<p>"+ name + " would like to join " + snapshot.ref().parent().parent().details +". <br> About: "+details[1]+"<br> Email: "+details[2]+"<br><button onClick=\"appReq("+trip+","+details[3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[3]+")\">Deny</button></p>"
 					contents.push(node)
+						});
 					para.innerHTML=contents.join("")
 
 				});
-					
-				}
+				
 			}
+			}	
 
                      });
                }
