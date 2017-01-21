@@ -283,6 +283,7 @@
                var contents = new Array()
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 			for(var i in snapshot.val()){
+				console.log(i)
 				var item=snapshot.val()[i]
 				if(item.uid===user){
 					console.log("in the if for trip "+i)
