@@ -132,7 +132,19 @@ function writeTripInformation() {
       writeObject["id"] = vals[i].value
       console.log(writeObject)
   firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[i].value).set(writeObject);
+  firebase.database().ref('users/' + vals[i].value + '/trips/invited/'+newtripref).set({
+    organiser: userId.displayName,
+    uid: userId.uid,
+    trip: document.getElementById("tripname").value,
+    section: json.rows[i][0]+" - "+json.rows[i][1],
+    date: document.getElementById("date").value,
+    time: document.getElementById("time").value,
+    groupsize: document.getElementById("groupsize").value,
+    email: document.getElementById("email").value,
+    phone : document.getElementById("phone").value,
+    info : document.getElementById("info").value
    }
+
 }
                function popUsers(){
                var list = document.getElementById('userlist');
