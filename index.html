@@ -285,15 +285,18 @@
 			snapshot.forEach(function(childSnapshot){
 				if(childSnapshot.val().uid === user){
 		       			var trip = childSnapshot.key
+					var tripName = childSnapshot.val().trip
 					return firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot) {
 						snapshot.forEach(function(childSnapshot){
 							var name = childSnapshot.val().name
 							var about = childSnapshot.val().about
 							var email = childSnapshot.val().email
-							var uid = childSnapshot.val().uid
+							var uid = childSnapshot.val().id
 
-					var node = "<p>"+name + "would like to join" + trip+". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("+trip+","+uid+")\">Deny</button></p>"
+					var node = "<p>"+name + " would like to join " + tripName +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("+trip+","+uid+")\">Deny</button></p>"
 					contents.push(node)
+					para.innerHTML=contents.join("")
+
 					});
 				});
 				}
