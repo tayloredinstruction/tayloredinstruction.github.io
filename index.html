@@ -310,11 +310,8 @@
 				var item=snapshot.val()[i]
 				if(item.uid===user){
 				var trip=i
-										console.log("in the if")
-
 				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
-											console.log("in the snap")
-
+					console.log(snapshot.val())
 					for (var j in snapshot.val().waiting){
 						console.log("in the dor")
 						var name = snapshot.val().waiting[j].name;
