@@ -283,7 +283,8 @@
                var contents = new Array()
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 			for(var i in snapshot.val()){
-				console.log(snapshot)
+				console.log(snapshot.val())
+				console.log(snapshot.val()[i])
 				console.log(snapshot.val().i)
 			}
 		       snapshot.forEach(function(childSnapshot){
