@@ -311,7 +311,6 @@
 				if(item.uid===user){
 				var trip=i
 				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
-					console.log(snapshot.val().waiting)
 					for (var j in snapshot.val().waiting){
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
@@ -331,7 +330,7 @@
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
 			console.log(data)
-                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"appReq("+data.key+","+user+")\">Approve</button><button onClick=\"denReq("+data.key+","+user+")\">Deny</button></p>'
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq("+data.key+","+user+")\">Accept</button><button onClick=\"decReq("+data.key+","+user+")\">Decline</button></p>'
                      contents.push(node);                       
                      });
                      para.innerHTML=contents.join("")                 
@@ -340,6 +339,15 @@
 
                }
 		    
+		function accReq(trip, user){
+			moveFbRecord('users/'+user+'/trips/'+trip,'users/'+user+'/trips/invited/'+trip)
+		}
+		    function decReq(trip, user){
+		}
+		    function appReq(trip, user){
+		}
+		    function denReq(trip, user){
+		}
 		    
 		    
 		    
