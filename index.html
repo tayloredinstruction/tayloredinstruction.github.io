@@ -289,8 +289,9 @@
 					console.log("in the if for trip "+i)
 				var trip = i
 				var tripName = item.trip
-				firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot, tripName) {
-					snapshot.forEach(function(childSnapshot, tripName){
+				console.log(item.trip)
+				firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot) {
+					snapshot.forEach(function(childSnapshot){
 							var name = childSnapshot.val().name
 							var about = childSnapshot.val().about
 							var email = childSnapshot.val().email
