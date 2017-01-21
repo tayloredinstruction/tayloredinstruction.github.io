@@ -1,6 +1,13 @@
 CACHE MANIFEST
-#7/01/2017 v2.0
+#21/01/2017 v2.0
 /lib/maps.js
 /index.html
-/images/GOPR3079-0001.jpg
 /images/icon.png
+/add_delete_trip.html
+/login.html
+/images/fsignin.png
+/images/gsignin.png
+/images/splash-desktop.jpg
+/images/splash-mobile.jpg
+/images/sidebar-icon.jpg
+/lib/w3.css
