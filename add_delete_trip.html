@@ -126,8 +126,10 @@ function writeTripInformation() {
      email: userId.email
   });
    var vals = document.getElementById("userlist").value
+   console.log(vals)
    for(var i=0; i< vals.length; i++){
       var ids = vals[i].split(",")
+      console.log(ids)
       var writeObject={}
       writeObject["name"]= ids[0]
       writeObject["id"] = ids[1]
