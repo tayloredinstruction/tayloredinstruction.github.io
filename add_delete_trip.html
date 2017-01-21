@@ -126,15 +126,12 @@ function writeTripInformation() {
      email: userId.email
   });
    var vals = document.getElementById("userlist").selectedOptions
-   console.log(vals)
    for(var i=0; i< vals.length; i++){
-      var ids = vals[i].split(",")
-      console.log(ids)
       var writeObject={}
-      writeObject["name"]= ids[0]
-      writeObject["id"] = ids[1]
+      writeObject["name"]= vals[i].innerHTML
+      writeObject["id"] = vals[i].value
       console.log(writeObject)
-  firebase.database().ref('trips/active/' + newtripref + '/invited/'+ids[1]).set(writeObject);
+  firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[i].value).set(writeObject);
    }
 }
                function popUsers(){
@@ -152,7 +149,7 @@ function writeTripInformation() {
                var df = document.createDocumentFragment();
                for (var i = 0; i<users.length; i++){
                   var option = document.createElement('option');
-                     option.value = users[i][0]+","+users[i][1];
+                     option.value = users[i][1];
                      option.appendChild(document.createTextNode(users[i][0]));
                      df.appendChild(option);
                }
