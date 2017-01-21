@@ -289,7 +289,20 @@
 					console.log("in the if for trip "+i)
 				var trip = i
 				var tripName = item.trip
-					
+				firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot) {
+					snapshot.forEach(function(childSnapshot){
+							var name = childSnapshot.val().name
+							var about = childSnapshot.val().about
+							var email = childSnapshot.val().email
+							var uid = childSnapshot.val().id
+
+					var node = "<p>"+name + " would like to join " + tripName +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("+trip+","+uid+")\">Deny</button></p>"
+					contents.push(node)
+console.log(node)
+					});
+											para.innerHTML=contents.join("")
+	
+				});	
 				}
 			}
                      });
