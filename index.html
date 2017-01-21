@@ -290,13 +290,13 @@
 				var details= new Array()
 				firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot) {
 					snapshot.forEach(function(childSnapshot){
-						details.push([childSnapshot.val().name, childSnapshot.val().about, childSnapshot.val().email, childSnapshot.val().id])
+						details=[childSnapshot.val().name, childSnapshot.val().about, childSnapshot.val().email, childSnapshot.val().id]
 
 					
 					});
 	
 				});
-					var node = "<p>"+details[0][0] + " would like to join " + tripName +". <br> About: "+details[0][1]+"<br> Email: "+details[0][2]+"<br><button onClick=\"appReq("+trip+","+details[0][3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[0][3]+")\">Deny</button></p>"
+					var node = "<p>"+details[0] + " would like to join " + tripName +". <br> About: "+details[1]+"<br> Email: "+details[2]+"<br><button onClick=\"appReq("+trip+","+details[3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[3]+")\">Deny</button></p>"
 					
 					contents.push(node)
 				}
