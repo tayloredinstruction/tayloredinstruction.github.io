@@ -242,7 +242,9 @@
 		   }
 		   function signOut(){
 			   firebase.auth().signOut().then(function() {
-  console.log('Signed Out');
+  alert('Signed Out');
+  window.location.href = 'https://tayloredinstruction.github.io/'
+
 }, function(error) {
   console.error('Sign Out Error', error);
 });
