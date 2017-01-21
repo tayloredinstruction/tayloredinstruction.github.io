@@ -295,15 +295,23 @@
 
 					var node = "<p>"+name + " would like to join " + tripName +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("+trip+","+uid+")\">Deny</button></p>"
 					contents.push(node)
+							console.log("inner")
+							console.log(contents)
 					para.innerHTML=contents.join("")
 
 					});
+						console.log("middle")
+						console.log(contents)
 				});
+					console.log("outer")
+					console.log(contents)
 				}
 			});
-	    
+	    			console.log("way outer")
+		       		console.log(contents)
                      });
-                  
+                  console.log("outest")
+			    console.log(contents)
                }
 		    
 		    
@@ -653,6 +661,7 @@
                   function joinTrip(key){
                      var user=firebase.auth().currentUser
                   if(user){
+			console.log(document.getElementById("myinfo").value)
                      firebase.database().ref('trips/active/' + key + '/waiting/'+ user.uid).set({
                           name: user.displayName,
                           id: user.uid,
