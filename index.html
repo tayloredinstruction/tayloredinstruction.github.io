@@ -295,7 +295,7 @@
 						var id= j.id;
 						var node = "<p>"+ name + " would like to join " + snapshot.val.details.trip +". <br> About: "+details[1]+"<br> Email: "+details[2]+"<br><button onClick=\"appReq("+trip+","+details[3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[3]+")\">Deny</button></p>"
 					contents.push(node)
-						});
+						}
 					para.innerHTML=contents.join("")
 
 				});
