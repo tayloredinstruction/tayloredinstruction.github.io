@@ -283,14 +283,10 @@
                var contents = new Array()
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 			for(var i in snapshot.val()){
-				if(snapshot.val()[i].uid===user){
-					console.log("in the if")
-				}
-			}
-		       snapshot.forEach(function(childSnapshot){
-				if(childSnapshot.val().uid === user){
-		       			var trip = childSnapshot.key
-					var tripName = childSnapshot.val().trip
+				var item=snapshot.val()[i]
+				if(item.uid===user){
+				var trip = i
+				var tripName = item.trip
 					return firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot) {
 						snapshot.forEach(function(childSnapshot){
 							var name = childSnapshot.val().name
@@ -305,7 +301,7 @@
 					});
 				});
 				}
-			});
+			}
                      });
                }
 		    
