@@ -311,9 +311,8 @@
 				if(item.uid===user){
 				var trip=i
 				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
-					console.log(snapshot.val())
+					console.log(snapshot.val().waiting)
 					for (var j in snapshot.val().waiting){
-						console.log("in the dor")
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
 						var email =snapshot.val().waiting[j].email;
@@ -322,16 +321,13 @@
 					contents.push(node)
 						}
 					para.innerHTML=contents.join("")
-console.log(contents)
-
 				});
 				
 			}
 			}	
-console.log(contents)
                      });
-			    console.log(contents)
 		firebase.database().ref('users/' + user + '/trips/invited' ).once('value').then(function(snapshot) {
+			console.log(snapshot.val())
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
 			console.log(data)
