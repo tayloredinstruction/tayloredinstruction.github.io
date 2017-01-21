@@ -282,11 +282,11 @@
                var para = document.getElementById("approve");
                var contents = new Array()
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
-			snapshot.forEach(function(childSnapshot){
-				console.log(snapshot.val())
-				console.log(childSnapshot.val().uid)
+			for(var i in snapshot){
+				console.log(i)
+			}
+		       snapshot.forEach(function(childSnapshot){
 				if(childSnapshot.val().uid === user){
-					console.log("In the IF")
 		       			var trip = childSnapshot.key
 					var tripName = childSnapshot.val().trip
 					return firebase.database().ref('trips/active/'+trip+'/waiting').once('value').then(function(snapshot) {
@@ -298,23 +298,13 @@
 
 					var node = "<p>"+name + " would like to join " + tripName +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("+trip+","+uid+")\">Deny</button></p>"
 					contents.push(node)
-							console.log("inner")
-							console.log(contents)
 					para.innerHTML=contents.join("")
 
 					});
-						console.log("middle")
-						console.log(contents)
 				});
-					console.log("outer")
-					console.log(contents)
 				}
 			});
-	    			console.log("way outer")
-		       		console.log(contents)
                      });
-                  console.log("outest")
-			    console.log(contents)
                }
 		    
 		    
