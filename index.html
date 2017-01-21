@@ -296,9 +296,10 @@
 
 					var node = "<p>"+name + " would like to join " + tripName +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("+trip+","+uid+")\">Deny</button></p>"
 					contents.push(node)
-					para.innerHTML=contents.join("")
-
+console.log(node)
 					});
+											para.innerHTML=contents.join("")
+
 				});
 				}
 			}
