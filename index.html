@@ -289,10 +289,10 @@
 				
 				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
 					for (var j in snapshot.val().waiting){
-						var name = j.name;
-						var about = j.about;
-						var email =j.email;
-						var id= j.id;
+						var name = snapshot.val()[j].name;
+						var about = snapshot.val()[j].about;
+						var email =snapshot.val()[j].email;
+						var id= snapshot.val()[j].id;
 						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+snapshot.key+","+id+")\">Approve</button><button onClick=\"denReq("+snapshot.key+","+id+")\">Deny</button></p>"
 					contents.push(node)
 						}
