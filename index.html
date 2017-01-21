@@ -321,13 +321,15 @@
 					contents.push(node)
 						}
 					para.innerHTML=contents.join("")
+console.log(contents)
 
 				});
 				
 			}
 			}	
-
+console.log(contents)
                      });
+			    console.log(contents)
 		firebase.database().ref('users/' + user + '/trips/invited' ).once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
@@ -337,6 +339,8 @@
                      });
                      para.innerHTML=contents.join("")                 
                   });
+			    console.log(contents)
+
                }
 		    
 		    
