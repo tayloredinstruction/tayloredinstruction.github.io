@@ -125,7 +125,7 @@ function writeTripInformation() {
      id: userId.uid,
      email: userId.email
   });
-   var vals = document.getElementById("userlist").value
+   var vals = document.getElementById("userlist").selectedOptions
    console.log(vals)
    for(var i=0; i< vals.length; i++){
       var ids = vals[i].split(",")
