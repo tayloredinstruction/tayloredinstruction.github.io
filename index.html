@@ -283,6 +283,7 @@
                var contents = new Array()
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 			snapshot.forEach(function(childSnapshot){
+				console.log(childSnapshot.val().uid)
 				if(childSnapshot.val().uid === user){
 					console.log("In the IF")
 		       			var trip = childSnapshot.key
