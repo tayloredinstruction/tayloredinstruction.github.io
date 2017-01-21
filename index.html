@@ -292,7 +292,7 @@
 							var email = childSnapshot.val().email
 							var uid = childSnapshot.val().uid
 
-					var node = "<p>"+name + "would like to join" + trip+". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("trip+","+uid+")\">Deny</button></p>"
+					var node = "<p>"+name + "would like to join" + trip+". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq("+trip+","+uid+")\">Approve</button><button onClick=\"denReq("+trip+","+uid+")\">Deny</button></p>"
 						});
 							contents.push(node)
 				}
