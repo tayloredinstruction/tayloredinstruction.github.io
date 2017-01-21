@@ -283,7 +283,7 @@
                var contents = new Array()
                return firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 			for(var i in snapshot.val()){
-				console.log(i)
+				console.log(snapshot.i.val())
 			}
 		       snapshot.forEach(function(childSnapshot){
 				if(childSnapshot.val().uid === user){
