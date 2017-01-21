@@ -307,12 +307,14 @@
                var contents = new Array()
                firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {				
 			for(var i in snapshot.val()){
-										console.log("in the for")
 				var item=snapshot.val()[i]
 				if(item.uid===user){
 				var trip=i
-				
+										console.log("in the if")
+
 				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
+											console.log("in the snap")
+
 					for (var j in snapshot.val().waiting){
 						console.log("in the dor")
 						var name = snapshot.val().waiting[j].name;
