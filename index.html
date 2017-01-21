@@ -288,16 +288,12 @@
 				var trip=i
 				
 				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
-					console.log(snapshot.val())
-					console.log(snapshot.val().waiting)						
-					snapshot.forEach(function(childSnapshot){
-						var name = childSnapshot.val().name;
-						var about = childSnapshot.val().about;
-						var email =childSnapshot.val().email;
-						var id= childSnapshot.val().id;
-					
-					
-						var node = "<p>"+ name + " would like to join " + snapshot.ref().parent().parent().details +". <br> About: "+details[1]+"<br> Email: "+details[2]+"<br><button onClick=\"appReq("+trip+","+details[3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[3]+")\">Deny</button></p>"
+					for (var j in snapshot.val().waiting){
+						var name = j.name;
+						var about = j.about;
+						var email =j.email;
+						var id= j.id;
+						var node = "<p>"+ name + " would like to join " + snapshot.val.details.trip +". <br> About: "+details[1]+"<br> Email: "+details[2]+"<br><button onClick=\"appReq("+trip+","+details[3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[3]+")\">Deny</button></p>"
 					contents.push(node)
 						});
 					para.innerHTML=contents.join("")
