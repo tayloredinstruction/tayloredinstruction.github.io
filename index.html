@@ -296,7 +296,11 @@
 					});
 	
 				});
+					console.log(details)
+					console.log(details[0])
+					console.log(details[0][0])
 					var node = "<p>"+details[0][0] + " would like to join " + tripName +". <br> About: "+details[0][1]+"<br> Email: "+details[[0][2]+"<br><button onClick=\"appReq("+trip+","+details[0][3]+")\">Approve</button><button onClick=\"denReq("+trip+","+details[0][3]+")\">Deny</button></p>"
+					
 					contents.push(node)
 				}
 			}
