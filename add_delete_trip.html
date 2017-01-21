@@ -131,7 +131,7 @@ function writeTripInformation() {
       var writeObject={}
       writeObject["name"]= ids[0]
       writeObject["id"] = ids[1]
-  firebase.database().ref('trips/active/' + newtripref + '/invited/'+option.value).set(writeObject);
+  firebase.database().ref('trips/active/' + newtripref + '/invited/'+ids[1]).set(writeObject);
    }
 }
                function popUsers(){
