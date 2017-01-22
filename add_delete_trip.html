@@ -126,13 +126,13 @@ function writeTripInformation() {
      email: userId.email
   });
    var vals = document.getElementById("userlist").selectedOptions
-   for(var i=0; i< vals.length; i++){
+   for(var j=0; j< vals.length; j++){
       var writeObject={}
-      writeObject["name"]= vals[i].innerHTML
-      writeObject["id"] = vals[i].value
+      writeObject["name"]= vals[j].innerHTML
+      writeObject["id"] = vals[j].value
       console.log(writeObject)
-  firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[i].value).set(writeObject);
-  firebase.database().ref('users/' + vals[i].value + '/trips/invited/'+newtripref).set({
+  firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[j].value).set(writeObject);
+  firebase.database().ref('users/' + vals[j].value + '/trips/invited/'+newtripref).set({
     organiser: userId.displayName,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
