@@ -330,7 +330,7 @@
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
 			console.log(data)
-                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq('+data.key+","+user+")\">Accept</button><button onClick=\"decReq("+data.key+","+user+")\">Decline</button></p>"
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq('+childSnapshot.key+","+user+")\">Accept</button><button onClick=\"decReq("+childSnapshot.key+","+user+")\">Decline</button></p>"
                      contents.push(node);                       
                      });
                      para.innerHTML=contents.join("")                 
