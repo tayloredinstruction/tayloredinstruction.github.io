@@ -340,7 +340,7 @@
                }
 		    
 		function accReq(trip, user){
-			moveFbRecord('users/'+user+'/trips/'+trip,'users/'+user+'/trips/invited/'+trip)
+			moveFbRecord(firebase.database().ref('users/'+user+'/trips/'+trip),firebase.database().ref('users/'+user+'/trips/invited/'+trip))
 		}
 		    function decReq(trip, user){
 		}
