@@ -725,6 +725,8 @@
 		if(data.private === "True" || data.space ==="0"){
 		   }
 		   else{
+			   console.log(data.private===true)
+			   console.log(data.private==="true")
 			   console.log(data.private)
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onclick=\"joinTrip(\''+childSnapshot.key+'\')\">Request to Join</button></p>'
                      contents.push(node);
