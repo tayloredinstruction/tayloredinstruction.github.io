@@ -76,13 +76,13 @@
    });
    function hider(){
       if(document.getElementById("rivsecsalt").checked === true){
-      document.getElementById("rivsecsalttext").className = ""
-      document.getElementById("rivsecs").className = "w3-hide"
+      document.getElementById("rivsecsalttextdiv").className = ""
+      document.getElementById("rivsecsdiv").className = "w3-hide"
 
       }
       else{
-               document.getElementById("rivsecsalttext").className = "w3-hide"
-               document.getElementById("rivsecs").className = ""
+               document.getElementById("rivsecsalttextdiv").className = "w3-hide"
+               document.getElementById("rivsecsdiv").className = ""
       }
    }
          
@@ -338,10 +338,14 @@ function writeTripInformation() {
            <input type="text" id="tripname" value="">
            <br>
            Section:<br>
+               <div id="rivsecsdiv">
                <select id="rivsecs" style="max-width:90%"></select><br>
+            </div>
                Other: <input type="checkbox" id = "rivsecsalt" onChange="hider()"><br>
-               <input type = "text" id = "rivsecsalttext" class = "w3-hide">
+            <div id="rivsecsalttextdiv" class = "w3-hide">   
+            <input type = "text" id = "rivsecsalttext">
                <br>
+            </div>
            Date:<br>
            <input type="date" id="date" value="">
            <br>
