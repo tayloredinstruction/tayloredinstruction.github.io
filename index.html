@@ -631,6 +631,10 @@
 			firebase.database().ref('users/' + user + '/completed/').once('value').then(function(snapshot) {
 				var elm = document.getElementById("logbooklist");
 				var df = document.createDocumentFragment();
+				var option = document.createElement('option');
+                     option.value = -1;
+                     option.appendChild(document.createTextNode("Choose a completed trip"));
+                     df.appendChild(option);
 				for(i in snapshot.val()){
                      var option = document.createElement('option');
                      option.value = i;
