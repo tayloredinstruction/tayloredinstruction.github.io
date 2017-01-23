@@ -637,7 +637,7 @@
 					console.log(i)
                      var option = document.createElement('option');
                      option.value = i;
-                     option.appendChild(document.createTextNode(snapshot.val[i].section +" - "+snapshot.val[i].date));
+                     option.appendChild(document.createTextNode(snapshot.val()[i].section +" - "+snapshot.val()[i].date));
                      df.appendChild(option);
 					console.log(option)
                    }
