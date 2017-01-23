@@ -627,19 +627,15 @@
 
 		    <script>
 			    function logList(){
-				    console.log('in func')
 			var user=firebase.auth().currentUser.uid;
 			firebase.database().ref('users/' + user + '/completed/').once('value').then(function(snapshot) {
 				var elm = document.getElementById("logbooklist");
 				var df = document.createDocumentFragment();
-				console.log(snapshot.val())
 				for(i in snapshot.val()){
-					console.log(i)
                      var option = document.createElement('option');
                      option.value = i;
-                     option.appendChild(document.createTextNode(snapshot.val()[i].section +" - "+snapshot.val()[i].date));
+                     option.appendChild(document.createTextNode(snapshot.val()[i].details.section +" - "+snapshot.val()[i].details.date));
                      df.appendChild(option);
-					console.log(option)
                    }
                    elm.appendChild(df);
 			});
