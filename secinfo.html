@@ -1,0 +1,121 @@
+<h2>Section Info</h2>
+            <div id="demo">
+               <p id="test"></p>
+               <button type="button" onclick="loadXMLDoc()">Get Latest Info</button>
+               <p>
+                  State:
+                  <select id="State">
+                     <option selected value ="Any">Any</option>
+                     <option value ="NSW">NSW</option>
+                     <option value ="QLD">QLD</option>
+                     <option value ="VIC">VIC</option>
+                     <option value ="TAS">TAS</option>
+                  </select>
+                  Level:
+                  <select id="Level">
+                     <option selected value="Any">Any</option>
+                     <option value=0>Visual</option>
+                     <option value=1>Low</option>
+                     <option value=2>Good</option>
+                     <option value=3>High</option>
+                  </select>
+               <p>
+                  Min. Grade:
+                  <select id="Min. grade">
+                     <option value=-1>None</option>
+                     <option value=2>2</option>
+                     <option value=3>3</option>
+                     <option value=4>4</option>
+                     <option value=5>5</option>
+                     <option value=6>6</option>
+                  </select>
+               </p>
+               <p>
+                  Max.Grade: 
+                  <select id="Max. grade">
+                     <option value=7 selected>None</option>
+                     <option value=2>2</option>
+                     <option value=3>3</option>
+                     <option value=4>4</option>
+                     <option value=5>5</option>
+                     <option value=6>6</option>
+                  </select>
+               </p>
+               <button type="button" onclick="populate()">Apply</button>
+            </div>
+            <select id="RivSec" onchange="update()" style="max-width:90%;">
+            </select>
+            <div id="River"></div>
+            <div id="Section"></div>
+            <div id="Character"></div>
+            <div id="Min. Level"></div>
+            <div id="Max. Level"></div>
+            <div id="Current Level"></div>
+            <div id="12 hr Previous"></div>
+            <div id="Average Grade"></div>
+            <div id="Length (km)"></div>
+            <div id="Time (hrs)"></div>
+            <div id="Shuttle (min)"></div>
+            <div id="Weather"></div>
+            <div id="Forecast"></div>
+            <div id="Full Description"></div>
+            
+            <script>
+               function update(){
+               var i = document.getElementById("RivSec").value
+               var json = JSON.parse(localStorage.json)  
+                   document.getElementById("River").innerHTML =
+                   "River: "+json.rows[i][0]
+                   document.getElementById("Section").innerHTML =
+                   "Section: "+json.rows[i][1]
+                document.getElementById("Character").innerHTML =
+                   "Character: "+json.rows[i][2]
+                   document.getElementById("Min. Level").innerHTML =
+                   "Min. Level: "+json.rows[i][3]
+                   document.getElementById("Max. Level").innerHTML =
+                   "Max. Level: "+json.rows[i][4]
+                   document.getElementById("Current Level").innerHTML =
+                   "Current Level: "+json.rows[i][5]
+                   document.getElementById("12 hr Previous").innerHTML =
+                   "12 hr Previous: "+json.rows[i][6]
+                   document.getElementById("Average Grade").innerHTML =
+                   "Average Grade: "+json.rows[i][7]
+                   document.getElementById("Length (km)").innerHTML =
+                   "Length (km): "+json.rows[i][8]
+                   document.getElementById("Time (hrs)").innerHTML =
+                   "Time (hrs): "+json.rows[i][9]
+                   document.getElementById("Shuttle (min)").innerHTML =
+                   "Shuttle (min): "+json.rows[i][10]
+               document.getElementById("Weather").innerHTML =
+                   "Weather: "+json.rows[i][17]
+                   document.getElementById("Forecast").innerHTML =
+                   "Forecast: "+json.rows[i][18] 
+                   document.getElementById("Full Description").innerHTML =
+                   "Full Description: "+json.rows[i][15] 	      
+               
+               }
+                    function populate(){
+                var json = JSON.parse(localStorage.json)
+                 removeOptions(document.getElementById("RivSec"));
+                 var elm = document.getElementById('RivSec'),
+               df = document.createDocumentFragment();
+                 for (var i=0; i<json.rows.length ; i++){
+                 if ((document.getElementById("State").value == json.rows[i][11] || document.getElementById("State").value == "Any") && ( document.getElementById("Level").value == json.rows[i][12] || document.getElementById("Level").value == "Any" ) && (document.getElementById("Min. grade").value <= json.rows[i][13]) && (document.getElementById("Max. grade").value >= json.rows[i][14]) ){
+                 var div = document.createElement('div');
+                 div.innerHTML= json.rows[i][1]
+                   var option = document.createElement('option');
+                   option.value = i;
+                   option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
+                   df.appendChild(option);}
+                   else{
+                   }
+                 }
+                 elm.appendChild(df);
+                 update()
+               
+               
+               
+               
+               
+                   }
+                   		 </script>
