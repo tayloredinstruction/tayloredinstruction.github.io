@@ -280,7 +280,7 @@
   <div class="w3-row" style="min-height:95vh">
 	  <div id = "userdeets" class = "w3-col l4">
 		  <div id="userLoad" class = "loader">
-			  <div id = "loadContainerUser" class "hide">
+			  <div id = "loadContainerUser" class= "w3-hide">
 		  <h4>User Details</h4>
 		  <p id="userino">Not signed in. </p>
 		 <button onclick="signIn()">Sign in</button>
@@ -293,7 +293,7 @@
 	  </div>
   <div class="w3-col  l4">
 	  <div id="appLoad" class = "loader">
-		  <div id = "loadContainerApp" class = "hide">
+		  <div id = "loadContainerApp" class = "w3-hide">
   <h4>Approval Required</h4>
 	  <div id = "approve"></div>
 		  </div>
@@ -301,7 +301,7 @@
 </div>
   <div class="w3-col  l4">
 	  <div id="tripLoad" class = "loader">
-		  <div id="loadContainerTrip" class ="hide"> 
+		  <div id="loadContainerTrip" class ="w3-hide"> 
   <h4>My Trips</h4>
      <div id="mytrips"></div> 
 	  </div>
@@ -332,7 +332,7 @@
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
 		document.getElementById("userLoad").className=""
-			  document.getElementById("loadContainerUser").className=""
+		document.getElementById("loadContainerUser").className=""
 		  });
 
    });
