@@ -393,21 +393,21 @@
 		function accReq(trip, user){
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
-			approveList();
+			setTimeout(approveList, 1500);
 		}
 		    function decReq(trip, user){
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
 			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)
-			approveList();
+			setTimeout(approveList, 1500);
 		}
 		    function appReq(trip, user){
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
-			approveList();
+			setTimeout(approveList, 1500);
 		}
 		    function denReq(trip, user){
 			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
-			approveList();
+			setTimeout(approveList, 1500);
 		}
 		    
 		function copyFbRecord(oldRef, newRef) {    
@@ -617,9 +617,8 @@
            <br>
            Additional Information:<br>
                <textarea id="logInfo" style="width:75wh"></textarea>
-           <br>
            <br><br>
-           <input type="button" value="Submit" onclick="updateLog()">
+           <input type="button" value="Update Entry" onclick="updateLog()">
             </p>
 		 
 		 </div>
