@@ -232,7 +232,7 @@
             <i class="fa fa-globe w3-xxlarge"></i>
             <p>RIVER MAP</p>
          </a>
-         <a class="w3-padding-large w3-hover-black" href="#photos">
+         <a class="w3-padding-large w3-hover-black" href="#logbook">
             <i class="fa fa-book w3-xxlarge"></i>
             <p>SECTION INFO</p>
          </a>
@@ -251,7 +251,7 @@
             <li class="w3-left" style="width:16.7% !important"><a href="#"><i class="fa fa-user w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:16.7% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:16.7% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:16.6% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:16.6% !important"><a href="#logbook"><i class="fa fa-book w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:16.6% !important"><a href="#trips"><i class="fa fa-calendar w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:16.7% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
          </ul>
@@ -334,7 +334,15 @@
 		    }
                firebase.auth().onAuthStateChanged(function() {
 		       approveList();
-      usertriplist()
+      usertriplist();
+		       logList();
+		       
+		       //PUT IN LOGIC FOR SHOW/HIDE LOG
+		       
+		       
+		       
+		       
+		       
                   var user = firebase.auth().currentUser
 		        firebase.database().ref('users/'+user.uid+'/info').update({
          name: user.displayName,
@@ -578,103 +586,96 @@
             </p>
             <div id="googft-mapCanvas"></div>
          </div>
-         <!-- Portfolio Section -->
-         <div class="w3-padding-64 w3-content" id="photos" style="min-height:95vh">
-            <h2>Section Info</h2>
-            <div id="demo">
-               <p id="test"></p>
-               <button type="button" onclick="loadXMLDoc()">Get Latest Info</button>
-               <p>
-                  State:
-                  <select id="State">
-                     <option selected value ="Any">Any</option>
-                     <option value ="NSW">NSW</option>
-                     <option value ="QLD">QLD</option>
-                     <option value ="VIC">VIC</option>
-                     <option value ="TAS">TAS</option>
-                  </select>
-                  Level:
-                  <select id="Level">
-                     <option selected value="Any">Any</option>
-                     <option value=0>Visual</option>
-                     <option value=1>Low</option>
-                     <option value=2>Good</option>
-                     <option value=3>High</option>
-                  </select>
-               <p>
-                  Min. Grade:
-                  <select id="Min. grade">
-                     <option value=-1>None</option>
-                     <option value=2>2</option>
-                     <option value=3>3</option>
-                     <option value=4>4</option>
-                     <option value=5>5</option>
-                     <option value=6>6</option>
-                  </select>
-               </p>
-               <p>
-                  Max.Grade: 
-                  <select id="Max. grade">
-                     <option value=7 selected>None</option>
-                     <option value=2>2</option>
-                     <option value=3>3</option>
-                     <option value=4>4</option>
-                     <option value=5>5</option>
-                     <option value=6>6</option>
-                  </select>
-               </p>
-               <button type="button" onclick="populate()">Apply</button>
-            </div>
-            <select id="RivSec" onchange="update()" style="max-width:90%;">
-            </select>
-            <div id="River"></div>
-            <div id="Section"></div>
-            <div id="Character"></div>
-            <div id="Min. Level"></div>
-            <div id="Max. Level"></div>
-            <div id="Current Level"></div>
-            <div id="12 hr Previous"></div>
-            <div id="Average Grade"></div>
-            <div id="Length (km)"></div>
-            <div id="Time (hrs)"></div>
-            <div id="Shuttle (min)"></div>
-            <div id="Weather"></div>
-            <div id="Forecast"></div>
-            <div id="Full Description"></div>
-            <script>
-               function update(){
-               var i = document.getElementById("RivSec").value
-               var json = JSON.parse(localStorage.json)  
-                   document.getElementById("River").innerHTML =
-                   "River: "+json.rows[i][0]
-                   document.getElementById("Section").innerHTML =
-                   "Section: "+json.rows[i][1]
-                document.getElementById("Character").innerHTML =
-                   "Character: "+json.rows[i][2]
-                   document.getElementById("Min. Level").innerHTML =
-                   "Min. Level: "+json.rows[i][3]
-                   document.getElementById("Max. Level").innerHTML =
-                   "Max. Level: "+json.rows[i][4]
-                   document.getElementById("Current Level").innerHTML =
-                   "Current Level: "+json.rows[i][5]
-                   document.getElementById("12 hr Previous").innerHTML =
-                   "12 hr Previous: "+json.rows[i][6]
-                   document.getElementById("Average Grade").innerHTML =
-                   "Average Grade: "+json.rows[i][7]
-                   document.getElementById("Length (km)").innerHTML =
-                   "Length (km): "+json.rows[i][8]
-                   document.getElementById("Time (hrs)").innerHTML =
-                   "Time (hrs): "+json.rows[i][9]
-                   document.getElementById("Shuttle (min)").innerHTML =
-                   "Shuttle (min): "+json.rows[i][10]
-               document.getElementById("Weather").innerHTML =
-                   "Weather: "+json.rows[i][17]
-                   document.getElementById("Forecast").innerHTML =
-                   "Forecast: "+json.rows[i][18] 
-                   document.getElementById("Full Description").innerHTML =
-                   "Full Description: "+json.rows[i][15] 	      
-               
-               }
+         <!-- Logbook Section -->
+         <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
+            <h2 class="w3-text-light-grey"> Logbook </h2>
+		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip()">
+		 <div id="logdiv">
+		 <p>Trip Organiser:<br>
+                 <input type="text" id="logUid" value="">
+            <br>
+           Trip Name:<br>
+           <input type="text" id="logTripname" value="">
+           <br>
+               Section:
+            <input type = "text" id = "logSec" value="">
+               <br>
+           Date:<br>
+           <input type="date" id="logDate" value="">
+           <br>
+           Time:<br>
+           <input type="time" id="logTime" value="">
+           <br>
+           Participants:<br>
+           <input type="number" id="logGroupsize" value="">
+           <br>
+           Organiser Email:<br>
+           <input type="text" id="logEmail" value="">
+           <br>
+           Organiser Phone Number:<br>
+           <input type="text" id="logPhone" value="">
+           <br>
+           Additional Information:<br>
+               <textarea id="logInfo" style="width:75wh"></textarea>
+           <br>
+           <br><br>
+           <input type="button" value="Submit" onclick="updateLog()">
+            </p>
+            
+		    <script>
+			    function logList(){
+			var user=firebase.auth().currentUser.uid;
+			firebase.database().ref('users/' + user + '/trips/completed/').once('value').then(function(snapshot) {
+				var elm = document.getElementById("logbooklist");
+				var df = document.createDocumentFragment();
+				for(i in snapshot.val){
+                     var option = document.createElement('option');
+                     option.value = i;
+                     option.appendChild(document.createTextNode(snapshot.val[i].section +" - "+snapshot.val[i].date));
+                     df.appendChild(option);
+                   }
+                   elm.appendChild(df);
+			});
+			    }
+			    
+			   function getTrip(){
+				 dispLog(document.getElementById("logbooklist").value)
+			    }
+		function dispLog(trip){
+			var user=firebase.auth().currentUser.uid;
+		firebase.database().ref('users/' + user + '/trips/completed/'+trip).once('value').then(function(snapshot) {
+			var data = snapshot.val()
+                     document.getElementById("logUid").value=data.details.organiser
+			document.getElementById("logTripname").value=data.details.trip
+			 document.getElementById("logSec").value= data.details.section
+			 document.getElementById("logDate").value= data.details.date
+			 document.getElementById("logTime").value= data.details.time
+			document.getElementById("logEmail").value = data.details.email
+			 document.getElementById("logPhone").value= data.details.phone
+			 document.getElementById("logInfo").value= data.details.info
+			  var names = new Array()
+			  for(i in data.confirmed){
+				names.push(i.name)
+			  }
+			  document.getElementById("logGroupsize").value=names.join(", ")
+                     });
+			
+		}
+			function updateLog(){
+			var user=firebase.auth().currentUser.uid;
+			firebase.database().ref('users/' + user + '/trips/completed/'+document.getElementById("logbooklist").value).update({
+                        uid: document.getElementById("logUid").value,
+			trip: document.getElementById("logTripname"),
+			section: document.getElementById("logSec").value,
+			date: document.getElementById("logDate").value,
+			time: document.getElementById("logTime").value,
+			email: document.getElementById("logEmail").value,
+			phone: document.getElementById("logPhone").value,
+			info: document.getElementById("logInfo").value,
+			partcipants: document.getElementById("logGroupsize").value
+                     });
+			
+		}
                function removeOptions(selectbox)
                {
                  var i;
@@ -697,33 +698,7 @@
                xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
                xhttp.send();
                }
-               function populate(){
-                var json = JSON.parse(localStorage.json)
-                 removeOptions(document.getElementById("RivSec"));
-                 var elm = document.getElementById('RivSec'),
-               df = document.createDocumentFragment();
-                 for (var i=0; i<json.rows.length ; i++){
-                 if ((document.getElementById("State").value == json.rows[i][11] || document.getElementById("State").value == "Any") && ( document.getElementById("Level").value == json.rows[i][12] || document.getElementById("Level").value == "Any" ) && (document.getElementById("Min. grade").value <= json.rows[i][13]) && (document.getElementById("Max. grade").value >= json.rows[i][14]) ){
-                 var div = document.createElement('div');
-                 div.innerHTML= json.rows[i][1]
-                   var option = document.createElement('option');
-                   option.value = i;
-                   option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
-                   df.appendChild(option);}
-                   else{
-                   }
-                 }
-                 elm.appendChild(df);
-                 update()
-               
-               
-               
-               
-               
-                   }
-               
-                 
-            </script>
+		 </script>
          </div>
                   <!-- TRIP Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
@@ -768,7 +743,7 @@
             <p id="tripp"></p>
            </div>
             <br>
-            <!-- End Contact Section -->
+            <!-- End Trip Section -->
          <!-- Contact Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
             <h2 class="w3-text-light-grey">Contact Us</h2>
