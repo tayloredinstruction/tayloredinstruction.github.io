@@ -376,8 +376,8 @@
 		    
 		function accReq(trip, user){
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
-			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
-			approveList();
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user)).then(;
+			approveList());
 		}
 		    function decReq(trip, user){
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
@@ -752,7 +752,9 @@
             </script>
             <h2 class="w3-text-light-grey">Upcoming Trips</h2>
             <hr style="width:200px" class="w3-opacity">
-            <a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
+	    <form action="https://tayloredinstruction.github.io/login.html?target=add_delete_trip">
+   	    <input type="submit" value="Add/Delete a Trip"/>
+            </form>
             <p id="tripp"></p>
            </div>
             <br>
