@@ -74,17 +74,30 @@
       popDeleteTrip()
       popUsers()
    });
-   
+   function hider(){
+      if(document.getElementById("rivsecsalt").checked === true){
+      document.getElementById("rivsecsalttext").className = ""
+      }
+      else{
+               document.getElementById("rivsecsalttext").className = "w3-hide"
+      }
+         
 function writeTripInformation() {
    var userId = firebase.auth().currentUser;
    var json = JSON.parse(localStorage.json)
    var i = document.getElementById("rivsecs").value
+   if (document.getElementById("rivsecsalt").checked === true){
+      var section = document.getElementById("rivsecsalttext").value
+   }
+   else{
+      var section = json.rows[i][0]+" - "+json.rows[i][1]
+   }
    var newtripref = firebase.database().ref().child('users').push().key
   firebase.database().ref('users/' + userId.uid + '/trips/' + newtripref).set({
     organiser: userId.displayName,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
-    section: json.rows[i][0]+" - "+json.rows[i][1],
+    section: section,
     date: document.getElementById("date").value,
     time: document.getElementById("time").value,
     groupsize: document.getElementById("groupsize").value,
@@ -104,7 +117,7 @@ function writeTripInformation() {
     organiser: userId.displayName,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
-    section: json.rows[i][0]+" - "+json.rows[i][1],
+    section: section,
     date: document.getElementById("date").value,
     time: document.getElementById("time").value,
     groupsize: document.getElementById("groupsize").value,
@@ -138,7 +151,7 @@ function writeTripInformation() {
     organiser: userId.displayName,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
-    section: json.rows[i][0]+" - "+json.rows[i][1],
+    section: section,
     date: document.getElementById("date").value,
     time: document.getElementById("time").value,
     groupsize: document.getElementById("groupsize").value,
@@ -321,7 +334,8 @@ function writeTripInformation() {
            <input type="text" id="tripname" value="">
            <br>
            Section:<br>
-               <select id="rivsecs" style="max-width:90%"></select>
+               <select id="rivsecs" style="max-width:90%"></select> Other:<input type="checkbox" id = "rivsecsalt" onChange="hider()"><br>
+               <input type = "text" id = "rivsecsalttext" class = "w3-hide">
                <br>
            Date:<br>
            <input type="date" id="date" value="">
