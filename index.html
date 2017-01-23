@@ -607,7 +607,7 @@
            <input type="time" id="logTime" value="">
            <br>
            Participants:<br>
-           <input type="number" id="logGroupsize" value="">
+           <input type="text" id="logGroupsize" value="">
            <br>
            Organiser Email:<br>
            <input type="text" id="logEmail" value="">
@@ -652,9 +652,10 @@
 			var user=firebase.auth().currentUser.uid;
 		firebase.database().ref('users/' + user + '/completed/'+trip).once('value').then(function(snapshot) {
 			var data = snapshot.val()
+			var sec= data.details.section.split("<")[0]+data.details.section.split("<")[1].split(">")[1]
                      document.getElementById("logUid").value=data.details.organiser
 			document.getElementById("logTripname").value=data.details.trip
-			 document.getElementById("logSec").value= data.details.section
+			 document.getElementById("logSec").value= sec
 			 document.getElementById("logDate").value= data.details.date
 			 document.getElementById("logTime").value= data.details.time
 			document.getElementById("logEmail").value = data.details.email
@@ -662,7 +663,7 @@
 			 document.getElementById("logInfo").value= data.details.info
 			  var names = new Array()
 			  for(i in data.confirmed){
-				names.push(i.name)
+				names.push(data.confirmed[i].name)
 			  }
 			  document.getElementById("logGroupsize").value=names.join(", ")
                      });
