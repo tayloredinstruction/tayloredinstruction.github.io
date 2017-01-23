@@ -376,8 +376,8 @@
 		    
 		function accReq(trip, user){
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
-			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user)).then(;
-			approveList());
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
+			approveList();
 		}
 		    function decReq(trip, user){
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
