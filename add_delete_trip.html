@@ -91,7 +91,8 @@ function writeTripInformation() {
     space: document.getElementById("groupsize").value,
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
-    info : document.getElementById("info").value
+    info : document.getElementById("info").value,
+    private: document.getElementById("private").value
   }, function(error){
                   if(error){
                   alert("Trip could not be added" + error)
@@ -110,7 +111,8 @@ function writeTripInformation() {
     space: document.getElementById("groupsize").value,
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
-    info : document.getElementById("info").value
+    info : document.getElementById("info").value,
+    private: document.getElementById("private").checked
   }, function(error){
                   if(error){
                   alert("Trip was not added" + error)
@@ -142,7 +144,8 @@ function writeTripInformation() {
     groupsize: document.getElementById("groupsize").value,
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
-    info : document.getElementById("info").value
+    info : document.getElementById("info").value,
+    private: document.getElementById("private").checked
    });
    }
 }
@@ -334,6 +337,9 @@ function writeTripInformation() {
            <br>
            Contact Phone Number:<br>
            <input type="text" id="phone" value="">
+           <br>
+           Private Trip (will not show in Upcoming Trips. Invite paddlers or you'll be lonely!):<br>
+           <input type="checkbox" id="private">
            <br>
            Invite Paddlers:<br>
                <select id="userlist" multiple="true" style="max-width:90%"></select>
