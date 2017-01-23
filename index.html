@@ -31,7 +31,7 @@
 	<script type="text/javascript">
         (function(document,navigator,standalone) {
             // prevents links from apps from oppening in mobile safari
-            // this javascript must be the first script in your <head>
+            // this javascript must be the first script in your head
             if ((standalone in navigator) && navigator[standalone]) {
                 var curnode, location=document.location, stop=/^(a|html)$/i;
                 document.addEventListener('click', function(e) {
@@ -308,6 +308,7 @@
 	  </div>
 </div>
 		 </div>
+	      </div>
 	      <br>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
@@ -589,15 +590,15 @@
          <!-- Logbook Section -->
          <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
             <h2 class="w3-text-light-grey"> Logbook </h2>
-		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip()">
-		 <div id="logdiv">
+		 		 <div id="logdiv">
+		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip()"></select>
 		 <p>Trip Organiser:<br>
                  <input type="text" id="logUid" value="">
             <br>
            Trip Name:<br>
            <input type="text" id="logTripname" value="">
            <br>
-               Section:
+               Section:<br>
             <input type = "text" id = "logSec" value="">
                <br>
            Date:<br>
@@ -621,7 +622,10 @@
            <br><br>
            <input type="button" value="Submit" onclick="updateLog()">
             </p>
-            
+		 
+		 </div>
+		          </div>
+
 		    <script>
 			    function logList(){
 			var user=firebase.auth().currentUser.uid;
@@ -699,7 +703,6 @@
                xhttp.send();
                }
 		 </script>
-         </div>
                   <!-- TRIP Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
             <script>
@@ -769,6 +772,6 @@
          </footer>
          <!-- END PAGE CONTENT -->
       </div>
-	   </div>
    </body>
 </html>
+
