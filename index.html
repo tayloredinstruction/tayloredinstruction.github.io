@@ -203,7 +203,8 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="initialize();triplist();favpopulate();displayfavs()">
+   <body class="w3-black" onload="initialize();triplist();favpopulate();displayfavs();setTimeout(stopLoader(), 3000);
+">
         <script>
   // Initialize Firebase
   var config = {
