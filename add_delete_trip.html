@@ -285,7 +285,6 @@ function writeTripInformation() {
             function deleteTrip(){
                var key = document.getElementById('deletelist').value
                var subs = localStorage.subs.split(",")
-               console.log(subs)
                firebase.database().ref('trips/active/' + key).update({
                   confirmed: null,
                   details: null,
@@ -299,6 +298,7 @@ function writeTripInformation() {
                }
                }); 
                for( var i = 0; i<subs.length; i++){
+               firebase.database().ref('users/' + subs[i] + '/trips/invited/' + key).set(null)
                firebase.database().ref('users/' + subs[i] + '/trips/' + key).set(null, function(error){
                   if(error){
                   alert("Trip could not be deleted" + error)
