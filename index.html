@@ -646,13 +646,11 @@
 			    }
 			    
 			   function getTrip(){
-				   console.log(document.getElementById("logbooklist").value)
 				 dispLog(document.getElementById("logbooklist").value)
 			    }
 		function dispLog(trip){
-			console.log("in the displog")
 			var user=firebase.auth().currentUser.uid;
-		firebase.database().ref('users/' + user + '/trips/completed/'+trip).once('value').then(function(snapshot) {
+		firebase.database().ref('users/' + user + '/completed/'+trip).once('value').then(function(snapshot) {
 			var data = snapshot.val()
                      document.getElementById("logUid").value=data.details.organiser
 			document.getElementById("logTripname").value=data.details.trip
