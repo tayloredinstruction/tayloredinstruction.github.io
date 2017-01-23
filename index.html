@@ -590,7 +590,7 @@
 		<button onclick="signIn()">Sign in</button>
 		 </div>
 		 		 <div id="logdiv" class="w3-hide">
-		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();resizeInput()"></select><br>
+		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();"></select><br>
 		 <p>Trip Organiser:<br>
                  <input type="text" id="logUid" value="">
             <br>
@@ -680,6 +680,7 @@
 				names.push(data.confirmed[i].name)
 			  }
 			  document.getElementById("logGroupsize").value=names.join(", ")
+			resizeInput()
                      });
 			
 		}
