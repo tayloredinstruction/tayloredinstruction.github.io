@@ -590,7 +590,7 @@
 		<button onclick="signIn()">Sign in</button>
 		 </div>
 		 		 <div id="logdiv" class="w3-hide">
-		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip()"></select><br>
+		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();resizeInput()"></select><br>
 		 <p>Trip Organiser:<br>
                  <input type="text" id="logUid" value="">
             <br>
@@ -607,7 +607,7 @@
            <input type="time" id="logTime" value="">
            <br>
            Participants:<br>
-           <input type="text" id="logGroupsize" value="" onchange="this.style.width = ((this.value.length + 1) * 8) + 'px';">
+           <input type="text" id="logGroupsize" value="">
            <br>
            Organiser Email:<br>
            <input type="text" id="logEmail" value="">
@@ -627,30 +627,15 @@
 
 		    <script>
 			    function resizeInput() {
-    if( $(this).val().length<1 ) { $(this).attr('size', 1); }
-    else if( $(this).attr("mw") > 0 )
-    {
-        var max_width = $(this).attr("mw");
-        if( $(this).val().length < max_width )
-        {
-            $(this).attr('size', $(this).val().length);
-        }
-        else
-        {
-            $(this).attr('size', max_width);
-        }
+    var ins = document.getElementsByTagName("input")
+    for (var x=0; x<ins.length;x++){
+	    if (ins[x].type="text"){
+            ins[x].size= ins[x].value.length;
+	    }
     }
-    else
-    {
-        $(this).attr('size', $(this).val().length);
-    }
-}
+       
 
-$('input[type="text"]')
-    // event handler
-    .keyup(resizeInput)
-    // resize on page load
-    .each(resizeInput);
+			    }
 			    
 			    
 			    
