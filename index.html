@@ -629,7 +629,7 @@
 			    function logList(){
 				    console.log('in func')
 			var user=firebase.auth().currentUser.uid;
-			firebase.database().ref('users/' + user + '/trips/completed/').once('value').then(function(snapshot) {
+			firebase.database().ref('users/' + user + '/completed/').once('value').then(function(snapshot) {
 				var elm = document.getElementById("logbooklist");
 				var df = document.createDocumentFragment();
 				console.log(snapshot.val())
