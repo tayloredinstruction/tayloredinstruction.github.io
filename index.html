@@ -7,6 +7,27 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="mobile-web-app-capable" content="yes">
+	   <style>
+.loader {
+  border: 16px solid black;
+  border-radius: 50%;
+  border-top: 16px solid white;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 	<script type="text/javascript">
         (function(document,navigator,standalone) {
             // prevents links from apps from oppening in mobile safari
@@ -258,6 +279,7 @@
 		 
   <div class="w3-row" style="min-height:95vh">
 	  <div id = "userdeets" class = "w3-col l4">
+		  <div id="userLoad" class = "loader">
 		  <h4>User Details</h4>
 		  <p id="userino">Not signed in. </p>
 		 <button onclick="signIn()">Sign in</button>
@@ -265,14 +287,19 @@
 		 <div id="infodiv" class = "w3-hide">
 		<p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
 		 </div>
+		  </div>
 	  </div>
   <div class="w3-col  l4">
+	  <div id="appLoad" class = "loader">
   <h4>Approval Required</h4>
 	  <div id = "approve"></div>
+	  </div>
 </div>
   <div class="w3-col  l4">
+	  <div id="tripLoad" class = "loader">
   <h4>My Trips</h4>
-     <div id="mytrips"></div>  
+     <div id="mytrips"></div> 
+	  </div>
 </div>
 		 </div>
 	      <br>
@@ -299,6 +326,7 @@
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
 		  });
+		  document.getElementById("userLoad").className=""
 
    });
 		    function approveList(){
@@ -326,16 +354,14 @@
 			}	
                      });
 		firebase.database().ref('users/' + user + '/trips/invited' ).once('value').then(function(snapshot) {
-			console.log(snapshot.val())
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
-			console.log(data)
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq(\''+childSnapshot.key+"\',\'"+user+"\')\">Accept</button><button onClick=\"decReq("+childSnapshot.key+","+user+")\">Decline</button></p>"
                      contents.push(node);                       
                      });
-                     para.innerHTML=contents.join("")                 
+                     para.innerHTML=contents.join("")
+		document.getElementById("appLoad").className=""
                   });
-			    console.log(contents)
 
                }
 		    
@@ -392,7 +418,7 @@
                         }
                      });
                      para.innerHTML=contents.join("")
-                  
+                  document.getElementById("tripLoad").className=""
                   });
                }
                function clearfavs() {
