@@ -627,11 +627,13 @@
 
 		    <script>
 			    function logList(){
+				    console.log('in func')
 			var user=firebase.auth().currentUser.uid;
 			firebase.database().ref('users/' + user + '/trips/completed/').once('value').then(function(snapshot) {
 				var elm = document.getElementById("logbooklist");
 				var df = document.createDocumentFragment();
-				for(i in snapshot.val){
+				console.log(snapshot.val())
+				for(i in snapshot.val()){
 					console.log(i)
                      var option = document.createElement('option');
                      option.value = i;
