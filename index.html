@@ -658,10 +658,10 @@
 					 var details = data[x].details
 					 log.push([details.organiser, details.uid, details.trip, details.section, details.date, details.time, details.phone, details.grade, details.duration, details.distance, details.level, details.participants, details.role, details.skills, details.info])
 						  } 
-					console.log("log")
+					console.log(log)
 						  for(var x = 0; x<log.length; x++){
 						 
-						  document.getElementById("logDump").innerHTML = log.join("|").join(",")
+						  document.getElementById("logDump").innerHTML = log.join("|")
 					 }
 						  });
     
