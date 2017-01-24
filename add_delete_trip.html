@@ -98,7 +98,7 @@ function writeTripInformation() {
    }
    var newtripref = firebase.database().ref().child('users').push().key
   firebase.database().ref('users/' + userId.uid + '/trips/' + newtripref).set({
-    organiser: document.getElementById("userid").value,
+    organiser: document.getElementById("userId").value,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
     section: section,
@@ -118,7 +118,7 @@ function writeTripInformation() {
                }
                });
    firebase.database().ref('trips/active/' + newtripref + '/details').set({
-    organiser: document.getElementById("userid").value,
+    organiser: document.getElementById("userId").value,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
     section: section,
@@ -152,7 +152,7 @@ function writeTripInformation() {
       console.log(writeObject)
   firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[j].value).set(writeObject);
   firebase.database().ref('users/' + vals[j].value + '/trips/invited/'+newtripref).set({
-    organiser: document.getElementById("userid").value,
+    organiser: document.getElementById("userId").value,
     uid: userId.uid,
     trip: document.getElementById("tripname").value,
     section: section,
