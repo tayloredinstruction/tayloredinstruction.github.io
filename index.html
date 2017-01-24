@@ -603,6 +603,15 @@
 		Level:<br>
 	<input type="text" id="logLevel" value="">
  <br>
+			 Grade:<br>
+	<input type="text" id="logGrade" value="">
+ <br>
+			 Duration:<br>
+	<input type="text" id="logDuration" value="">
+ <br>
+			 Distance:<br>
+	<input type="text" id="logDistance" value="">
+ <br>
            Date:<br>
            <input type="date" id="logDate" value="">
            <br>
@@ -684,6 +693,10 @@
 			 document.getElementById("logPhone").value= data.details.phone
 			 document.getElementById("logInfo").value= data.details.info
 			document.getElementById("logLevel").value= data.details.level
+			document.getElementById("logGrade").value= data.details.grade
+			document.getElementById("logDuration").value= data.details.duration
+			document.getElementById("logDistance").value= data.details.distance
+
 			  var names = new Array()
 			  for(i in data.confirmed){
 				names.push(data.confirmed[i].name)
@@ -707,10 +720,18 @@
 			partcipants: document.getElementById("logGroupsize").value,
 			level: document.getElementById("logLevel").value,
 			skills: document.getElementById("logSkills").value,
-			role: document.getElementById("logRole").value
+			role: document.getElementById("logRole").value,
+			grade: document.getElementById("logGrade").value,
+			duration: document.getElementById("logDuration").value,
+			distance: document.getElementById("logDistance").value
 				
                      });
-			alert("Logbook updated")
+				if(document.getElementById("logbooklist").value==-1){
+					alert("You must select a trip that you have created or joined. For historic trips you can add a new trip then wait approx. one hour for it to appear here.")
+				}
+				else{
+					alert("Logbook updated")
+				}
 		}
                function removeOptions(selectbox)
                {
