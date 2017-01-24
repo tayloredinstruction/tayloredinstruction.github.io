@@ -36,7 +36,7 @@
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
       <script>
-function getUrlVars() {
+function getUrlVars1() {
 var vars = {};
 var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
 	console.log(parts)
@@ -45,6 +45,15 @@ vars[key] = value;
 return('https://tayloredinstruction.github.io/'+vars["target"])
 
 }
+	      function getUrlVars2() {
+var vars = {};
+var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+	console.log(parts)
+vars[key] = value;
+});	      window.location.href = 'https://tayloredinstruction.github.io/'+vars["target"]
+}
+	      
+
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
@@ -57,7 +66,7 @@ return('https://tayloredinstruction.github.io/'+vars["target"])
   firebase.auth().onAuthStateChanged(function(user) {
         var user = firebase.auth().currentUser;
   if (user) {
-	  getUrlVars()
+	  getUrlVars2()
   } else {
 document.getElementById("html").className=""  }
 });
@@ -65,7 +74,7 @@ document.getElementById("html").className=""  }
 	   	   <script type="text/javascript">
       // FirebaseUI config.
       var uiConfig = {
-        signInSuccessUrl: getUrlVars(),
+        signInSuccessUrl: getUrlVars1(),
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
