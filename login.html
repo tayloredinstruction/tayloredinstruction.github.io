@@ -140,6 +140,20 @@ firebase.auth().currentUser.linkWithRedirect(provider);
             }
         }
                                }
+	    
+	    function isUserEqual(googleUser, firebaseUser) {
+  if (firebaseUser) {
+    var providerData = firebaseUser.providerData;
+    for (var i = 0; i < providerData.length; i++) {
+      if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === googleUser.getBasicProfile().getId()) {
+        // We don't need to reauth the Firebase connection.
+        return true;
+      }
+    }
+  }
+  return false;
+}
 	    function onSignIn(googleUser) {
   console.log('Google Auth Response', googleUser);
   // We need to register an Observer on Firebase Auth to make sure auth is initialized.
@@ -195,7 +209,7 @@ firebase.auth().currentUser.linkWithRedirect(provider);
          <header class="w3-container w3-padding-32 w3-center w3-black" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Login</h2>
 <div id = "login">
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<div class="g-signin2" align = "center" data-onsuccess="onSignIn"></div>
 	<input type="image" src="images/gsignin.png" onclick="googlelogin()"><br>
 	<input type="image" src="images/fsignin.png" onclick="facebooklogin()">
 
