@@ -394,6 +394,7 @@
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
 			setTimeout(approveList, 1500);
+			setTimeout(usertriplist, 2000);
 		}
 		    function decReq(trip, user){
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
@@ -404,6 +405,7 @@
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
 			setTimeout(approveList, 1500);
+
 		}
 		    function denReq(trip, user){
 			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
