@@ -600,6 +600,9 @@
                Section:<br>
             <input type = "text" id = "logSec" value="">
                <br>
+		Level:<br>
+	<input type="text" id="logLevel" value="">
+ <br>
            Date:<br>
            <input type="date" id="logDate" value="">
            <br>
@@ -609,6 +612,12 @@
            Participants:<br>
            <input type="text" id="logGroupsize" value="">
            <br>
+	My Role:<br>
+	<input type="text" id="logRole" value="">
+			 <br>
+		Skills Practiced:<br>
+	<input type="text" id="logSkills" value="">
+			 <br>
            Organiser Email:<br>
            <input type="text" id="logEmail" value="">
            <br>
@@ -674,6 +683,7 @@
 			document.getElementById("logEmail").value = data.details.email
 			 document.getElementById("logPhone").value= data.details.phone
 			 document.getElementById("logInfo").value= data.details.info
+			document.getElementById("logLevel").value= data.details.level
 			  var names = new Array()
 			  for(i in data.confirmed){
 				names.push(data.confirmed[i].name)
@@ -694,7 +704,10 @@
 			email: document.getElementById("logEmail").value,
 			phone: document.getElementById("logPhone").value,
 			info: document.getElementById("logInfo").value,
-			partcipants: document.getElementById("logGroupsize").value
+			partcipants: document.getElementById("logGroupsize").value,
+			level: document.getElementById("logLevel").value,
+			skills: document.getElementById("logSkills").value,
+			role: document.getElementById("logRole").value
                      });
 			
 		}
