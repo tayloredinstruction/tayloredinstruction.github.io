@@ -707,6 +707,10 @@
 			
 		}
 			function updateLog(){
+				if(document.getElementById("logbooklist").value==-1){
+					alert("You must select a trip that you have created or joined. For historic trips you can add a new trip then wait approx. one hour for it to appear here.")
+				}
+				else{
 			var user=firebase.auth().currentUser.uid;
 			firebase.database().ref('users/' + user + '/completed/'+document.getElementById("logbooklist").value+'/details').update({
                         uid: document.getElementById("logUid").value,
@@ -726,12 +730,9 @@
 			distance: document.getElementById("logDistance").value
 				
                      });
-				if(document.getElementById("logbooklist").value==-1){
-					alert("You must select a trip that you have created or joined. For historic trips you can add a new trip then wait approx. one hour for it to appear here.")
-				}
-				else{
+				
 					alert("Logbook updated")
-				}
+				}	
 		}
                function removeOptions(selectbox)
                {
