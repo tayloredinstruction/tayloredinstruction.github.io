@@ -655,7 +655,8 @@
 				   var data=snapshot.val()
 				   var log = [["organiser", "uid","trip", "section", "date", "time", "email", "phone", "grade", "duration", "distance", "level","participants", "role", "skills", "info"]]
 				   for (x in snapshot){
-					   console.log("snap for")
+					   console.log(x)
+					   console.log(snapshot.val())
 					 var details = data[x].details
 					 log.push([details.organiser, details.uid, details.trip, details.section, details.date, details.time, details.phone, details.grade, details.duration, details.distance, details.level, details.participants, details.role, details.skills, details.info])
 						  } 
