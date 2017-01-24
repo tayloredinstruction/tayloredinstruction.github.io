@@ -94,50 +94,7 @@ document.getElementById("html").className=""  }
     </script>
          <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
-    <script type="text/javascript">
-  firebase.auth().getRedirectResult().then(function(result) {
-  if (result.credential) {
-    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    var token = result.credential.accessToken;
-	  		
-
-    // ...
-  }
-  // The signed-in user info.
-  var user = result.user;
-}).catch(function(error) {
-	var errorCode = error.code;
-  var errorMessage = error.message;
-	var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-	      if(errorCode == "auth/account-exists-with-different-credential"){
-		      if(credential.provider == "facebook.com"){
-			      var provider = new firebase.auth.FacebookAuthProvider();
-firebase.auth().currentUser.linkWithRedirect(provider);
-		      }
-		      else{
-			      var provider = new firebase.auth.GoogleAuthProvider();
-firebase.auth().currentUser.linkWithRedirect(provider);
-		      }
-	      }
-
-});
-      
-     function facebooklogin(){
-       var provider = new firebase.auth.FacebookAuthProvider();
-               firebase.auth().signInWithRedirect(provider);
-
-     }
-      
-      
-      function googlelogin(){
-        var provider = new firebase.auth.GoogleAuthProvider();
-	firebase.auth().signInWithRedirect(provider);
-        
-    }
     
-    </script>
    </head>
    <body class="w3-black">
 
@@ -165,14 +122,8 @@ firebase.auth().currentUser.linkWithRedirect(provider);
          <!-- Header/Home -->
          <header class="w3-container w3-padding-32 w3-center w3-black" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Login</h2>
-<div id = "login">
-	    <div id="firebaseui-auth-container"></div>
-<div class="g-signin2" align = "center" data-onsuccess="onSignIn"></div>
-	<input type="image" src="images/gsignin.png" onclick="googlelogin()"><br>
-	<input type="image" src="images/fsignin.png" onclick="facebooklogin()">
-
-      
-    </div>         </header>
+	    <div id="firebaseui-auth-container"></div>    
+             </header>
          <!-- Add Trip Section -->
 
         
