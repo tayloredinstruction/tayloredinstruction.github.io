@@ -695,7 +695,7 @@
 		}
 			function updateLog(){
 			var user=firebase.auth().currentUser.uid;
-			firebase.database().ref('users/' + user + '/completed/'+document.getElementById("logbooklist").value).update({
+			firebase.database().ref('users/' + user + '/completed/'+document.getElementById("logbooklist").value+'/details').update({
                         uid: document.getElementById("logUid").value,
 			trip: document.getElementById("logTripname"),
 			section: document.getElementById("logSec").value,
