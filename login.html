@@ -101,7 +101,7 @@ firebase.auth().currentUser.linkWithRedirect(provider);
       
       function googlelogin(){
         var provider = new firebase.auth.GoogleAuthProvider();
-	firebase.auth().signInWithPopup(provider);
+	firebase.auth().signInWithRedirect(provider);
         
     }
     
