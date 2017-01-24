@@ -82,11 +82,11 @@ document.getElementById("html").className=""  }
 	      if(errorCode == "auth/account-exists-with-different-credential"){
 		      if(credential.provider == "facebook.com"){
 			      var provider = new firebase.auth.FacebookAuthProvider();
-auth.currentUser.linkWithRedirect(provider);
+firebase.auth().currentUser.linkWithRedirect(provider);
 		      }
 		      else{
 			      var provider = new firebase.auth.GoogleAuthProvider();
-auth.currentUser.linkWithRedirect(provider);
+firebase.auth().currentUser.linkWithRedirect(provider);
 		      }
 	      }
 
