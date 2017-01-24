@@ -589,6 +589,7 @@
             <h2 class="w3-text-light-grey"> Logbook </h2>
 		 <div id = "downloadLog">
 			 <button onclick="downloadLog()">Download Logbook</button>
+			 <p> Copy and paste the text that appears below into a .txt file and then open with Excel. Ensure you change the "delimiter" to "comma".</p>
 			 <p id = "logDump"></p>
 		 </div>
 		 <div id = "loginbook">
@@ -612,10 +613,10 @@
 			 Grade:<br>
 	<input type="text" id="logGrade" value="">
  <br>
-			 Duration:<br>
+			 Duration (hrs):<br>
 	<input type="text" id="logDuration" value="">
  <br>
-			 Distance:<br>
+			 Distance (km):<br>
 	<input type="text" id="logDistance" value="">
  <br>
            Date:<br>
@@ -653,12 +654,12 @@
 				   var user = firebase.auth().currentUser.uid;
 				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
 				   var data=snapshot.val()
-				   var log = [["organiser", "uid","trip", "section", "date", "time", "email", "phone", "grade", "duration", "distance", "level","participants", "role", "skills", "info"]]
+				   var log = [["Organiser", "Trip Name", "Section", "Date", "Time", "Email", "Phone", "Grade", "Duration (hrs)", "Distance (km)", "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
 				   for (x in data){
 					   console.log(data[x])
 					   console.log(snapshot.val())
 					 var details = data[x].details
-					 log.push([details.organiser, details.uid, details.trip, details.section, details.date, details.time, details.email, details.phone, details.grade, details.duration, details.distance, details.level, details.participants, details.role, details.skills, details.info])
+					 log.push([details.organiser, details.trip, details.section, details.date, details.time, details.email, details.phone, details.grade+'\t', details.duration+'\t', details.distance+'\t', details.level, details.participants, details.role, details.skills, details.info])
 						  } 
 					console.log(log)
 						  for(var x = 0; x<log.length; x++){
