@@ -585,6 +585,10 @@
          <!-- Logbook Section -->
          <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
             <h2 class="w3-text-light-grey"> Logbook </h2>
+		 <div id = "downloadLog">
+			 <button onclick="downloadLog">Download Logbook</button>
+			 <p id = "logDump"></p>
+		 </div>
 		 <div id = "loginbook">
 		 <p>Sign in to use Logbook</p><br>
 		<button onclick="signIn()">Sign in</button>
@@ -643,6 +647,25 @@
 		          </div>
 
 		    <script>
+			    function downloadLog(){
+				   var user = firebase.auth().currentUser.uid;
+				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
+				   var data=snapshot.val()
+				   var log = [["organiser", "uid","trip", "section", "date", "time", "email", "phone", "grade", "duration", "distance", "level","participants", "role", "skills", "info"]]
+				   for (x in snapshot){
+					 var details = data[x].details
+					 log.push([details.organiser, details.uid, details.trip, details.section, details.date, details.time, details.phone, details.grade, details.duration, details.distance, details.level, details.participants, details.role, details.skills, details.info]
+						  }
+						  var 
+						  for(var x = 0; x<log.length; x++){
+						 
+						  document.getElementById("logDump").innerHTML = log.join("|").join(",")
+					 }
+						  });
+    
+			    }
+			    
+			    
 			    function resizeInput() {
     var ins = document.getElementsByTagName("input")
     for (var x=0; x<ins.length;x++){
