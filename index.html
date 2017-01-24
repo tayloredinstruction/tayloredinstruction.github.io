@@ -654,7 +654,7 @@
 				   var user = firebase.auth().currentUser.uid;
 				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
 				   var data=snapshot.val()
-				   var log = [['Organiser', 'Trip Name', 'Section', "Date", 'Time', 'Email', 'Phone', 'Grade', 'Duration (hrs)', 'Distance (km)', "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
+				   var log = [['Organiser', 'Trip Name', 'Section', "Date", 'Time', 'Email', '"\tPhone"', '"\tGrade"', '"\tDuration (hrs)"', '"\tDistance (km)"', "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
 				   for (x in data){
 					   console.log(data[x])
 					   console.log(snapshot.val())
