@@ -109,7 +109,14 @@ function writeTripInformation() {
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value,
-    private: document.getElementById("private").value
+    private: document.getElementById("private").checked,
+    grade: "",
+    duration: "",
+    distance: "",
+    level: "",
+    participants: "",
+    role: "",
+    skills: ""
   }, function(error){
                   if(error){
                   alert("Trip could not be added" + error)
@@ -129,7 +136,14 @@ function writeTripInformation() {
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value,
-    private: document.getElementById("private").checked
+    private: document.getElementById("private").checked,
+    grade: "",
+    duration: "",
+    distance: "",
+    level: "",
+    participants: "",
+    role: "",
+    skills: ""
   }, function(error){
                   if(error){
                   alert("Trip was not added" + error)
@@ -162,7 +176,14 @@ function writeTripInformation() {
     email: document.getElementById("email").value,
     phone : document.getElementById("phone").value,
     info : document.getElementById("info").value,
-    private: document.getElementById("private").checked
+    private: document.getElementById("private").checked,
+    grade: "",
+    duration: "",
+    distance: "",
+    level: "",
+    participants: "",
+    role: "",
+    skills: ""
    });
    }
 }
