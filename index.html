@@ -686,6 +686,7 @@
 			    
 			    
 			    function logList(){
+                       removeOptions(document.getElementById("logbooklist"));
 			var user=firebase.auth().currentUser.uid;
 			firebase.database().ref('users/' + user + '/completed/').once('value').then(function(snapshot) {
 				var elm = document.getElementById("logbooklist");
@@ -728,7 +729,13 @@
 			document.getElementById("logLevel").value= data.details.level
 			document.getElementById("logGrade").value= data.details.grade
 			document.getElementById("logDuration").value= data.details.duration
-			document.getElementById("logDistance").value= data.details.distance
+			document.getElementById("logDistance").value= data.details.distance,
+			document.getElementById("logRole").value= data.details.role,
+			document.getElementById("logSkills").value= data.details.skills,
+			document.getElementById("log").value= data.details.distance
+
+
+
 
 			  var names = new Array()
 			  for(i in data.confirmed){
