@@ -445,7 +445,7 @@ function writeTripInformation() {
 			var user=firebase.auth().currentUser.uid;
 		firebase.database().ref('users/' + user + '/trips/'+trip).once('value').then(function(snapshot) {
 			var data = snapshot.val()
-			var sec= data.details.section.split("<")[0]+data.section.split("<")[1].split(">")[1]
+			var sec= data.section.split("<")[0]+data.section.split("<")[1].split(">")[1]
 			document.getElementById("updtripname").value=data.trip
 			 document.getElementById("updgroupsize").value= data.groupsize
 			 document.getElementById("upddate").value= data.date
