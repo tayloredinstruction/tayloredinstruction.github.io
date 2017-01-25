@@ -521,7 +521,9 @@ function updTripInformation() {
    for(var q =0; q<users.length; q++){
 	   var upduser=users[q]
   firebase.database().ref('users/' + upduser + '/trips/' + newtripref).update({
-    trip: document.getElementById("updtripname").value,
+    organiser: userId.displayName,
+	  uid: userId.uid,
+	  trip: document.getElementById("updtripname").value,
     section: section,
     date: document.getElementById("upddate").value,
     time: document.getElementById("updtime").value,
@@ -550,6 +552,8 @@ function updTripInformation() {
    for(var q =0; q<invites.length; q++){
 	   var upduser=invites[q]
   firebase.database().ref('users/' + upduser + '/trips/invited/' + newtripref).update({
+	  organiser: userId.displayName,
+	  uid: userId.uid,
     trip: document.getElementById("updtripname").value,
     section: section,
     date: document.getElementById("upddate").value,
@@ -576,6 +580,8 @@ function updTripInformation() {
                });
    }
    firebase.database().ref('trips/active/' + newtripref + '/details').update({
+	   organiser: userId.displayName,
+	  uid: userId.uid,
     trip: document.getElementById("updtripname").value,
     section: section,
     date: document.getElementById("upddate").value,
@@ -610,6 +616,8 @@ function updTripInformation() {
       console.log(writeObject)
   firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[j].value).set(writeObject);
   firebase.database().ref('users/' + vals[j].value + '/trips/invited/'+newtripref).set({
+	  organiser: userId.displayName,
+	  uid: userId.uid,
     trip: document.getElementById("updtripname").value,
     section: section,
     date: document.getElementById("upddate").value,
