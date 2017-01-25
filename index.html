@@ -597,7 +597,8 @@
 		<button onclick="signIn()">Sign in</button>
 		 </div>
 		 		 <div id="logdiv" class="w3-hide">
-		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();"></select><br>
+		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();hideLog()"></select><br>
+					 <div id="logmod" class="w3-hide">
 		 <p>Trip Organiser:<br>
                  <input type="text" id="logUid" value="">
             <br>
@@ -626,7 +627,7 @@
            <input type="time" id="logTime" value="">
            <br>
            Participants:<br>
-	<textarea id="logGroupsize" value="" style="width:75%"></textarea>
+	<textarea id="logParticipants" value="" style="width:75%"></textarea>
            <br>
 	My Role:<br>
 	<input type="text" id="logRole" value="">
@@ -645,11 +646,20 @@
            <br><br>
            <input type="button" value="Update Entry" onclick="updateLog()">
             </p>
-		 
+					 </div>
 		 </div>
 		          </div>
 
 		    <script>
+			    function hideLog(){
+				    if(document.getElementById("logbooklist").value=-1){
+					    document.getElementById("logmod").className="w3-hide"
+				    }
+				    else{
+					document.getElementById("logmod").className="w3-hide"
+				    }
+
+			    }
 			    function downloadLog(){
 				   var user = firebase.auth().currentUser.uid;
 				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
@@ -729,15 +739,13 @@
 			document.getElementById("logLevel").value= data.details.level
 			document.getElementById("logGrade").value= data.details.grade
 			document.getElementById("logDuration").value= data.details.duration
-			document.getElementById("logDistance").value= data.details.distance,
-			document.getElementById("logRole").value= data.details.role,
-			document.getElementById("logSkills").value= data.details.skills,
-			document.getElementById("log").value= data.details.distance
+			document.getElementById("logDistance").value= data.details.distance
+			document.getElementById("logRole").value= data.details.role
+			document.getElementById("logSkills").value= data.details.skills
 
 
-			console.log(data.details.participants.length)
 			if(data.details.participants.length>0){
-				document.getElementById("logGroupsize").value=data.details.participants
+				document.getElementById("logParticipants").value=data.details.participants
 			}
 			else{
 			  var names = new Array()
