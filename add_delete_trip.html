@@ -420,13 +420,13 @@ function writeTripInformation() {
 				 localStorage.invites=""
 				    localStorage.users=""
 				firebase.database().ref('trips/active/' + trip + '/confirmed/').once('value').then(function(snapshot) {
-					for(i in snapshot){
+					for(i in snapshot.val()){
 						users.push(i)
 					}
 					localStorage.users=users.join(",")			
 			    });
 				    firebase.database().ref('trips/active/' + trip + '/invited/').once('value').then(function(snapshot) {
-					for(i in snapshot){
+					for(i in snapshot.val()){
 						invites.push(i)
 					}
 					localStorage.invites=invites.join(",")			
