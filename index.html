@@ -736,12 +736,16 @@
 
 
 
-
+			if(data.details.participants.length>0){
+				document.getElementById("logGroupsize").value=data.details.participants
+			}
+			else{
 			  var names = new Array()
 			  for(i in data.confirmed){
 				names.push(data.confirmed[i].name)
 			  }
 			  document.getElementById("logGroupsize").value=names.join(", ")
+			}
 			resizeInput()
                      });
 			
