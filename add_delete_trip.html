@@ -424,13 +424,13 @@ function writeTripInformation() {
 				var df = document.createDocumentFragment();
 				var option = document.createElement('option');
                      option.value = -1;
-                     option.appendChild(document.createTextNode("Choose a tripto update"));
+                     option.appendChild(document.createTextNode("Choose a trip to update"));
                      df.appendChild(option);
-				for(i in snapshot.val()){
-               if(snapshot.val()[i].details.uid === user){
+			for(i in snapshot.val()){
+               if(snapshot.val()[i].uid === user){
                      var option = document.createElement('option');
                      option.value = i;
-                     option.appendChild(document.createTextNode(snapshot.val()[i].details.trip +" - "+snapshot.val()[i].details.date));
+                     option.appendChild(document.createTextNode(snapshot.val()[i].trip +" - "+snapshot.val()[i].date));
                      df.appendChild(option);
                }
                    }
@@ -445,14 +445,14 @@ function writeTripInformation() {
 			var user=firebase.auth().currentUser.uid;
 		firebase.database().ref('users/' + user + '/trips/'+trip).once('value').then(function(snapshot) {
 			var data = snapshot.val()
-			var sec= data.details.section.split("<")[0]+data.details.section.split("<")[1].split(">")[1]
-			document.getElementById("updtripname").value=data.details.trip
-			 document.getElementById("updgroupsize").value= data.details.groupsize
-			 document.getElementById("upddate").value= data.details.date
-			 document.getElementById("updtime").value= data.details.time
-			document.getElementById("updemail").value = data.details.email
-			 document.getElementById("updphone").value= data.details.phone
-			 document.getElementById("updinfo").value= data.details.info
+			var sec= data.details.section.split("<")[0]+data.section.split("<")[1].split(">")[1]
+			document.getElementById("updtripname").value=data.trip
+			 document.getElementById("updgroupsize").value= data.groupsize
+			 document.getElementById("upddate").value= data.date
+			 document.getElementById("updtime").value= data.time
+			document.getElementById("updemail").value = data.email
+			 document.getElementById("updphone").value= data.phone
+			 document.getElementById("updinfo").value= data.info
 			resizeInput()
                      });
 			
