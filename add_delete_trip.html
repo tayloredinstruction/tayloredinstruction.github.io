@@ -73,6 +73,8 @@
       loadXMLDoc()
       popDeleteTrip()
       popUsers()
+      updpopUsers()
+      updlist()
    });
    function hider(){
       if(document.getElementById("rivsecsalt").checked === true){
@@ -289,6 +291,7 @@ function writeTripInformation() {
                  xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
                  xhttp.send();
                favpopulate();
+               updpopulate();
                }
             function popDeleteTrip(){
                var list = document.getElementById('deletelist');
@@ -394,6 +397,257 @@ function writeTripInformation() {
            <br>
            <br><br>
            <input type="button" value="Submit" onclick="writeTripInformation()">
+            </p>
+         </div>
+         
+         
+         
+         <!-- Update Trip Section -->
+         <script>
+            function resizeInput() {
+    var ins = document.getElementsByTagName("input")
+    for (var x=0; x<ins.length;x++){
+	    if (ins[x].type="text"){
+            ins[x].size= ins[x].value.length;
+	    }
+    }
+       
+			    }
+			    
+			    
+			    
+			    
+			    function updList(){
+			var user=firebase.auth().currentUser.uid;
+			firebase.database().ref('users/' + user + '/trips/').once('value').then(function(snapshot) {
+				var elm = document.getElementById("updtriplist");
+				var df = document.createDocumentFragment();
+				var option = document.createElement('option');
+                     option.value = -1;
+                     option.appendChild(document.createTextNode("Choose a tripto update"));
+                     df.appendChild(option);
+				for(i in snapshot.val()){
+               if(snapshot.val()[i].details.uid === user){
+                     var option = document.createElement('option');
+                     option.value = i;
+                     option.appendChild(document.createTextNode(snapshot.val()[i].details.trip +" - "+snapshot.val()[i].details.date));
+                     df.appendChild(option);
+               }
+                   }
+                   elm.appendChild(df);
+			});
+			    }
+			    
+			   function getTrip(){
+				 dispUpd(document.getElementById("updtriplist").value)
+			    }
+		function dispUpd(trip){
+			var user=firebase.auth().currentUser.uid;
+		firebase.database().ref('users/' + user + '/trips/'+trip).once('value').then(function(snapshot) {
+			var data = snapshot.val()
+			var sec= data.details.section.split("<")[0]+data.details.section.split("<")[1].split(">")[1]
+			document.getElementById("updtripname").value=data.details.trip
+			 document.getElementById("updgroupsize").value= data.details.groupsize
+			 document.getElementById("upddate").value= data.details.date
+			 document.getElementById("updtime").value= data.details.time
+			document.getElementById("updemail").value = data.details.email
+			 document.getElementById("updphone").value= data.details.phone
+			 document.getElementById("updinfo").value= data.details.info
+			resizeInput()
+                     });
+			
+		}
+                           function updpopulate(){
+               	var json = JSON.parse(localStorage.json)
+                   removeOptions(document.getElementById("updrivsecs"));
+                   var elm = document.getElementById('updrivsecs'),
+               	df = document.createDocumentFragment();
+                   for (var i=0; i<json.rows.length; i++){	    
+                   var div = document.createElement('div');
+                   div.innerHTML= json.rows[i][1]
+                     var option = document.createElement('option');
+                     option.value = i;
+                     option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
+                     df.appendChild(option);
+                   }
+                   elm.appendChild(df);
+                  var userId = firebase.auth().currentUser;
+   document.getElementById("userId").value=userId.displayName
+                  document.getElementById("email").value=userId.email
+               }
+            function updhider(){
+      if(document.getElementById("updrivsecsalt").checked === true){
+      document.getElementById("updrivsecsalttextdiv").className = ""
+      document.getElementById("updrivsecsdiv").className = "w3-hide"
+
+      }
+      else{
+               document.getElementById("updrivsecsalttextdiv").className = "w3-hide"
+               document.getElementById("updrivsecsdiv").className = ""
+      }
+   }
+         
+function updTripInformation() {
+   var userId = firebase.auth().currentUser;
+   var json = JSON.parse(localStorage.json)
+   var i = document.getElementById("updrivsecs").value
+   if (document.getElementById("updrivsecsalt").checked === true){
+      var section = document.getElementById("updrivsecsalttext").value
+   }
+   else{
+      var section = json.rows[i][0]+" - "+json.rows[i][1]
+   }
+   var newtripref = document.getElementById("updtriplist").value
+  firebase.database().ref('users/' + userId.uid + '/trips/' + newtripref).update({
+    trip: document.getElementById("updtripname").value,
+    section: section,
+    date: document.getElementById("upddate").value,
+    time: document.getElementById("updtime").value,
+    groupsize: document.getElementById("updgroupsize").value,
+    space: document.getElementById("updgroupsize").value,
+    email: document.getElementById("updemail").value,
+    phone : document.getElementById("updphone").value,
+    info : document.getElementById("updinfo").value,
+    private: document.getElementById("updprivate").checked,
+    grade: "",
+    duration: "",
+    distance: "",
+    level: "",
+    participants: "",
+    role: "",
+    skills: ""
+  }, function(error){
+                  if(error){
+                  alert("Trip could not be added" + error)
+                  }
+                  else{
+               }
+               });
+   firebase.database().ref('trips/active/' + newtripref + '/details').update({
+    trip: document.getElementById("updtripname").value,
+    section: section,
+    date: document.getElementById("upddate").value,
+    time: document.getElementById("updtime").value,
+    groupsize: document.getElementById("updgroupsize").value,
+    space: document.getElementById("updgroupsize").value,
+    email: document.getElementById("updemail").value,
+    phone : document.getElementById("updphone").value,
+    info : document.getElementById("updinfo").value,
+    private: document.getElementById("updprivate").checked,
+    grade: "",
+    duration: "",
+    distance: "",
+    level: "",
+    participants: "",
+    role: "",
+    skills: ""
+  }, function(error){
+                  if(error){
+                  alert("Trip was not updated" + error)
+                  }
+                  else{
+                  alert("Trip updated successfully.")
+                  popDeleteTrip()
+               }
+               });
+   var vals = document.getElementById("upduserlist").selectedOptions
+   for(var j=0; j< vals.length; j++){
+      var writeObject={}
+      writeObject["name"]= vals[j].innerHTML
+      writeObject["id"] = vals[j].value
+      console.log(writeObject)
+  firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[j].value).set(writeObject);
+  firebase.database().ref('users/' + vals[j].value + '/trips/invited/'+newtripref).set({
+    trip: document.getElementById("updtripname").value,
+    section: section,
+    date: document.getElementById("upddate").value,
+    time: document.getElementById("updtime").value,
+    groupsize: document.getElementById("updgroupsize").value,
+    email: document.getElementById("updemail").value,
+    phone : document.getElementById("updphone").value,
+    info : document.getElementById("updinfo").value,
+    private: document.getElementById("updprivate").checked,
+    grade: "",
+    duration: "",
+    distance: "",
+    level: "",
+    participants: "",
+    role: "",
+    skills: ""
+   });
+   }
+}
+               function updpopUsers(){
+               var list = document.getElementById('upduserlist');
+               removeOptions(list);
+               var users = new Array()
+               return firebase.database().ref('users').once('value').then(function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+                     var data = childSnapshot;
+                     users.push([data.val().info.name,data.val().info.uid])
+                     });
+        users.sort(function(a, b) { 
+                  return a[0] > b[0] ? 1 : -1;
+               });
+               var df = document.createDocumentFragment();
+               for (var i = 0; i<users.length; i++){
+                  var option = document.createElement('option');
+                     option.value = users[i][1];
+                     option.appendChild(document.createTextNode(users[i][0]));
+                     df.appendChild(option);
+               }
+               list.appendChild(df)
+                  });
+            }
+
+</script>
+         
+         
+         
+         
+         
+                  <div class="w3-padding-64 w3-content" id = "uptrip" style="min-height:95vh">
+           <h2>Update a Trip</h2>
+                     <p>Select a trip to update</p><select id = "updtriplst"></select>
+            <p>Trip Name:<br>
+           <input type="text" id="updtripname" value="">
+           <br>
+               Section:</p>
+               <div id="updrivsecsdiv">
+               <select id="updrivsecs" style="max-width:90%"></select><br>
+            </div>
+            <p>Other: <input type="checkbox" id = "updrivsecsalt" onChange="updhider()"><br></p>
+            <div id="updrivsecsalttextdiv" class = "w3-hide">   
+            <input type = "text" id = "updrivsecsalttext">
+               <br>
+            </div>
+            <p>
+           Date:<br>
+           <input type="date" id="upddate" value="">
+           <br>
+           Time:<br>
+           <input type="time" id="updtime" value="">
+           <br>
+           Max. Group Size:<br>
+           <input type="number" id="updgroupsize" value="">
+           <br>
+           Contact Email:<br>
+           <input type="text" id="updemail" value="">
+           <br>
+           Contact Phone Number:<br>
+           <input type="text" id="updphone" value="">
+           <br>
+           Private Trip: <input type="checkbox" id="updprivate">
+           <br>
+           Invite Paddlers:<br>
+               Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.<br>
+               <select id="upduserlist" multiple="true" style="max-width:90%"></select>
+               <br>
+           Additional Information:<br>
+               <textarea id="updinfo" style="width:75wh"></textarea>
+           <br>
+           <br><br>
+           <input type="button" value="Submit" onclick="updTripInformation()">
             </p>
          </div>
          <!-- Delete Trip Section -->
