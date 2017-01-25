@@ -423,13 +423,13 @@ function writeTripInformation() {
 					for(i in snapshot){
 						users.push(i)
 					}
-					localstorage.users=users.join(",")			
+					localStorage.users=users.join(",")			
 			    });
 				    firebase.database().ref('trips/active/' + trip + '/invited/').once('value').then(function(snapshot) {
 					for(i in snapshot){
 						invites.push(i)
 					}
-					localstorage.invites=invites.join(",")			
+					localStorage.invites=invites.join(",")			
 			    });
 			    }
 		 
