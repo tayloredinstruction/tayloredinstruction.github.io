@@ -747,7 +747,7 @@
 			var user=firebase.auth().currentUser.uid;
 			firebase.database().ref('users/' + user + '/completed/'+document.getElementById("logbooklist").value+'/details').update({
                         uid: document.getElementById("logUid").value,
-			trip: document.getElementById("logTripname"),
+			trip: document.getElementById("logTripname").value,
 			section: document.getElementById("logSec").value,
 			date: document.getElementById("logDate").value,
 			time: document.getElementById("logTime").value,
