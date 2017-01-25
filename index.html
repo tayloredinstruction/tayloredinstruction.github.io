@@ -597,7 +597,7 @@
 		<button onclick="signIn()">Sign in</button>
 		 </div>
 		 		 <div id="logdiv" class="w3-hide">
-		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip()"></select><br>
+		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();hideLog()"></select><br>
 					 <div id="logmod" class="w3-hide">
 		 <p>Trip Organiser:<br>
                  <input type="text" id="logUid" value="">
@@ -653,12 +653,10 @@
 		    <script>
 			    function hideLog(){
 				    console.log("made it")
-				    if(document.getElementById("logbooklist").value=-1){
-					    console.log("made it 2")
+				    if(document.getElementById("logbooklist").value==-1){
 					    document.getElementById("logmod").className="w3-hide"
 				    }
 				    else{
-					    				    console.log("made it3")
 					document.getElementById("logmod").className=""
 				    }
 
