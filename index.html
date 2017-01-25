@@ -713,7 +713,12 @@
 			var user=firebase.auth().currentUser.uid;
 		firebase.database().ref('users/' + user + '/completed/'+trip).once('value').then(function(snapshot) {
 			var data = snapshot.val()
+			if(data.details.section.split("<")[1] === undefined ){
+				var sec = data.details.section
+				}
+			else{
 			var sec= data.details.section.split("<")[0]+data.details.section.split("<")[1].split(">")[1]
+			}
                      document.getElementById("logUid").value=data.details.organiser
 			document.getElementById("logTripname").value=data.details.trip
 			 document.getElementById("logSec").value= sec
