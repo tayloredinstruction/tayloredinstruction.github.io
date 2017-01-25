@@ -360,7 +360,6 @@
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
-					console.log("logic worked")
 				var trip=i
 				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
 					for (var j in snapshot.val().waiting){
@@ -372,7 +371,6 @@
 					contents.push(node)
 						}
 					para.innerHTML=contents.join("")
-					console.log(para)
 				});
 				
 			}
