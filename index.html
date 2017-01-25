@@ -353,12 +353,10 @@
 
    });
 		    function approveList(){
-			    console.log("app func")
                var user=firebase.auth().currentUser.uid
                var para = document.getElementById("approve");
                var contents = new Array()
                firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
-		       console.log("in snap")
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
@@ -374,13 +372,13 @@
 					contents.push(node)
 						}
 					para.innerHTML=contents.join("")
+					console.log(para)
 				});
 				
 			}
 			}	
                      });
 		firebase.database().ref('users/' + user + '/trips/invited' ).once('value').then(function(snapshot) {
-			console.log("2nd request worked")
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq(\''+childSnapshot.key+"\',\'"+user+"\')\">Accept</button><button onClick=\"decReq("+childSnapshot.key+","+user+")\">Decline</button></p>"
