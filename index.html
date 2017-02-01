@@ -470,7 +470,7 @@
 		    function addComment(id, comment){
 			    var user = firebase.auth().currentUser.displayName
 			 firebase.database().ref('trips/active/'+id+'/details/').update({
-				 comments: comment+user+'<br>   '+document.getElementById(id+"text").value+'<br>'
+				 comments: comment+"<b style='color:red'>"+user+'</b>:&nbsp;'+document.getElementById(id+"text").value+'<br>'
 			 });
 			    usertriplist();
 		    }
