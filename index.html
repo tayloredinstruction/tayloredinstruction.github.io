@@ -460,7 +460,7 @@
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
-  document.getElementById(childSnapshot.key).innerHTML=snapshot.val().comments
+  document.getElementById(childSnapshot.key).innerHTML=snapshot.val().comments+'<input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\',\''+comments+'\')">Send</button>
 });
 				});
 			}
