@@ -470,8 +470,9 @@
 		    function addComment(id){
 			    var user = firebase.auth().currentUser.displayName
 			 firebase.database().ref('trips/active/'+id+'/details/').update({
-				 comments: user+'/n'+document.getElementById(id+"text").value+'/n'
+				 comments: user+'<br>'+document.getElementById(id+"text").value+'<br>'
 			 });
+			    usertriplist();
 		    }
                function clearfavs() {
                   localStorage.removeItem("favslist")
