@@ -476,6 +476,7 @@
 			 firebase.database().ref('trips/active/'+id+'/details/').update({
 				 comments: comment+"<b style='color:red'>"+user+'</b>:&nbsp;'+document.getElementById(id+"text").value+'<br>'
 			 });
+			    document.getElementById(id+'text').value=""
 		    }
                function clearfavs() {
                   localStorage.removeItem("favslist")
