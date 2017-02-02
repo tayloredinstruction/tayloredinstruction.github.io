@@ -456,7 +456,7 @@
 				else{
 					var comments = commSnapshot.val().comments
 					}
-                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-black"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\',\''+comments+'\')">Send</button></div></div>'
+                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-black"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align">Comments</button><div class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div>'
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
@@ -470,7 +470,8 @@
 
                   });
                }
-		    function addComment(id, comment){
+		    function addComment(id){
+			    var comment = document.getElementById(id).innerHTML
 			    var user = firebase.auth().currentUser.displayName
 			 firebase.database().ref('trips/active/'+id+'/details/').update({
 				 comments: comment+"<b style='color:red'>"+user+'</b>:&nbsp;'+document.getElementById(id+"text").value+'<br>'
