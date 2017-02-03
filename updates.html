@@ -392,6 +392,7 @@
                }
 		    
 		function accReq(trip, user){
+			console.log("the loader should happen")
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
@@ -400,8 +401,11 @@
 			setTimeout(usertriplist, 2000);
 			document.getElementById("appLoad").className=("")		
 			document.getElementById("loadContainerApp").className=("")
+			console.log("the loader should cease")
 		}
 		    function decReq(trip, user){
+			    			console.log("the loader should happen")
+
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
@@ -409,8 +413,12 @@
 			setTimeout(approveList, 1500);
 			document.getElementById("appLoad").className=("")		
 			document.getElementById("loadContainerApp").className=("")
+			    			console.log("the loader should cease")
+
 		}
 		    function appReq(trip, user){
+			    			console.log("the loader should happen")
+
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
@@ -418,14 +426,20 @@
 			setTimeout(approveList, 1500);
 			document.getElementById("appLoad").className=("")		
 			document.getElementById("loadContainerApp").className=("")
+			    			console.log("the loader should cease")
+
 		}
 		    function denReq(trip, user){
+			    			console.log("the loader should happen")
+
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
 			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
 			setTimeout(approveList, 1500);
 			document.getElementById("appLoad").className=("")		
 			document.getElementById("loadContainerApp").className=("")
+			    			console.log("the loader should cease")
+
 		}
 		    
 		function copyFbRecord(oldRef, newRef) {    
