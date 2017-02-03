@@ -295,7 +295,9 @@
 	  <div id="appLoad" class = "loader">
 		  <div id = "loadContainerApp" class = "w3-hide">
   <h4>Notifications</h4>
-	  <div id = "approve"></div>
+	  <div id = "approveWait"></div>
+		  </div>
+	  <div id = "approveInvite"></div>
 		  </div>
 	  </div>
 </div>
@@ -354,8 +356,8 @@
    });
 		    function approveList(){
                var user=firebase.auth().currentUser.uid
-               var para = document.getElementById("approve");
-               var contents = new Array()
+               var paraWait = document.getElementById("approveWait");
+               var paraInvite = document.getElementById("approveInvite");
                firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 		       console.log('in the listener')
 			for(var i in snapshot.val()){
@@ -363,15 +365,16 @@
 				if(item.uid===user){
 				var trip=i
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
+					               var contentsWait = new Array()
 					for (var j in snapshot.val().waiting){
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
 						var email =snapshot.val().waiting[j].email;
 						var id= snapshot.val().waiting[j].id;
 						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
-					contents.push(node)
+					contentsWait.push(node)
 						}
-					para.innerHTML=contents.join("")
+					paraWait.innerHTML=contentsWait.join("")
 					document.getElementById("appLoad").className=("")
 					document.getElementById("loadContainerApp").className=("")
 				});
@@ -380,12 +383,13 @@
 			}	
                      });
 		firebase.database().ref('users/' + user + '/trips/invited' ).on('value', function(snapshot) {
+		 var contentsInvite = new Array()
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq(\''+childSnapshot.key+"\',\'"+user+"\')\">Accept</button><button onClick=\"decReq(\'"+childSnapshot.key+"\',\'"+user+"\')\">Decline</button></p>"
-                     contents.push(node);                       
+                     contentsInvite.push(node);                       
                      });
-                     para.innerHTML=contents.join("")
+                     paraInvite.innerHTML=contentsInvite.join("")
 		document.getElementById("appLoad").className=""
 		document.getElementById("loadContainerApp").className=""
 
