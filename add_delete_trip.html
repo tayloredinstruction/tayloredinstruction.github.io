@@ -196,7 +196,6 @@ function writeTripInformation() {
                return firebase.database().ref('users').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
-			  console.log(data)
                      users.push([data.val().info.name,data.val().info.uid])
                      });
         users.sort(function(a, b) { 
@@ -524,8 +523,10 @@ function updTripInformation() {
    }
    var newtripref = document.getElementById("updtriplist").value
    var users = localStorage.users.split(",")
+   console.log(users)
    for(var q =0; q<users.length; q++){
 	   var upduser=users[q]
+	   console.log(upduser)
   firebase.database().ref('users/' + upduser + '/trips/' + newtripref).update({
     organiser: userId.displayName,
 	  uid: userId.uid,
@@ -619,7 +620,6 @@ function updTripInformation() {
       var writeObject={}
       writeObject["name"]= vals[j].innerHTML
       writeObject["id"] = vals[j].value
-      console.log(writeObject)
   firebase.database().ref('trips/active/' + newtripref + '/invited/'+vals[j].value).set(writeObject);
   firebase.database().ref('users/' + vals[j].value + '/trips/invited/'+newtripref).set({
 	  organiser: userId.displayName,
@@ -650,7 +650,6 @@ function updTripInformation() {
                return firebase.database().ref('users').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
-			  console.log(data.val())
                      users.push([data.val().info.name,data.val().info.uid])
                      });
         users.sort(function(a, b) { 
