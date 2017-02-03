@@ -373,7 +373,7 @@
 						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
 					contentsWait.push(node)
 						}
-					paraWait.innerHTML+==contentsWait.join("")
+					paraWait.innerHTML+=contentsWait.join("")
 					document.getElementById("appLoad").className=("")
 					document.getElementById("loadContainerApp").className=("")
 				});
