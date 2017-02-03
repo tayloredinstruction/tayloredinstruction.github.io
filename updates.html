@@ -372,6 +372,8 @@
 					contents.push(node)
 						}
 					para.innerHTML=contents.join("")
+					document.getElementById("appLoad").className=("")
+					document.getElementById("loadContainerApp").className=("")
 				});
 				
 			}
@@ -392,47 +394,33 @@
                }
 		    
 		function accReq(trip, user){
-			console.log("the loader should happen")
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip))
-			moveFbRecordThen(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
 			setTimeout(approveList, 1500);
 			setTimeout(usertriplist, 2000);
-			console.log("the loader should cease")
 		}
 		    function decReq(trip, user){
-			    			console.log("the loader should happen")
-
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
-			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null).then(function(value){
-							document.getElementById("appLoad").className=("")		
-			document.getElementById("loadContainerApp").className=("")
-			});		
+			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)		
 			setTimeout(approveList, 1500);
 			
 		}
 		    function appReq(trip, user){
-			    			console.log("the loader should happen")
-
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
-			moveFbRecordThen(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
 			setTimeout(approveList, 1500);
 
 		}
 		    function denReq(trip, user){
-			    			console.log("the loader should happen")
-
 			document.getElementById("loadContainerApp").className=("w3-hide")
 			document.getElementById("appLoad").className=("loader")
-			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null).then(function(value){
-							document.getElementById("appLoad").className=("")		
-			document.getElementById("loadContainerApp").className=("")
-			});
+			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
 			setTimeout(approveList, 1500);
 		}
 		    
@@ -453,17 +441,7 @@
           });
      });
 }     
-               function moveFbRecordThen(oldRef, newRef) {    
-     oldRef.once('value', function(snap)  {
-          newRef.set( snap.val(), function(error) {
-               if( !error ) {  oldRef.remove(); }
-               else if( typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
-          }).then(function(value){
-							document.getElementById("appLoad").className=("")		
-			document.getElementById("loadContainerApp").className=("")
-			});;
-     });
-}          
+          
 		    function commentShow(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {
