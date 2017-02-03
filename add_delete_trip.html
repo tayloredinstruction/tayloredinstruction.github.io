@@ -523,7 +523,6 @@ function updTripInformation() {
    }
    var newtripref = document.getElementById("updtriplist").value
    var users = localStorage.users.split(",")
-   console.log(users)
    for(var q =0; q<users.length; q++){
 	   var upduser=users[q]
 	   console.log(upduser)
@@ -558,7 +557,9 @@ function updTripInformation() {
 	var invites = localStorage.invites.split(",")
    for(var q =0; q<invites.length; q++){
 	   var upduser=invites[q]
-	   console.log('users/' + upduser + '/trips/invited/' + newtripref)
+	   if(upduser==""){
+		   continue
+	   }
   firebase.database().ref('users/' + upduser + '/trips/invited/' + newtripref).update({
 	  organiser: userId.displayName,
 	  uid: userId.uid,
