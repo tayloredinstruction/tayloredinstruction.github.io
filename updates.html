@@ -385,8 +385,14 @@
 						contentsWait.push(node)
 						}
 						       }
+					if (contentsWait.join("")==""){
+						var element = document.getElementById(trip+"notification");
+						element.parentNode.removeChild(element);
+					}
+					else{
 					idiv.innerHTML=contentsWait.join("")
 					paraWait.appendChild(idiv)
+					}
 					console.log(idiv)
 					document.getElementById("appLoad").className=""
 					document.getElementById("loadContainerApp").className=""
