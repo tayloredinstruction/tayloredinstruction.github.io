@@ -373,6 +373,9 @@
 					idiv.id=trip+"notification"
 					               var contentsWait = new Array()
 					for (var j in snapshot.val().waiting){
+						if(snapshot.val()===null){
+							continue
+						}
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
 						var email =snapshot.val().waiting[j].email;
@@ -472,7 +475,7 @@
                         else{
 				return firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
 					
-				if(commSnapshot.val().comments===undefined){
+				if(commSnapshot.val().comments===null || commSnapshot.val().comments===undefined ){
 					var comments= ""
 					}
 				else{
