@@ -365,8 +365,8 @@
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
 					console.log(document.getElementById(trip+"notification"))
 					if(document.getElementById(trip+"notification")){
-						console.log('deleting')
 						var element = document.getElementById(trip+"notification");
+						console.log(element)
 						element.parentNode.removeChild(element);
 					}
 					var idiv=document.createElement('div')
@@ -387,13 +387,13 @@
 						       }
 					if (contentsWait.join("")===""){
 						var element = document.getElementById(trip+"notification");
+						console.log(element)
 						element.parentNode.removeChild(element);
 					}
 					else{
 					idiv.innerHTML=contentsWait.join("")
 					paraWait.appendChild(idiv)
 					}
-					console.log(idiv)
 					document.getElementById("appLoad").className=""
 					document.getElementById("loadContainerApp").className=""
 				});
