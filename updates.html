@@ -7,6 +7,48 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="mobile-web-app-capable" content="yes">
+	   <style>
+.loader {
+  border: 8px solid black;
+  border-radius: 50%;
+  border-top: 8px solid white;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+	<script type="text/javascript">
+        (function(document,navigator,standalone) {
+            // prevents links from apps from oppening in mobile safari
+            // this javascript must be the first script in your head
+            if ((standalone in navigator) && navigator[standalone]) {
+                var curnode, location=document.location, stop=/^(a|html)$/i;
+                document.addEventListener('click', function(e) {
+                    curnode=e.target;
+                    while (!(stop).test(curnode.nodeName)) {
+                        curnode=curnode.parentNode;
+                    }
+                    // Condidions to do this only on links to your own app
+                    // if you want all links, use if('href' in curnode) instead.
+                    if('href' in curnode && ( curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host) ) ) {
+                        e.preventDefault();
+                        location.href = curnode.href;
+                    }
+                },false);
+            }
+        })(document,window.navigator,'standalone');
+    </script>
       <link rel="stylesheet" href="lib/w3.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -161,7 +203,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="favpopulate();displayfavs();shortfavs();initialize();triplist()">
+   <body class="w3-black" onload="initialize();triplist();favpopulate();displayfavs();">
         <script>
   // Initialize Firebase
   var config = {
@@ -190,9 +232,9 @@
             <i class="fa fa-globe w3-xxlarge"></i>
             <p>RIVER MAP</p>
          </a>
-         <a class="w3-padding-large w3-hover-black" href="#photos">
+         <a class="w3-padding-large w3-hover-black" href="#logbook">
             <i class="fa fa-book w3-xxlarge"></i>
-            <p>SECTION INFO</p>
+            <p>LOGBOOK</p>
          </a>
          <a class="w3-padding-large w3-hover-black" href="#trips">
             <i class="fa fa-calendar w3-xxlarge"></i>
@@ -206,47 +248,178 @@
       <!-- Navbar on small screens (Hidden on medium and large screens) -->
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
          <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-            <li class="w3-left" style="width:16.7% !important"><a href="#"><i class="fa fa-user w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:16.7% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:16.7% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:16.6% !important"><a href="#photos"><i class="fa fa-book w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:16.6% !important"><a href="#trips"><i class="fa fa-calendar w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:16.7% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:15% !important"><a href="#"><i class="fa fa-user w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:15% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:15% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:15% !important"><a href="#logbook"><i class="fa fa-book w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:15% !important"><a href="#trips"><i class="fa fa-calendar w3-xxlarge"></i></a></li>
+            <li class="w3-left" style="width:15% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
          </ul>
       </div>
       <!-- Page Content -->
+	   <script>
+		   function signIn(){
+			window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html'
+		   }
+		   function signOut(){
+			   firebase.auth().signOut().then(function() {
+  alert('Signed Out');
+  window.location.href = 'https://tayloredinstruction.github.io/'
+
+}, function(error) {
+  console.error('Sign Out Error', error);
+});
+		   }
+		   
+	   </script>
       <div class="w3-padding-large" id="main">
          <!-- Header/Home -->
-         <header class="w3-container w3-padding-32 w3-left w3-black" id="home" style="min-height:95vh">
+         <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-  <div class="w3-row">
-  <div id = "approve" class="w3-col  l4">
-  <h4>Approval Required</h4>
+		 
+  <div class="w3-row" style="min-height:95vh">
+	  <div id = "userdeets" class = "w3-col l4">
+		  <div id="userLoad" class = "loader">
+			  <div id = "loadContainerUser" class= "w3-hide">
+		  <h4>User Details</h4>
+		  <p id="userino">Not signed in. </p>
+		 <button onclick="signIn()">Sign in</button>
+		 <button onclick="signOut()">Sign out</button><br>
+		 <div id="infodiv" class = "w3-hide">
+		<p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
+		 </div>
+			  </div>
+		  </div>
+	  </div>
+  <div class="w3-col  l4">
+	  <div id="appLoad" class = "loader">
+		  <div id = "loadContainerApp" class = "w3-hide">
+  <h4>Notifications</h4>
+	  <div id = "approve"></div>
+		  </div>
+	  </div>
 </div>
   <div class="w3-col  l4">
+	  <div id="tripLoad" class = "loader">
+		  <div id="loadContainerTrip" class ="w3-hide"> 
   <h4>My Trips</h4>
-     <div id="mytrips"></div>  
+     <div id="mytrips"></div> 
+	  </div>
+	  </div>
 </div>
-  <div class="w3-col  l4">
-    <h4>Favourite Sections</h4>
-    <div id="shortfavs"></div>
-  </div>  
-</div>
-            
-            
-            
-         </header>
+		 </div>
+	      </div>
+	      <br>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
             <h2>Favourite Sections</h2>
             <script>
+		    setTimeout(stopLoader, 3000);
+		    function stopLoader(){
+			    document.getElementById("userLoad").className=""
+		document.getElementById("loadContainerUser").className=""
+			    document.getElementById("appLoad").className=""
+		document.getElementById("loadContainerApp").className=""
+			     document.getElementById("tripLoad").className=""
+		  document.getElementById("loadContainerTrip").className=""
+		    }
+			    
+
+		    
+		    function updateInfo(){
+			    var user = firebase.auth().currentUser
+			    var info = document.getElementById("myinfo").value
+			firebase.database().ref('users/'+user.uid+'/info').update({
+			about: info
+   });    
+		    }
                firebase.auth().onAuthStateChanged(function() {
-      usertriplist()
+		       approveList();
+      usertriplist();
+		       logList();
+		       document.getElementById("loginbook").className="w3-hide"
+		       document.getElementById("logdiv").className=""     
                   var user = firebase.auth().currentUser
-      firebase.database().ref('users/'+user.uid+'/info').update({
+		        firebase.database().ref('users/'+user.uid+'/info').update({
          name: user.displayName,
          uid: user.uid})
+		  document.getElementById("userino").innerHTML="Signed in as "+user.displayName+". "
+		  document.getElementById("infodiv").className=""
+		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
+		  document.getElementById("myinfo").defaultValue=snapshot.val().about
+		document.getElementById("userLoad").className=""
+		document.getElementById("loadContainerUser").className=""
+		  });
+
    });
+		    function approveList(){
+               var user=firebase.auth().currentUser.uid
+               var para = document.getElementById("approve");
+               var contents = new Array()
+               firebase.database().ref('users/'+user+'/trips').on('value', function(snapshot) {
+			for(var i in snapshot.val()){
+				var item=snapshot.val()[i]
+				if(item.uid===user){
+				var trip=i
+				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
+					for (var j in snapshot.val().waiting){
+						var name = snapshot.val().waiting[j].name;
+						var about = snapshot.val().waiting[j].about;
+						var email =snapshot.val().waiting[j].email;
+						var id= snapshot.val().waiting[j].id;
+						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
+					contents.push(node)
+						}
+					para.innerHTML=contents.join("")
+				});
+				
+			}
+			}	
+                     });
+		firebase.database().ref('users/' + user + '/trips/invited' ).on('value', function(snapshot) {
+                  snapshot.forEach(function(childSnapshot) {
+			var data = childSnapshot.val()
+                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq(\''+childSnapshot.key+"\',\'"+user+"\')\">Accept</button><button onClick=\"decReq("+childSnapshot.key+","+user+")\">Decline</button></p>"
+                     contents.push(node);                       
+                     });
+                     para.innerHTML=contents.join("")
+		document.getElementById("appLoad").className=""
+		document.getElementById("loadContainerApp").className=""
+
+                  });
+
+               }
+		    
+		function accReq(trip, user){
+			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
+			setTimeout(approveList, 1500);
+			setTimeout(usertriplist, 2000);
+		}
+		    function decReq(trip, user){
+			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
+			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)
+			setTimeout(approveList, 1500);
+		}
+		    function appReq(trip, user){
+			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
+			setTimeout(approveList, 1500);
+
+		}
+		    function denReq(trip, user){
+			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
+			setTimeout(approveList, 1500);
+		}
+		    
+		function copyFbRecord(oldRef, newRef) {    
+     oldRef.once('value', function(snap)  {
+          newRef.set( snap.val(), function(error) {
+               if( error && typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
+          });
+     });
+}  
+		    
                function moveFbRecord(oldRef, newRef) {    
      oldRef.once('value', function(snap)  {
           newRef.set( snap.val(), function(error) {
@@ -254,74 +427,62 @@
                else if( typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
           });
      });
+}          
+		    function commentShow(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
 }
-               function getUrlVars() {
-var vars = {};
-var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-	console.log(parts)
-vars[key] = value;
-});
-localStorage.uid=vars[uid]
-               }
             function usertriplist(){
-               getUrlVars()
-               var user=localStorage.uid
-               //var user=firebase.auth().currentUser.uid
+               var user=firebase.auth().currentUser.uid
                var para = document.getElementById("mytrips");
                var contents = new Array()
-               return firebase.database().ref('users/' + user + '/trips' ).once('value').then(function(snapshot) {
+               firebase.database().ref('users/' + user + '/trips' ).on('value', function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
-                     if(childSnapshot.val().uid===undefined){
+			var data = childSnapshot.val()
+                     if(data.uid===undefined){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
                      }
-                     else{
-                     var data = childSnapshot.val();
-                        if(Date.parse(data.date)<Date.now()){
-                         moveFbRecord(firebase.database().ref('users/' + user + '/trips/' +childSnapshot.key),firebase.database().ref('users/' + user + '/completed/' +childSnapshot.key))
-                        }
                         else{
-                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '</p>'
+				return firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
+					
+				if(commSnapshot.val().comments===undefined){
+					var comments= ""
+					}
+				else{
+					var comments = commSnapshot.val().comments
+					}
+                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-black"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div>'
                      contents.push(node);
-                        }
-                     }
+			para.innerHTML=contents.join("")
+					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
+  document.getElementById(childSnapshot.key+'view').innerHTML=snapshot.val().comments
+});
+				});
+			}
                      });
-                     para.innerHTML=contents.join("")
-                  
+                  document.getElementById("tripLoad").className=""
+		  document.getElementById("loadContainerTrip").className=""
+
                   });
                }
+		    function addComment(id){
+			    var comment = document.getElementById(id+'view').innerHTML
+			    var user = firebase.auth().currentUser.displayName
+			 firebase.database().ref('trips/active/'+id+'/details/').update({
+				 comments: comment+"<b style='color:red'>"+user+'</b>:&nbsp;'+document.getElementById(id+"text").value+'<br>'
+			 });
+			    document.getElementById(id+'text').value=""
+		    }
                function clearfavs() {
                   localStorage.removeItem("favslist")
                      localStorage.favslist = ""
                      }  
-                function shortfavs(){
-                var json = JSON.parse(localStorage.json)  
-                  var favsdiv = document.getElementById("shortfavs")
-                  var favslist= localStorage.favslist.split(";")
-                  var contents = new Array()
-                  for(var i = 0; i<favslist.length-1; i++){
-                  if (!isNaN(parseFloat(favslist[i]))){
-                   	var ref = parseFloat(favslist[i])
-               if (isNaN(json.rows[ref][5])){
-               	var colour = "yellow !important"
-               	}
-                      else if(json.rows[ref][5]>json.rows[ref][4]){
-                      var colour = "blue !important"
-                      }
-                      else if(json.rows[ref][5]<json.rows[ref][3]){
-                      var colour = "red !important"
-                      }
-                      else{
-                      var colour = "green !important"
-                      }
-               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
-               	contents.push(node)
-                      }
-                      else{
-                      }
-                  }
-                  favsdiv.innerHTML=contents.join("")
-                }
+                
                function addtofavs(){
                   if(localStorage.favslist=== undefined){
                   localStorage.favslist=""
@@ -394,25 +555,7 @@ localStorage.uid=vars[uid]
                      df.appendChild(option);
                    }
                    elm.appendChild(df);
-               }
-               
-               function loadXMLDoc() {
-                 var xhttp = new XMLHttpRequest();
-                 xhttp.onreadystatechange = function() {
-                   if (this.readyState == 4 && this.status == 200) {
-               	var json = JSON.parse(this.responseText);
-                      localStorage.removeItem("json")
-                      localStorage.json=JSON.stringify(json);
-                   }
-                 }
-                 xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
-                 xhttp.send();
-               favpopulate();
-               displayfavs();
-                 }
-               
-               
-               	
+               }   	
             </script>
             <button type="button" onclick="loadXMLDoc();favpopulate();displayfavs()">Get Latest Info</button><br>
             <select id="newfav" style="max-width:90%">
@@ -469,103 +612,208 @@ localStorage.uid=vars[uid]
             </p>
             <div id="googft-mapCanvas"></div>
          </div>
-         <!-- Portfolio Section -->
-         <div class="w3-padding-64 w3-content" id="photos" style="min-height:95vh">
-            <h2>Section Info</h2>
-            <div id="demo">
-               <p id="test"></p>
-               <button type="button" onclick="loadXMLDoc()">Get Latest Info</button>
-               <p>
-                  State:
-                  <select id="State">
-                     <option selected value ="Any">Any</option>
-                     <option value ="NSW">NSW</option>
-                     <option value ="QLD">QLD</option>
-                     <option value ="VIC">VIC</option>
-                     <option value ="TAS">TAS</option>
-                  </select>
-                  Level:
-                  <select id="Level">
-                     <option selected value="Any">Any</option>
-                     <option value=0>Visual</option>
-                     <option value=1>Low</option>
-                     <option value=2>Good</option>
-                     <option value=3>High</option>
-                  </select>
-               <p>
-                  Min. Grade:
-                  <select id="Min. grade">
-                     <option value=-1>None</option>
-                     <option value=2>2</option>
-                     <option value=3>3</option>
-                     <option value=4>4</option>
-                     <option value=5>5</option>
-                     <option value=6>6</option>
-                  </select>
-               </p>
-               <p>
-                  Max.Grade: 
-                  <select id="Max. grade">
-                     <option value=7 selected>None</option>
-                     <option value=2>2</option>
-                     <option value=3>3</option>
-                     <option value=4>4</option>
-                     <option value=5>5</option>
-                     <option value=6>6</option>
-                  </select>
-               </p>
-               <button type="button" onclick="populate()">Apply</button>
-            </div>
-            <select id="RivSec" onchange="update()" style="max-width:90%;">
-            </select>
-            <div id="River"></div>
-            <div id="Section"></div>
-            <div id="Character"></div>
-            <div id="Min. Level"></div>
-            <div id="Max. Level"></div>
-            <div id="Current Level"></div>
-            <div id="12 hr Previous"></div>
-            <div id="Average Grade"></div>
-            <div id="Length (km)"></div>
-            <div id="Time (hrs)"></div>
-            <div id="Shuttle (min)"></div>
-            <div id="Weather"></div>
-            <div id="Forecast"></div>
-            <div id="Full Description"></div>
-            <script>
-               function update(){
-               var i = document.getElementById("RivSec").value
-               var json = JSON.parse(localStorage.json)  
-                   document.getElementById("River").innerHTML =
-                   "River: "+json.rows[i][0]
-                   document.getElementById("Section").innerHTML =
-                   "Section: "+json.rows[i][1]
-                document.getElementById("Character").innerHTML =
-                   "Character: "+json.rows[i][2]
-                   document.getElementById("Min. Level").innerHTML =
-                   "Min. Level: "+json.rows[i][3]
-                   document.getElementById("Max. Level").innerHTML =
-                   "Max. Level: "+json.rows[i][4]
-                   document.getElementById("Current Level").innerHTML =
-                   "Current Level: "+json.rows[i][5]
-                   document.getElementById("12 hr Previous").innerHTML =
-                   "12 hr Previous: "+json.rows[i][6]
-                   document.getElementById("Average Grade").innerHTML =
-                   "Average Grade: "+json.rows[i][7]
-                   document.getElementById("Length (km)").innerHTML =
-                   "Length (km): "+json.rows[i][8]
-                   document.getElementById("Time (hrs)").innerHTML =
-                   "Time (hrs): "+json.rows[i][9]
-                   document.getElementById("Shuttle (min)").innerHTML =
-                   "Shuttle (min): "+json.rows[i][10]
-               document.getElementById("Weather").innerHTML =
-                   "Weather: "+json.rows[i][17]
-                   document.getElementById("Forecast").innerHTML =
-                   "Forecast: "+json.rows[i][18] 
-                   document.getElementById("Full Description").innerHTML =
-                   "Full Description: "+json.rows[i][15] 	      
-               
-               }
+         <!-- Logbook Section -->
+         <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
+            <h2 class="w3-text-light-grey"> Logbook </h2>
+		 <div id = "downloadLog">
+			 <button onclick="downloadLog()">Download Logbook</button>
+			 <p> Copy and paste the text that appears below into a .txt file and then open with Excel. Ensure you change the "delimiter" to "comma", and MANUALLY specify the "column data format" as text for "Phone", "Grade", "Duration (hrs)" and "Distance (km)"</p>
+			 <p id = "logDump"></p>
+		 </div>
+		 <div id = "loginbook">
+		 <p>Sign in to use Logbook</p><br>
+		<button onclick="signIn()">Sign in</button>
+		 </div>
+		 		 <div id="logdiv" class="w3-hide">
+		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();hideLog()"></select><br>
+					 <div id="logmod" class="w3-hide">
+		 <p>Trip Organiser:<br>
+                 <input type="text" id="logUid" value="">
+            <br>
+           Trip Name:<br>
+           <input type="text" id="logTripname" value="">
+           <br>
+               Section:<br>
+            <input type = "text" id = "logSec" value="">
+               <br>
+		Level:<br>
+	<input type="text" id="logLevel" value="">
+ <br>
+			 Grade:<br>
+	<input type="text" id="logGrade" value="">
+ <br>
+			 Duration (hrs):<br>
+	<input type="text" id="logDuration" value="">
+ <br>
+			 Distance (km):<br>
+	<input type="text" id="logDistance" value="">
+ <br>
+           Date:<br>
+           <input type="date" id="logDate" value="">
+           <br>
+           Time:<br>
+           <input type="time" id="logTime" value="">
+           <br>
+           Participants:<br>
+	<textarea id="logParticipants" value="" style="width:75%"></textarea>
+           <br>
+	My Role:<br>
+	<input type="text" id="logRole" value="">
+			 <br>
+		Skills Practiced:<br>
+			 <textarea id="logSkills" value="" style="width:75%"></textarea>
+			 <br>
+           Organiser Email:<br>
+           <input type="text" id="logEmail" value="">
+           <br>
+           Organiser Phone Number:<br>
+           <input type="text" id="logPhone" value="">
+           <br>
+           Additional Information:<br>
+               <textarea id="logInfo" style="width:75%"></textarea>
+           <br><br>
+           <input type="button" value="Update Entry" onclick="updateLog()">
+            </p>
+					 </div>
+		 </div>
+		          </div>
+
+		    <script>
+			    function hideLog(){
+				    if(document.getElementById("logbooklist").value==-1){
+					    document.getElementById("logmod").className="w3-hide"
+				    }
+				    else{
+					document.getElementById("logmod").className=""
+				    }
+
+			    }
+			    function downloadLog(){
+				   var user = firebase.auth().currentUser.uid;
+				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
+				   var data=snapshot.val()
+				   var log = [['Organiser', 'Trip Name', 'Section', "Date", 'Time', 'Email', 'Phone', 'Grade', 'Duration (hrs)', 'Distance (km)', "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
+				   for (x in data){
+					 var details = data[x].details
+					 log.push([details.organiser, details.trip, details.section, details.date, details.time, details.email, details.phone, details.grade, details.duration, details.distance, details.level, '"'+details.participants+'"', '"'+details.role+'"', '"'+details.skills+'"', '"'+details.info+'"'])
+						  } 
+						  for(var x = 0; x<log.length; x++){
+						 
+						  document.getElementById("logDump").innerHTML = log.join("<br>")
+					 }
+						  });
+    
+			    }
+			    
+			    
+			    function resizeInput() {
+    var ins = document.getElementsByTagName("input")
+    for (var x=0; x<ins.length;x++){
+	    if (ins[x].type="text"){
+            ins[x].size= ins[x].value.length;
+	    }
+    }
+       
+
+			    }
+			    
+			    
+			    
+			    
+			    function logList(){
+			var user=firebase.auth().currentUser.uid;
+			firebase.database().ref('users/' + user + '/completed/').on('value', function(snapshot) {
+				removeOptions(document.getElementById("logbooklist"));
+				var elm = document.getElementById("logbooklist");
+				var df = document.createDocumentFragment();
+				var option = document.createElement('option');
+                     option.value = -1;
+                     option.appendChild(document.createTextNode("Choose a completed trip"));
+                     df.appendChild(option);
+				for(i in snapshot.val()){
+                     var option = document.createElement('option');
+                     option.value = i;
+                     option.appendChild(document.createTextNode(snapshot.val()[i].details.trip +" - "+snapshot.val()[i].details.date));
+                     df.appendChild(option);
+                   }
+                   elm.appendChild(df);
+			});
+			    }
+			    
+			   function getTrip(){
+				 dispLog(document.getElementById("logbooklist").value)
+			    }
+		function dispLog(trip){
+			var user=firebase.auth().currentUser.uid;
+		firebase.database().ref('users/' + user + '/completed/'+trip).on('value', function(snapshot) {
+			var data = snapshot.val()
+			if(data.details.section.split("<")[1] === undefined ){
+				var sec = data.details.section
+				}
+			else{
+			var sec= data.details.section.split("<")[0]+data.details.section.split("<")[1].split(">")[1]
+			}
+                     document.getElementById("logUid").value=data.details.organiser
+			document.getElementById("logTripname").value=data.details.trip
+			 document.getElementById("logSec").value= sec
+			 document.getElementById("logDate").value= data.details.date
+			 document.getElementById("logTime").value= data.details.time
+			document.getElementById("logEmail").value = data.details.email
+			 document.getElementById("logPhone").value= data.details.phone
+			 document.getElementById("logInfo").value= data.details.info
+			document.getElementById("logLevel").value= data.details.level
+			document.getElementById("logGrade").value= data.details.grade
+			document.getElementById("logDuration").value= data.details.duration
+			document.getElementById("logDistance").value= data.details.distance
+			document.getElementById("logRole").value= data.details.role
+			document.getElementById("logSkills").value= data.details.skills
+
+
+			if(data.details.participants.length>0){
+				document.getElementById("logParticipants").value=data.details.participants
+			}
+			else{
+			  var names = new Array()
+			  for(i in data.confirmed){
+				names.push(data.confirmed[i].name)
+			  }
+			  document.getElementById("logGroupsize").value=names.join(", ")
+			}
+			resizeInput()
+                     });
+			
+		}
+			function updateLog(){
+				if(document.getElementById("logbooklist").value==-1){
+					alert("You must select a trip that you have created or joined. For historic trips you can add a new trip then wait approx. one hour for it to appear here.")
+				}
+				else{
+			var user=firebase.auth().currentUser.uid;
+			firebase.database().ref('users/' + user + '/completed/'+document.getElementById("logbooklist").value+'/details').update({
+                        uid: document.getElementById("logUid").value,
+			trip: document.getElementById("logTripname").value,
+			section: document.getElementById("logSec").value,
+			date: document.getElementById("logDate").value,
+			time: document.getElementById("logTime").value,
+			email: document.getElementById("logEmail").value,
+			phone: document.getElementById("logPhone").value,
+			info: document.getElementById("logInfo").value,
+			participants: document.getElementById("logParticipants").value,
+			level: document.getElementById("logLevel").value,
+			skills: document.getElementById("logSkills").value,
+			role: document.getElementById("logRole").value,
+			grade: document.getElementById("logGrade").value,
+			duration: document.getElementById("logDuration").value,
+			distance: document.getElementById("logDistance").value
+				
+                     });
+				
+					alert("Logbook updated")
+					document.getElementById("logbooklist").selectedIndex = "0";
+					hideLog()
+				logList()	
+				}	
+		}
                function removeOptions(selectbox)
                {
                  var i;
@@ -581,63 +829,46 @@ localStorage.uid=vars[uid]
                var json = JSON.parse(this.responseText);
                     localStorage.removeItem("json")
                     localStorage.json=JSON.stringify(json);
+		favpopulate();
+               	displayfavs();
                  }
                }
                xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
                xhttp.send();
                }
-               function populate(){
-                var json = JSON.parse(localStorage.json)
-                 removeOptions(document.getElementById("RivSec"));
-                 var elm = document.getElementById('RivSec'),
-               df = document.createDocumentFragment();
-                 for (var i=0; i<json.rows.length ; i++){
-                 if ((document.getElementById("State").value == json.rows[i][11] || document.getElementById("State").value == "Any") && ( document.getElementById("Level").value == json.rows[i][12] || document.getElementById("Level").value == "Any" ) && (document.getElementById("Min. grade").value <= json.rows[i][13]) && (document.getElementById("Max. grade").value >= json.rows[i][14]) ){
-                 var div = document.createElement('div');
-                 div.innerHTML= json.rows[i][1]
-                   var option = document.createElement('option');
-                   option.value = i;
-                   option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
-                   df.appendChild(option);}
-                   else{
-                   }
-                 }
-                 elm.appendChild(df);
-                 update()
-               
-               
-               
-               
-               
-                   }
-               
-                 
-            </script>
-         </div>
+		 </script>
                   <!-- TRIP Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
             <script>
-               function triplist(){
-               var para = document.getElementById("tripp");
+              
+               return firebase.database().ref('trips/active').once('value').then(function(snapshot) {
+		        var para = document.getElementById("tripp");
                var contents = new Array()
-               return firebase.database().ref('trips/').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot.child('details').val();
+		if(data.private === true || data.space ==="0"){
+		   }
+		   else{
                      var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onclick=\"joinTrip(\''+childSnapshot.key+'\')\">Request to Join</button></p>'
                      contents.push(node);
+		  }
                      });
                      para.innerHTML=contents.join("")
                   
                   });
-               }
+               
                   function joinTrip(key){
                      var user=firebase.auth().currentUser
                   if(user){
-                     firebase.database().ref('trips/' + key + '/waiting/'+ user.uid).set({
+			console.log(document.getElementById("myinfo").value)
+                     firebase.database().ref('trips/active/' + key + '/waiting/'+ user.uid).set({
                           name: user.displayName,
                           id: user.uid,
-                          email: user.email
-                       });                  }
+                          email: user.email,
+			  about: document.getElementById("myinfo").value
+                     });   
+			  alert("Request sent.")
+		  }
                   else {
                      window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html#trips'
                   }
@@ -645,11 +876,11 @@ localStorage.uid=vars[uid]
             </script>
             <h2 class="w3-text-light-grey">Upcoming Trips</h2>
             <hr style="width:200px" class="w3-opacity">
-            <a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" target="_self" class="w3-hover-text-green">Add/Delete a Trip</a>
+		<a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" class="w3-btn w3-white">Add/Delete a Trip</a>
             <p id="tripp"></p>
            </div>
             <br>
-            <!-- End Contact Section -->
+            <!-- End Trip Section -->
          <!-- Contact Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
             <h2 class="w3-text-light-grey">Contact Us</h2>
@@ -674,6 +905,7 @@ localStorage.uid=vars[uid]
             <!-- End footer -->
          </footer>
          <!-- END PAGE CONTENT -->
-      </div>      
+      </div>
    </body>
 </html>
+
