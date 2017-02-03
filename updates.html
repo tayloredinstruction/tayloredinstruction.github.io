@@ -364,7 +364,7 @@
 				var trip=i
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
 					console.log(document.getElementById(trip+"notification"))
-					if(document.getElementById(trip+"notification")!=null){
+					if(document.getElementById(trip+"notification")){
 						console.log('deleting')
 						var element = document.getElementById(trip+"notification");
 						element.parentNode.removeChild(element);
