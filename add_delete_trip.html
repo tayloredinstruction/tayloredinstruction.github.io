@@ -650,6 +650,7 @@ function updTripInformation() {
                return firebase.database().ref('users').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot;
+			  console.log(data.val())
                      users.push([data.val().info.name,data.val().info.uid])
                      });
         users.sort(function(a, b) { 
