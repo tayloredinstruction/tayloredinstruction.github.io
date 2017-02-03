@@ -366,6 +366,7 @@
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
 					console.log(trip)
 					if(document.getElementById(trip+"notification")){
+						console.log('deletrius')
 						var element = document.getElementById(trip+"notification");
 						element.parentNode.removeChild(element);
 					}
@@ -376,7 +377,8 @@
 						var email =snapshot.val().waiting[j].email;
 						var id= snapshot.val().waiting[j].id;
 						var node = "<p id=\""+trip+"notification\">"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
-					contentsWait.push(node)
+					console.log(node)
+						contentsWait.push(node)
 						}
 					paraWait.innerHTML=contentsWait.join("")
 					document.getElementById("appLoad").className=""
