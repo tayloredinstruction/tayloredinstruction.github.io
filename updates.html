@@ -364,6 +364,7 @@
 				if(item.uid===user){
 				var trip=i
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
+					console.log(trip)
 					if(document.getElementById(trip+"notification")){
 						var element = document.getElementById(trip+"notification");
 						element.parentNode.removeChild(element);
