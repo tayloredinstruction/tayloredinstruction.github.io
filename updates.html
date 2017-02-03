@@ -385,14 +385,12 @@
 						contentsWait.push(node)
 						}
 						       }
+					idiv.innerHTML=contentsWait.join("")
+					paraWait.appendChild(idiv)
 					if (contentsWait.join("")===""){
 						var element = document.getElementById(trip+"notification");
 						console.log(element)
 						element.parentNode.removeChild(element);
-					}
-					else{
-					idiv.innerHTML=contentsWait.join("")
-					paraWait.appendChild(idiv)
 					}
 					document.getElementById("appLoad").className=""
 					document.getElementById("loadContainerApp").className=""
