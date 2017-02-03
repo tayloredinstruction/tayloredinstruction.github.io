@@ -357,6 +357,7 @@
                var para = document.getElementById("approve");
                var contents = new Array()
                firebase.database().ref('users/'+user+'/trips').on('value', function(snapshot) {
+		       console.log('in the listener')
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
@@ -443,6 +444,7 @@
                firebase.database().ref('users/' + user + '/trips' ).on('value', function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
+			console.log(data)
                      if(data.uid===undefined){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
