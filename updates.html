@@ -368,7 +368,8 @@
 						var element = document.getElementById(trip+"notification");
 						element.parentNode.removeChild(element);
 					}
-					paraWait.append(document.createElement('div').id=trip+"notification")
+					var idiv=document.createElement('div')
+					idiv.id=trip+"notification"
 					               var contentsWait = new Array()
 					for (var j in snapshot.val().waiting){
 						var name = snapshot.val().waiting[j].name;
@@ -379,7 +380,8 @@
 					console.log(node)
 						contentsWait.push(node)
 						}
-					document.getElementById(trip+"notification").innerHTML=contentsWait.join("")
+					idiv.innerHTML=contentsWait.join("")
+					paraWait.appendChild(idiv)
 					document.getElementById("appLoad").className=""
 					document.getElementById("loadContainerApp").className=""
 				});
