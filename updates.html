@@ -392,25 +392,40 @@
                }
 		    
 		function accReq(trip, user){
+			document.getElementById("loadContainerApp").className=("w3-hide")
+			document.getElementById("appLoad").className=("loader")
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
 			setTimeout(approveList, 1500);
 			setTimeout(usertriplist, 2000);
+			document.getElementById("appLoad").className=("")		
+			document.getElementById("loadContainerApp").className=("")
 		}
 		    function decReq(trip, user){
+			document.getElementById("loadContainerApp").className=("w3-hide")
+			document.getElementById("appLoad").className=("loader")
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
 			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)
 			setTimeout(approveList, 1500);
+			document.getElementById("appLoad").className=("")		
+			document.getElementById("loadContainerApp").className=("")
 		}
 		    function appReq(trip, user){
+			document.getElementById("loadContainerApp").className=("w3-hide")
+			document.getElementById("appLoad").className=("loader")
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
 			setTimeout(approveList, 1500);
-
+			document.getElementById("appLoad").className=("")		
+			document.getElementById("loadContainerApp").className=("")
 		}
 		    function denReq(trip, user){
+			document.getElementById("loadContainerApp").className=("w3-hide")
+			document.getElementById("appLoad").className=("loader")
 			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
 			setTimeout(approveList, 1500);
+			document.getElementById("appLoad").className=("")		
+			document.getElementById("loadContainerApp").className=("")
 		}
 		    
 		function copyFbRecord(oldRef, newRef) {    
