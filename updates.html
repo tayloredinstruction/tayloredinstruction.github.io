@@ -356,13 +356,13 @@
                var user=firebase.auth().currentUser.uid
                var para = document.getElementById("approve");
                var contents = new Array()
-               firebase.database().ref('users/'+user+'/trips').on('value', function(snapshot) {
+               firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 		       console.log('in the listener')
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
 				var trip=i
-				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
+				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
 					for (var j in snapshot.val().waiting){
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
