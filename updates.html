@@ -372,10 +372,11 @@
 					var idiv=document.createElement('div')
 					idiv.id=trip+"notification"
 					               var contentsWait = new Array()
+						       if(snapshot.val()){
+							
+						
 					for (var j in snapshot.val().waiting){
-						if(snapshot.val()===null){
-							continue
-						}
+						
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
 						var email =snapshot.val().waiting[j].email;
@@ -383,6 +384,7 @@
 						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
 						contentsWait.push(node)
 						}
+						       }
 					idiv.innerHTML=contentsWait.join("")
 					paraWait.appendChild(idiv)
 					console.log(idiv)
