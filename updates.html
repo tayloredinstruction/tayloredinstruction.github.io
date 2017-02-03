@@ -358,7 +358,6 @@
                var paraWait = document.getElementById("approveWait");
                var paraInvite = document.getElementById("approveInvite");
                firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
-		       console.log('in the listener')
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
@@ -377,11 +376,11 @@
 						var email =snapshot.val().waiting[j].email;
 						var id= snapshot.val().waiting[j].id;
 						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
-					console.log(node)
 						contentsWait.push(node)
 						}
 					idiv.innerHTML=contentsWait.join("")
 					paraWait.appendChild(idiv)
+					console.log('loaderStop')
 					document.getElementById("appLoad").className=""
 					document.getElementById("loadContainerApp").className=""
 				});
