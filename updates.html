@@ -491,7 +491,9 @@
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
+						if(snapshot.val()){
   document.getElementById(childSnapshot.key+'view').innerHTML=snapshot.val().comments
+						}
 });
 				});
 			}
