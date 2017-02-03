@@ -374,7 +374,7 @@
 						var about = snapshot.val().waiting[j].about;
 						var email =snapshot.val().waiting[j].email;
 						var id= snapshot.val().waiting[j].id;
-						var node = "<p id=\""+trip+"notification\'>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
+						var node = "<p id=\""+trip+"notification\">"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
 					contentsWait.push(node)
 						}
 					paraWait.innerHTML=contentsWait.join("")
