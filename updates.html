@@ -203,7 +203,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="initialize();triplist();favpopulate();displayfavs();">
+   <body class="w3-black" onload="initialize();favpopulate();displayfavs();">
         <script>
   // Initialize Firebase
   var config = {
@@ -841,7 +841,7 @@
          <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
             <script>
               
-               return firebase.database().ref('trips/active').once('value').then(function(snapshot) {
+              firebase.database().ref('trips/active').on('value', function(snapshot) {
 		        var para = document.getElementById("tripp");
                var contents = new Array()
                   snapshot.forEach(function(childSnapshot) {
