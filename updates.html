@@ -380,7 +380,7 @@
 					console.log(node)
 						contentsWait.push(node)
 						}
-					paraWait.innerHTML=contentsWait.join("")
+					paraWait.appendChild(contentsWait.join(""))
 					document.getElementById("appLoad").className=""
 					document.getElementById("loadContainerApp").className=""
 				});
