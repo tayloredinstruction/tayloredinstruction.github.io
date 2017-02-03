@@ -477,7 +477,7 @@
                         else{
 				return firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
 					
-				if(commSnapshot.val().comments===null || commSnapshot.val().comments===undefined ){
+				if(!(commSnapshot.val())){
 					var comments= ""
 					}
 				else{
