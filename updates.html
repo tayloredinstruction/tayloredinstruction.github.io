@@ -471,7 +471,7 @@
 			  else{
 			var data = childSnapshot.val()
 				 firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
-					
+					console.log(!(commSnapshot.val()) || commSnapshot.val().comments===undefined)
 				if(!(commSnapshot.val()) || commSnapshot.val().comments===undefined){
 					var comments= ""
 					}
