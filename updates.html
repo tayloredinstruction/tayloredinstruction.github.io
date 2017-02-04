@@ -467,7 +467,7 @@
                         else{
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
-				return firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
+				 firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
 					
 				if(!(commSnapshot.val())){
 					var comments= ""
