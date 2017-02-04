@@ -458,16 +458,15 @@
             function usertriplist(){
                var user=firebase.auth().currentUser.uid
                var para = document.getElementById("mytrips");
-               var contents = new Array()
                firebase.database().ref('users/' + user + '/trips' ).on('value', function(snapshot) {
-                  snapshot.forEach(function(childSnapshot) {
-			var data = childSnapshot.val()
-			console.log(data)
-                     if(data.uid===undefined){
+		                      var contents = new Array()
+		        if(!(snapshot.hasChild())){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
                      }
                         else{
+                  snapshot.forEach(function(childSnapshot) {
+			var data = childSnapshot.val()
 				return firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
 					
 				if(!(commSnapshot.val())){
@@ -485,8 +484,9 @@
 						}
 });
 				});
-			}
+			
                      });
+			}
                   document.getElementById("tripLoad").className=""
 		  document.getElementById("loadContainerTrip").className=""
 
