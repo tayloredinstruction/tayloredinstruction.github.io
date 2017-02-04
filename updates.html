@@ -460,7 +460,7 @@
                var para = document.getElementById("mytrips");
                firebase.database().ref('users/' + user + '/trips' ).on('value', function(snapshot) {
 		                      var contents = new Array()
-		        if(!(snapshot.hasChild())){
+		        if(!(snapshot.hasChildren())){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
                      }
