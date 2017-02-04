@@ -362,6 +362,7 @@
 				var item=snapshot.val()[i]
 				if(item.uid===user){
 				var trip=i
+				console.log('here?')
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
 					console.log("listener: "+trip)
 					if(document.getElementById(trip+"notification")){
