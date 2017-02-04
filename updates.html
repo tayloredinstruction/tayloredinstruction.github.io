@@ -364,7 +364,7 @@
 				var trip=i
 				console.log('here?')
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
-					console.log("listener: "+trip)
+					console.log(snapshot.key+"   "+trip)
 					if(document.getElementById(trip+"notification")){
 						var element = document.getElementById(trip+"notification");
 						console.log(element)
