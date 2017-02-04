@@ -466,8 +466,10 @@
                      }
                         else{
                   snapshot.forEach(function(childSnapshot) {
+			  if(childSnapshot.key=="invited"){
+			  }
+			  else{
 			var data = childSnapshot.val()
-			console.log(data);
 				 firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
 					
 				if(!(commSnapshot.val())){
@@ -485,6 +487,7 @@
 						}
 });
 				});
+			  }
 			
                      });
 			}
