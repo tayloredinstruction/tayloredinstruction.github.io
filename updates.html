@@ -363,8 +363,8 @@
 				if(item.uid===user){
 				var trip=i
 				console.log('here?')
-				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
-					console.log("listener: "+trip)
+				firebase.database().ref('trips/active/'+trip+'/waiting').on('value', function(snapshot) {
+					console.log(snapshot.val())
 					if(document.getElementById(trip+"notification")){
 						var element = document.getElementById(trip+"notification");
 						console.log(element)
@@ -376,7 +376,7 @@
 						       if(snapshot.val()){
 							
 						
-					for (var j in snapshot.val().waiting){
+					for (var j in snapshot.val()){
 						
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
@@ -895,7 +895,7 @@
                      var user=firebase.auth().currentUser
                   if(user){
 			console.log(document.getElementById("myinfo").value)
-                     firebase.database().ref('trips/active/' + key + '/waiting/'+ user.uid).set({
+                     firebase.database().ref('trips/active/' + key + '/waiting/'+ user.uid).update({
                           name: user.displayName,
                           id: user.uid,
                           email: user.email,
