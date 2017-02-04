@@ -472,7 +472,7 @@
 			var data = childSnapshot.val()
 				 firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
 					
-				if(!(commSnapshot.val())){
+				if(!(commSnapshot.val()) || commSnapshot.val().comments===undefined){
 					var comments= ""
 					}
 				else{
