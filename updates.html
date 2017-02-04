@@ -362,12 +362,9 @@
 				var item=snapshot.val()[i]
 				if(item.uid===user){
 				var trip=i
-				console.log('here?')
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
-					console.log(snapshot.key+"   "+trip)
 					if(document.getElementById(snapshot.key+"notification")){
 						var element = document.getElementById(trip+"notification");
-						console.log(element)
 						element.parentNode.removeChild(element);
 					}
 					var idiv=document.createElement('div')
@@ -390,11 +387,8 @@
 					paraWait.appendChild(idiv)
 					if (contentsWait.join("")===""){
 						var element = document.getElementById(snapshot.key+"notification");
-						console.log(element)
 						element.parentNode.removeChild(element);
 					}
-					document.getElementById("appLoad").className=""
-					document.getElementById("loadContainerApp").className=""
 				});
 				
 			}
@@ -408,36 +402,30 @@
                      contentsInvite.push(node);                       
                      });
                      paraInvite.innerHTML=contentsInvite.join("")
-		document.getElementById("appLoad").className=""
-		document.getElementById("loadContainerApp").className=""
 
                   });
 
                }
 		    
 		function accReq(trip, user){
-			document.getElementById("loadContainerApp").className=("w3-hide")
-			document.getElementById("appLoad").className=("loader")
+			document.getElementById(trip+"notification").className=("w3-hide")
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
 		}
 		    function decReq(trip, user){
-			document.getElementById("loadContainerApp").className=("w3-hide")
-			document.getElementById("appLoad").className=("loader")
+			document.getElementById(trip+"notification").className=("w3-hide")
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
 			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)		
 			
 		}
 		    function appReq(trip, user){
-			document.getElementById("loadContainerApp").className=("w3-hide")
-			document.getElementById("appLoad").className=("loader")
+			document.getElementById(trip+"notification").className=("w3-hide")
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
 
 		}
 		    function denReq(trip, user){
-			document.getElementById("loadContainerApp").className=("w3-hide")
-			document.getElementById("appLoad").className=("loader")
+			document.getElementById(trip+"notification").className=("w3-hide")
 			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
 		}
 		    
