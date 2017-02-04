@@ -203,7 +203,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="initialize();triplist();favpopulate();displayfavs();">
+   <body class="w3-black" onload="initialize();favpopulate();displayfavs();">
         <script>
   // Initialize Firebase
   var config = {
@@ -295,7 +295,8 @@
 	  <div id="appLoad" class = "loader">
 		  <div id = "loadContainerApp" class = "w3-hide">
   <h4>Notifications</h4>
-	  <div id = "approve"></div>
+	  <div id = "approveWait"></div>
+	  <div id = "approveInvite"></div>
 		  </div>
 	  </div>
 </div>
@@ -354,62 +355,78 @@
    });
 		    function approveList(){
                var user=firebase.auth().currentUser.uid
-               var para = document.getElementById("approve");
-               var contents = new Array()
+               var paraWait = document.getElementById("approveWait");
+               var paraInvite = document.getElementById("approveInvite");
                firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
 			for(var i in snapshot.val()){
 				var item=snapshot.val()[i]
 				if(item.uid===user){
 				var trip=i
-				firebase.database().ref('trips/active/'+trip).once('value').then(function(snapshot) {
+				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
+					if(document.getElementById(snapshot.key+"notification")){
+						var element = document.getElementById(snapshot.key+"notification");
+						element.parentNode.removeChild(element);
+					}
+					var idiv=document.createElement('div')
+					idiv.id=snapshot.key+"notification"
+					               var contentsWait = new Array()
+						       if(snapshot.val()){
+							
+						
 					for (var j in snapshot.val().waiting){
+						
 						var name = snapshot.val().waiting[j].name;
 						var about = snapshot.val().waiting[j].about;
 						var email =snapshot.val().waiting[j].email;
 						var id= snapshot.val().waiting[j].id;
 						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
-					contents.push(node)
+						contentsWait.push(node)
 						}
-					para.innerHTML=contents.join("")
+						       }
+					idiv.innerHTML=contentsWait.join("")
+					paraWait.appendChild(idiv)
+					if (contentsWait.join("")===""){
+						var element = document.getElementById(snapshot.key+"notification");
+						element.parentNode.removeChild(element);
+					}
 				});
 				
 			}
 			}	
                      });
-		firebase.database().ref('users/' + user + '/trips/invited' ).once('value').then(function(snapshot) {
+		firebase.database().ref('users/' + user + '/trips/invited' ).on('value', function(snapshot) {
+		 var contentsInvite = new Array()
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
-                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq(\''+childSnapshot.key+"\',\'"+user+"\')\">Accept</button><button onClick=\"decReq("+childSnapshot.key+","+user+")\">Decline</button></p>"
-                     contents.push(node);                       
+                     var node = '<p id="'+childSnapshot.key+'inv">Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq(\''+childSnapshot.key+"\',\'"+user+"\')\">Accept</button><button onClick=\"decReq(\'"+childSnapshot.key+"\',\'"+user+"\')\">Decline</button></p>"
+                     contentsInvite.push(node);                       
                      });
-                     para.innerHTML=contents.join("")
-		document.getElementById("appLoad").className=""
-		document.getElementById("loadContainerApp").className=""
+                     paraInvite.innerHTML=contentsInvite.join("")
 
                   });
 
                }
 		    
 		function accReq(trip, user){
-			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip));
-			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
-			setTimeout(approveList, 1500);
-			setTimeout(usertriplist, 2000);
+			document.getElementById(trip+"inv").className=("w3-hide")
+			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip))
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
 		}
 		    function decReq(trip, user){
+			document.getElementById(trip+"inv").className=("w3-hide")
 			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
-			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)
-			setTimeout(approveList, 1500);
+			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)		
+			
 		}
 		    function appReq(trip, user){
+			document.getElementById(trip+"notification").className=("w3-hide")
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
-			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user));
-			setTimeout(approveList, 1500);
+			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
 
 		}
 		    function denReq(trip, user){
+			document.getElementById(trip+"notification").className=("w3-hide")
 			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
-			setTimeout(approveList, 1500);
 		}
 		    
 		function copyFbRecord(oldRef, newRef) {    
@@ -419,6 +436,7 @@
           });
      });
 }  
+
 		    
                function moveFbRecord(oldRef, newRef) {    
      oldRef.once('value', function(snap)  {
@@ -427,7 +445,8 @@
                else if( typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
           });
      });
-}          
+}     
+          
 		    function commentShow(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {
@@ -439,32 +458,38 @@
             function usertriplist(){
                var user=firebase.auth().currentUser.uid
                var para = document.getElementById("mytrips");
-               var contents = new Array()
-               return firebase.database().ref('users/' + user + '/trips' ).once('value').then(function(snapshot) {
-                  snapshot.forEach(function(childSnapshot) {
-			var data = childSnapshot.val()
-                     if(data.uid===undefined){
+               firebase.database().ref('users/' + user + '/trips' ).on('value', function(snapshot) {
+		                      var contents = new Array()
+		        if(!(snapshot.hasChildren())){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
                      }
                         else{
-				return firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
-					
-				if(commSnapshot.val().comments===undefined){
+                  snapshot.forEach(function(childSnapshot) {
+			  if(childSnapshot.key=="invited"){
+			  }
+			  else{
+			var data = childSnapshot.val()
+				 firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
+				if(!(commSnapshot.val().comments) || commSnapshot.val().comments===null){
 					var comments= ""
 					}
 				else{
 					var comments = commSnapshot.val().comments
 					}
-                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-black"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div>'
+                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-black"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
+						if(snapshot.val().comments){
   document.getElementById(childSnapshot.key+'view').innerHTML=snapshot.val().comments
+						}
 });
 				});
-			}
+			  }
+			
                      });
+			}
                   document.getElementById("tripLoad").className=""
 		  document.getElementById("loadContainerTrip").className=""
 
@@ -721,9 +746,9 @@
 			    
 			    
 			    function logList(){
-                       removeOptions(document.getElementById("logbooklist"));
 			var user=firebase.auth().currentUser.uid;
-			firebase.database().ref('users/' + user + '/completed/').once('value').then(function(snapshot) {
+			firebase.database().ref('users/' + user + '/completed/').on('value', function(snapshot) {
+				removeOptions(document.getElementById("logbooklist"));
 				var elm = document.getElementById("logbooklist");
 				var df = document.createDocumentFragment();
 				var option = document.createElement('option');
@@ -745,7 +770,7 @@
 			    }
 		function dispLog(trip){
 			var user=firebase.auth().currentUser.uid;
-		firebase.database().ref('users/' + user + '/completed/'+trip).once('value').then(function(snapshot) {
+		firebase.database().ref('users/' + user + '/completed/'+trip).on('value', function(snapshot) {
 			var data = snapshot.val()
 			if(data.details.section.split("<")[1] === undefined ){
 				var sec = data.details.section
@@ -840,10 +865,10 @@
                   <!-- TRIP Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
             <script>
-               function triplist(){
-               var para = document.getElementById("tripp");
+              
+              firebase.database().ref('trips/active').on('value', function(snapshot) {
+		        var para = document.getElementById("tripp");
                var contents = new Array()
-               return firebase.database().ref('trips/active').once('value').then(function(snapshot) {
                   snapshot.forEach(function(childSnapshot) {
                      var data = childSnapshot.child('details').val();
 		if(data.private === true || data.space ==="0"){
@@ -856,12 +881,12 @@
                      para.innerHTML=contents.join("")
                   
                   });
-               }
+               
                   function joinTrip(key){
                      var user=firebase.auth().currentUser
                   if(user){
 			console.log(document.getElementById("myinfo").value)
-                     firebase.database().ref('trips/active/' + key + '/waiting/'+ user.uid).set({
+                     firebase.database().ref('trips/active/' + key + '/waiting/'+ user.uid).update({
                           name: user.displayName,
                           id: user.uid,
                           email: user.email,
