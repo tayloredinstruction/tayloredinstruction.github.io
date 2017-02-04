@@ -472,7 +472,7 @@
 			var data = childSnapshot.val()
 				 firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
 					console.log(!(commSnapshot.val()) || commSnapshot.val().comments===undefined)
-				if(!(commSnapshot.val()) || commSnapshot.val().comments===undefined){
+				if(!(commSnapshot.val().comments) || commSnapshot.val().comments===null){
 					var comments= ""
 					}
 				else{
@@ -482,7 +482,7 @@
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
-						if(snapshot.val()){
+						if(snapshot.val().comments){
   document.getElementById(childSnapshot.key+'view').innerHTML=snapshot.val().comments
 						}
 });
