@@ -363,7 +363,7 @@
 				if(item.uid===user){
 				var trip=i
 				console.log('here?')
-				firebase.database().ref('trips/active/'+trip+'/waiting').on('value', function(snapshot) {
+				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
 					console.log("listener: "+trip)
 					if(document.getElementById(trip+"notification")){
 						var element = document.getElementById(trip+"notification");
@@ -378,10 +378,10 @@
 						
 					for (var j in snapshot.val()){
 						
-						var name = snapshot.val()[j].name;
-						var about = snapshot.val()[j].about;
-						var email =snapshot.val()[j].email;
-						var id= snapshot.val()[j].id;
+						var name = snapshot.val().waiting[j].name;
+						var about = snapshot.val().waiting[j].about;
+						var email =snapshot.val().waiting[j].email;
+						var id= snapshot.val().waiting[j].id;
 						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
 						contentsWait.push(node)
 						}
