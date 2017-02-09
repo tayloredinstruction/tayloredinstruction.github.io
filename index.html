@@ -741,7 +741,7 @@
 						  } 
 					console.log(log)
 					 sa = true;
-     var myBlob =  new Blob( snapshot.val() , {type:'application/vnd.ms-excel'});
+     var myBlob =  new Blob( [snapshot.val()] , {type:'application/vnd.ms-excel'});
 					console.log(myBlob)
      var url = window.URL.createObjectURL(myBlob);
      var a = document.createElement("a");
