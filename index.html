@@ -641,9 +641,8 @@
          <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
             <h2 class="w3-text-light-grey"> Logbook </h2>
 		 <div id = "downloadLog">
-			 <button onclick="downloadLog()">Download Logbook</button>
-			 <button onclick="excelLog()">Download Logbook</button>
-			 <p> Copy and paste the text that appears below into a .txt file and then open with Excel. Ensure you change the "delimiter" to "comma", and MANUALLY specify the "column data format" as text for "Phone", "Grade", "Duration (hrs)" and "Distance (km)"</p>
+			 <button onclick="downloadLog()">Get Log as Table</button>
+			 <button onclick="excelLog()">Download Logbook as Excel File</button>
 			 <p id = "logDump"></p>
 		 </div>
 		 <div id = "loginbook">
@@ -718,15 +717,21 @@
 				   var user = firebase.auth().currentUser.uid;
 				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
 				   var data=snapshot.val()
-				   var log = [['Organiser', 'Trip Name', 'Section', "Date", 'Time', 'Email', 'Phone', 'Grade', 'Duration (hrs)', 'Distance (km)', "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
+				var log = '<table><tr style=\"border: 1px solid #000000; text-align: left\"><th>Organiser</th><th>Trip Name</th><th>Section</th><th>Date</th><th>Time</th><th>Email</th><th>Phone</th><th>Grade</th><th>Duration (hrs)</th><th>Distance (km)</th><th>Level</th><th>Participants</th><th>Role</th><th>Skills Practiced</th><th>Additional Info</th></tr>'
+				   var parity=0
 				   for (x in data){
+					   if(parity%2===1){
+						   var trstyle = "<tr style=\"background-color: #dddddd; border: 1px solid #000000; text-align: left\">"
+						   }
+					   else{
+						   trstyle="<tr style=\"border: 1px solid #000000; text-align: left\">"
+					   }
 					 var details = data[x].details
-					 log.push([details.organiser, details.trip, details.section, details.date, details.time, details.email, details.phone, details.grade, details.duration, details.distance, details.level, '"'+details.participants+'"', '"'+details.role+'"', '"'+details.skills+'"', '"'+details.info+'"'])
-						  } 
-						  for(var x = 0; x<log.length; x++){
-						 
-						  document.getElementById("logDump").innerHTML = log.join("<br>")
-					 }
+					 log+=trstyle+'<td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>="'+details.phone+'"</td><td>="'+details.grade+'"</td><td>="'+details.duration+'"</td><td>="'+details.distance+'"</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>'
+				parity+=1		  
+				   }
+					log+='</table>'
+						  document.getElementById("logDump").innerHTML = log;
 						  });
     
 			    }
