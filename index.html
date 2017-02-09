@@ -761,7 +761,7 @@
      var a = document.createElement("a");
      document.body.appendChild(a);
      a.href = url;
-     a.download = firebase.auth().currentUser.displayName+" log.xlsx";
+     a.download = firebase.auth().currentUser.displayName+" log.xls";
      a.click();
      setTimeout(function() {window.URL.revokeObjectURL(url);},0);
     
