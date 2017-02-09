@@ -755,13 +755,13 @@
 					log+='</table>'
 					console.log(log)
 					 sa = true;
-     var myBlob =  new Blob( [log] , {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+     var myBlob =  new Blob( [log] , {type:'application/application/vnd.google-apps.spreadsheet'});
 					console.log(myBlob)
      var url = window.URL.createObjectURL(myBlob);
      var a = document.createElement("a");
      document.body.appendChild(a);
      a.href = url;
-     a.download = "newfile.xls";
+     a.download = firebase.auth().currentUser.displayName+"_log.xls";
      a.click();
      setTimeout(function() {window.URL.revokeObjectURL(url);},0);
     
