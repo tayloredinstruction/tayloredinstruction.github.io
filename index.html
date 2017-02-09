@@ -642,6 +642,7 @@
             <h2 class="w3-text-light-grey"> Logbook </h2>
 		 <div id = "downloadLog">
 			 <button onclick="downloadLog()">Download Logbook</button>
+			 <button onclick="excelLog()">Download Logbook</button>
 			 <p> Copy and paste the text that appears below into a .txt file and then open with Excel. Ensure you change the "delimiter" to "comma", and MANUALLY specify the "column data format" as text for "Phone", "Grade", "Duration (hrs)" and "Distance (km)"</p>
 			 <p id = "logDump"></p>
 		 </div>
@@ -726,6 +727,34 @@
 						 
 						  document.getElementById("logDump").innerHTML = log.join("<br>")
 					 }
+						  });
+    
+			    }
+			    function excelLog(){
+				   var user = firebase.auth().currentUser.uid;
+				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
+				   var data=snapshot.val()
+				   var log = [['Organiser', 'Trip Name', 'Section', "Date", 'Time', 'Email', 'Phone', 'Grade', 'Duration (hrs)', 'Distance (km)', "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
+				   for (x in data){
+					 var details = data[x].details
+					 log.push([details.organiser, details.trip, details.section, details.date, details.time, details.email, details.phone, details.grade, details.duration, details.distance, details.level, '"'+details.participants+'"', '"'+details.role+'"', '"'+details.skills+'"', '"'+details.info+'"'])
+						  } 
+						  for(var x = 0; x<log.length; x++){
+						 
+						  document.getElementById("logDump").innerHTML = log.join("<br>")
+					 }
+					 sa = true;
+     var myBlob =  new Blob( log , {type:'text/html'});
+     var url = window.URL.createObjectURL(myBlob);
+     var a = document.createElement("a");
+     document.body.appendChild(a);
+     a.href = url;
+     a.download = "newfile.xls";
+     a.click();
+     setTimeout(function() {window.URL.revokeObjectURL(url);},0);
+    
+    return (sa);
+  }
 						  });
     
 			    }
