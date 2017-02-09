@@ -739,8 +739,10 @@
 					 var details = data[x].details
 					 log.push([[details.organiser], [details.trip], [details.section], [details.date], [details.time], [details.email], [details.phone], [details.grade], [details.duration], [details.distance], [details.level], ['"'+details.participants+'"'], ['"'+details.role+'"'], ['"'+details.skills+'"'], ['"'+details.info+'"']])
 						  } 
+					console.log(log)
 					 sa = true;
      var myBlob =  new Blob( log , {type:'text/html'});
+					console.log(myBlob)
      var url = window.URL.createObjectURL(myBlob);
      var a = document.createElement("a");
      document.body.appendChild(a);
