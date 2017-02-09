@@ -734,14 +734,15 @@
 				   var user = firebase.auth().currentUser.uid;
 				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
 				   var data=snapshot.val()
-				   var log = [[['Organiser'], ['Trip Name'], ['Section'], ["Date"], ['Time'], ['Email'], ['Phone'], ['Grade'], ['Duration (hrs)'], ['Distance (km)'], ["Level"],["Participants"], ["Role"], ["Skills Practiced"], ["Additional Info"]]]
+				   var log = '<table><tr><th>Organiser</th><th>Trip Name</th><th>Section</th><th>Date</th><th>Time</th><th>Email</th><th>Phone</th><th>Grade</th><th>Duration (hrs)</th><th>Distance (km)</th><th>Level</th><th>Participants</th><th>Role</th><th>Skills Practiced</th><th>Additional Info</th></tr>'
 				   for (x in data){
 					 var details = data[x].details
-					 log.push([[details.organiser], [details.trip], [details.section], [details.date], [details.time], [details.email], [details.phone], [details.grade], [details.duration], [details.distance], [details.level], ['"'+details.participants+'"'], ['"'+details.role+'"'], ['"'+details.skills+'"'], ['"'+details.info+'"']])
-						  } 
+					 log.push('<tr><td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>'+details.phone+'</td><td>'+details.grade+'</td><td>'+details.duration+'</td><td>'+details.distance+'</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>')
+						  }
+					log.push('</table>')
 					console.log(log)
 					 sa = true;
-     var myBlob =  new Blob( [[["col1"]],[["col2"]]] , {type:'application/vnd.ms-excel'});
+     var myBlob =  new Blob( [log] , {type:'application/vnd.ms-excel'});
 					console.log(myBlob)
      var url = window.URL.createObjectURL(myBlob);
      var a = document.createElement("a");
