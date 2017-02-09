@@ -734,15 +734,11 @@
 				   var user = firebase.auth().currentUser.uid;
 				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
 				   var data=snapshot.val()
-				   var log = [['Organiser', 'Trip Name', 'Section', "Date", 'Time', 'Email', 'Phone', 'Grade', 'Duration (hrs)', 'Distance (km)', "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
+				   var log = [[['Organiser'], ['Trip Name'], ['Section'], ["Date"], ['Time'], ['Email'], ['Phone'], ['Grade'], ['Duration (hrs)'], ['Distance (km)'], ["Level"],["Participants"], ["Role"], ["Skills Practiced"], ["Additional Info"]]]
 				   for (x in data){
 					 var details = data[x].details
-					 log.push([details.organiser, details.trip, details.section, details.date, details.time, details.email, details.phone, details.grade, details.duration, details.distance, details.level, '"'+details.participants+'"', '"'+details.role+'"', '"'+details.skills+'"', '"'+details.info+'"'])
+					 log.push([[details.organiser], [details.trip], [details.section], [details.date], [details.time], [details.email], [details.phone], [details.grade], [details.duration], [details.distance], [details.level], ['"'+details.participants+'"'], ['"'+details.role+'"'], ['"'+details.skills+'"'], ['"'+details.info+'"']])
 						  } 
-						  for(var x = 0; x<log.length; x++){
-						 
-						  document.getElementById("logDump").innerHTML = log.join("<br>")
-					 }
 					 sa = true;
      var myBlob =  new Blob( log , {type:'text/html'});
      var url = window.URL.createObjectURL(myBlob);
