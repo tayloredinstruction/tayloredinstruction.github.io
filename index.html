@@ -737,9 +737,9 @@
 				   var log = '<table><tr><th>Organiser</th><th>Trip Name</th><th>Section</th><th>Date</th><th>Time</th><th>Email</th><th>Phone</th><th>Grade</th><th>Duration (hrs)</th><th>Distance (km)</th><th>Level</th><th>Participants</th><th>Role</th><th>Skills Practiced</th><th>Additional Info</th></tr>'
 				   for (x in data){
 					 var details = data[x].details
-					 log+='<tr><td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>'+details.phone+'</td><td>'+details.grade+'</td><td>'+details.duration+'</td><td>'+details.distance+'</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>')
+					 log+='<tr><td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>'+details.phone+'</td><td>'+details.grade+'</td><td>'+details.duration+'</td><td>'+details.distance+'</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>'
 						  }
-					log+='</table>')
+					log+='</table>'
 					console.log(log)
 					 sa = true;
      var myBlob =  new Blob( [log] , {type:'application/vnd.ms-excel'});
