@@ -561,8 +561,8 @@
                       else{
                       }
                   }
-		firebase.database().ref('sections/').on('value', function(snapshot) {
-		console.log(snapshot.val)
+		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
+		console.log(snapshot.val())
                   para.innerHTML=contents.join("")
 		});
 			  
