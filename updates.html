@@ -548,13 +548,24 @@
                       else{
                       var colour = "green !important"
                       }
-               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
+		var qualityRegex = />(.+)</g,
+                matches,
+                qualities = [];
+            while (matches = qualityRegex.exec(json.rows[ref][1])) {
+              qualities.push(decodeURIComponent(matches[1]));
+            }  
+			  var secGraph = qualities[0]
+               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
                	contents.push(node)
                       }
                       else{
                       }
                   }
+		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
+		console.log(snapshot.val)
                   para.innerHTML=contents.join("")
+		});
+			  
                   }
                     
                     	function removeOptions(selectbox)
