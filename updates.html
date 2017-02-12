@@ -563,7 +563,7 @@
                       }
                       else{
                       }
-                  }
+                  
 			  			para.innerHTML=contents.join("")
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
 			var dataArray = [['Date', 'Level']]
@@ -583,7 +583,7 @@
 
         chart.draw(data, options);
 		});
-			  
+		  }	  
                   }
                     
                     	function removeOptions(selectbox)
