@@ -115,6 +115,7 @@
          background-color: Black;
          }
       </style>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
@@ -555,15 +556,30 @@
               qualities.push(decodeURIComponent(matches[1]));
             }  
 			  var secGraph = qualities[0]
-               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
+               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br><div id = \""secGraph+"curve_chart\"></div><br>Forecast: "+json.rows[ref][18]+"</p>";
                	contents.push(node)
                       }
                       else{
                       }
                   }
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
-		console.log(snapshot.val())
-                  para.innerHTML=contents.join("")
+			var dataArray = new Array()
+			for (var i in snapshot.val()){
+			para.innerHTML=contents.join("")
+			dataArray.push[i,parseFloat(snapshot.val()[i])]
+				console.log([i,snapshot.val()[i]])
+			}
+		        var data = google.visualization.arrayToDataTable(dataArray);
+
+        var options = {
+          title: snapshot.key,
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
+
+        chart.draw(data, options);
 		});
 			  
                   }
