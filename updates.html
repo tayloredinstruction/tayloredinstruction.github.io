@@ -204,7 +204,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="initialize();favpopulate();displayfavs();">
+   <body class="w3-black" onload="initialize();favpopulate()">
         <script>
   // Initialize Firebase
   var config = {
@@ -527,7 +527,9 @@
                     localStorage.favslist=localStorage.favslist+favstring
                  }
                     }
-                    
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(displayfavs);
+
                   function displayfavs(){
                   var json = JSON.parse(localStorage.json)  
                   var favsdiv = document.getElementById("favsdiv")
@@ -563,7 +565,6 @@
                       }
                   }
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
-			google.charts.load('current', {'packages':['corechart']});
 			var dataArray = [['Date'],['Level']]
 			for (var i in snapshot.val()){
 			para.innerHTML=contents.join("")
