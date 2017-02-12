@@ -569,8 +569,8 @@
 			for (var i in snapshot.val()){
 			para.innerHTML=contents.join("")
 			dataArray.push([i,parseFloat(snapshot.val()[i])])
-				console.log([i,parseFloat(snapshot.val()[i])])
 			}
+			console.log(dataArray);
 		        var data = google.visualization.arrayToDataTable(dataArray);
 
         var options = {
