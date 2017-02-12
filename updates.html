@@ -563,6 +563,7 @@
                       }
                   }
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
+			google.charts.load('current', {'packages':['corechart']});
 			var dataArray = [['Date'],['Level']]
 			for (var i in snapshot.val()){
 			para.innerHTML=contents.join("")
