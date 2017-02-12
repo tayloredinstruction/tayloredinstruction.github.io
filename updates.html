@@ -563,11 +563,11 @@
                       }
                   }
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
-			var dataArray = new Array()
+			var dataArray = [['Date'],['Level']]
 			for (var i in snapshot.val()){
 			para.innerHTML=contents.join("")
-			dataArray.push[i,parseFloat(snapshot.val()[i])]
-				console.log([i,snapshot.val()[i]])
+			dataArray.push([i,parseFloat(snapshot.val()[i]))
+				console.log([i,parseFloat(snapshot.val()[i]]))
 			}
 		        var data = google.visualization.arrayToDataTable(dataArray);
 
