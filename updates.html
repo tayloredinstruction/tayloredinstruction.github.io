@@ -50,7 +50,6 @@
         })(document,window.navigator,'standalone');
     </script>
       <link rel="stylesheet" href="lib/w3.css">
-      <link rel="stylesheet" href="lib/w3-theme-black.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <style type="text/css">
@@ -110,6 +109,11 @@
          #main {margin-left: 120px}
          /* Remove margins from "page content" on small screens */
          @media only screen and (max-width: 600px) {#main {margin-left: 0}}
+      </style>
+      <style>
+         body { 
+         background-color: Black;
+         }
       </style>
       <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
@@ -199,7 +203,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-theme-l1" onload="initialize();favpopulate();displayfavs();">
+   <body class="w3-black" onload="initialize();favpopulate();displayfavs();">
         <script>
   // Initialize Firebase
   var config = {
@@ -268,12 +272,12 @@
 		   }
 		   
 	   </script>
-      <div class="w3-padding-large w3-theme-l1" id="main">
+      <div class="w3-padding-large" id="main">
          <!-- Header/Home -->
-         <div class="w3-padding-64 w3-content w3-theme-l1" id="home" style="min-height:95vh">
+         <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
 		 
-  <div class="w3-row w3-theme-l1" style="min-height:95vh">
+  <div class="w3-row" style="min-height:95vh">
 	  <div id = "userdeets" class = "w3-col l4">
 		  <div id="userLoad" class = "loader">
 			  <div id = "loadContainerUser" class= "w3-hide">
@@ -313,12 +317,12 @@
             <script>
 		    setTimeout(stopLoader, 3000);
 		    function stopLoader(){
-			    document.getElementById("userLoad").className="w3-theme-l1"
-		document.getElementById("loadContainerUser").className="w3-theme"
-			    document.getElementById("appLoad").className="w3-theme-l1"
-		document.getElementById("loadContainerApp").className="w3-theme"
-			     document.getElementById("tripLoad").className="w3-theme-l1"
-		  document.getElementById("loadContainerTrip").className="w3-theme"
+			    document.getElementById("userLoad").className=""
+		document.getElementById("loadContainerUser").className=""
+			    document.getElementById("appLoad").className=""
+		document.getElementById("loadContainerApp").className=""
+			     document.getElementById("tripLoad").className=""
+		  document.getElementById("loadContainerTrip").className=""
 		    }
 			    
 
@@ -637,8 +641,8 @@
          <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
             <h2 class="w3-text-light-grey"> Logbook </h2>
 		 <div id = "downloadLog">
-			 <button onclick="downloadLog()">Download Logbook</button>
-			 <p> Copy and paste the text that appears below into a .txt file and then open with Excel. Ensure you change the "delimiter" to "comma", and MANUALLY specify the "column data format" as text for "Phone", "Grade", "Duration (hrs)" and "Distance (km)"</p>
+			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
+			 <br><button onclick="downloadLog()">Get Log as Table</button><p>(Copy/Paste as required)</p>
 			 <p id = "logDump"></p>
 		 </div>
 		 <div id = "loginbook">
@@ -713,15 +717,56 @@
 				   var user = firebase.auth().currentUser.uid;
 				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
 				   var data=snapshot.val()
-				   var log = [['Organiser', 'Trip Name', 'Section', "Date", 'Time', 'Email', 'Phone', 'Grade', 'Duration (hrs)', 'Distance (km)', "Level","Participants", "Role", "Skills Practiced", "Additional Info"]]
+				var log = '<table><tr style=\"border: 1px solid #000000; text-align: left\"><th>Organiser</th><th>Trip Name</th><th>Section</th><th>Date</th><th>Time</th><th>Email</th><th>Phone</th><th>Grade</th><th>Duration (hrs)</th><th>Distance (km)</th><th>Level</th><th>Participants</th><th>Role</th><th>Skills Practiced</th><th>Additional Info</th></tr>'
+				   var parity=0
 				   for (x in data){
+					   if(parity%2===1){
+						   var trstyle = "<tr style=\"background-color: #dddddd; border: 1px solid #000000; text-align: left\">"
+						   }
+					   else{
+						   trstyle="<tr style=\"border: 1px solid #000000; text-align: left\">"
+					   }
 					 var details = data[x].details
-					 log.push([details.organiser, details.trip, details.section, details.date, details.time, details.email, details.phone, details.grade, details.duration, details.distance, details.level, '"'+details.participants+'"', '"'+details.role+'"', '"'+details.skills+'"', '"'+details.info+'"'])
-						  } 
-						  for(var x = 0; x<log.length; x++){
-						 
-						  document.getElementById("logDump").innerHTML = log.join("<br>")
-					 }
+					 log+=trstyle+'<td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>="'+details.phone+'"</td><td>="'+details.grade+'"</td><td>="'+details.duration+'"</td><td>="'+details.distance+'"</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>'
+				parity+=1		  
+				   }
+					log+='</table>'
+						  document.getElementById("logDump").innerHTML = log;
+						  });
+    
+			    }
+			    function excelLog(){
+				   var user = firebase.auth().currentUser.uid;
+				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
+				   var data=snapshot.val()
+				   var log = '<table><tr style=\"border: 1px solid #000000; text-align: left\"><th>Organiser</th><th>Trip Name</th><th>Section</th><th>Date</th><th>Time</th><th>Email</th><th>Phone</th><th>Grade</th><th>Duration (hrs)</th><th>Distance (km)</th><th>Level</th><th>Participants</th><th>Role</th><th>Skills Practiced</th><th>Additional Info</th></tr>'
+				   var parity=0
+				   for (x in data){
+					   if(parity%2===1){
+						   var trstyle = "<tr style=\"background-color: #dddddd; border: 1px solid #000000; text-align: left\">"
+						   }
+					   else{
+						   trstyle="<tr style=\"border: 1px solid #000000; text-align: left\">"
+					   }
+					 var details = data[x].details
+					 log+=trstyle+'<td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>="'+details.phone+'"</td><td>="'+details.grade+'"</td><td>="'+details.duration+'"</td><td>="'+details.distance+'"</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>'
+				parity+=1		  
+				   }
+					log+='</table>'
+					console.log(log)
+					 sa = true;
+     var myBlob =  new Blob( [log] , {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+					console.log(myBlob)
+     var url = window.URL.createObjectURL(myBlob);
+     var a = document.createElement("a");
+     document.body.appendChild(a);
+     a.href = url;
+     a.download = firebase.auth().currentUser.displayName+" log.xls";
+     a.click();
+     setTimeout(function() {window.URL.revokeObjectURL(url);},0);
+    
+    return (sa);
+  
 						  });
     
 			    }
