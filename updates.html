@@ -576,7 +576,7 @@
 			dataArrayBody.push([i,parseFloat(snapshot.val()[i])])
 			}
 
-			var dataArray = dataArrayHead + dataArrayBody.sort(Comparator)
+			var dataArray = dataArrayHead.concat(dataArrayBody.sort(Comparator))
 			console.log(dataArray);
 		        var data = google.visualization.arrayToDataTable(dataArray);
 
