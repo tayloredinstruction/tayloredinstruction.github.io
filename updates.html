@@ -529,7 +529,11 @@
                     }
                 google.charts.load('current', {'packages':['corechart']});
                 google.charts.setOnLoadCallback(displayfavs);
-
+			 function Comparator(a, b) {
+   				if (new Date(a[0]) < new Date(b[0])) return -1;
+   				if (new Date(a[0]) > new Date(b[0])) return 1;
+  				 return 0;
+ 			}
                   function displayfavs(){
                   var json = JSON.parse(localStorage.json)  
                   var favsdiv = document.getElementById("favsdiv")
@@ -566,10 +570,13 @@
                   
 			  			para.innerHTML=contents.join("")
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
-			var dataArray = [['Date', 'Level']]
+			var dataArrayHead = [['Date', 'Level']]
+			var dataArrayBody = new Array()
 			for (var i in snapshot.val()){
-			dataArray.push([i,parseFloat(snapshot.val()[i])])
+			dataArrayBody.push([i,parseFloat(snapshot.val()[i])])
 			}
+
+			var dataArray = dataArrayHead + dataArrayBody.sort(Comparator)
 			console.log(dataArray);
 		        var data = google.visualization.arrayToDataTable(dataArray);
 
