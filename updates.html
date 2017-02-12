@@ -564,10 +564,10 @@
                       else{
                       }
                   }
+			  			para.innerHTML=contents.join("")
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
 			var dataArray = [['Date', 'Level']]
 			for (var i in snapshot.val()){
-			para.innerHTML=contents.join("")
 			dataArray.push([i,parseFloat(snapshot.val()[i])])
 			}
 			console.log(dataArray);
