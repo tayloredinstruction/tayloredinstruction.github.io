@@ -573,10 +573,14 @@
 			var dataArrayHead = [['Date', 'Level']]
 			var dataArrayBody = new Array()
 			for (var i in snapshot.val()){
-			dataArrayBody.push([i,parseFloat(snapshot.val()[i])])
+			var d = new Date(i)
+			dataArrayBody.push([i,d.day().toString()+'/'+(d.month()+1).toString()+' '+d.hours().toString+d.minutes().toString,parseFloat(snapshot.val()[i])])
 			}
-
-			var dataArray = dataArrayHead.concat(dataArrayBody.sort(Comparator))
+			var dataArrayBody=dataArrayBody.sort(Comparator)
+			for (var i=0; i<dataArrayBody.length; i++){
+			dataArrayBody[i]=dataArrayBody[i].shift()
+			}
+			var dataArray = dataArrayHead.concat(dataArrayBody)
 			console.log(dataArray);
 		        var data = google.visualization.arrayToDataTable(dataArray);
 
