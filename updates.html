@@ -586,11 +586,11 @@
 			var showEvery = parseInt(dataArrayBody.length/4)
 			console.log(showEvery)
         var options = {
-          title: snapshot.key,
-          curveType: 'function',
-          legend: 'none',
-	  width: '100%',
-	  hAxis: {showTextEvery: 28}
+          'title': snapshot.key,
+          'curveType': 'function',
+          'legend': 'none',
+	  'width': '100%',
+	  'hAxis': {'showTextEvery': showEvery}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
