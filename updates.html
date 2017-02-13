@@ -574,22 +574,21 @@
 			var dataArrayBody = new Array()
 			for (var i in snapshot.val()){
 			var d = new Date(i)
-			dataArrayBody.push([i,d.getDay().toString()+'/'+(d.getMonth()+1).toString()+' '+d.getHours().toString()+d.getMinutes().toString(),parseFloat(snapshot.val()[i])])
+			dataArrayBody.push([i,d.getDate().toString()+'/'+(d.getMonth()+1).toString(),parseFloat(snapshot.val()[i])])
 			}
 			var dataArrayBody=dataArrayBody.sort(Comparator)
 			for (var i=0; i<dataArrayBody.length; i++){
 			dataArrayBody[i].shift()
 			}
 			var dataArray = dataArrayHead.concat(dataArrayBody)
-			console.log(dataArray);
 		        var data = google.visualization.arrayToDataTable(dataArray);
-
+			var showEvery = parseInt(dataArrayBody.length/6)
         var options = {
           title: snapshot.key,
           curveType: 'function',
           legend: 'none',
 		width: '100%',
-		hAxis: {showTextEvery: 6}
+		hAxis: {showTextEvery: showEvery}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
