@@ -574,7 +574,7 @@
 			var dataArrayBody = new Array()
 			for (var i in snapshot.val()){
 			var d = new Date(i)
-			dataArrayBody.push([i,d.day().toString()+'/'+(d.month()+1).toString()+' '+d.hours().toString+d.minutes().toString,parseFloat(snapshot.val()[i])])
+			dataArrayBody.push([i,d.getDay().toString()+'/'+(d.getMonth()+1).toString()+' '+d.getHours().toString+d.getMinutes().toString,parseFloat(snapshot.val()[i])])
 			}
 			var dataArrayBody=dataArrayBody.sort(Comparator)
 			for (var i=0; i<dataArrayBody.length; i++){
