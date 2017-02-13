@@ -115,6 +115,7 @@
          background-color: Black;
          }
       </style>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
@@ -203,7 +204,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="initialize();favpopulate();displayfavs();">
+   <body class="w3-black" onload="initialize();favpopulate()">
         <script>
   // Initialize Firebase
   var config = {
@@ -526,7 +527,13 @@
                     localStorage.favslist=localStorage.favslist+favstring
                  }
                     }
-                    
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(displayfavs);
+			 function Comparator(a, b) {
+   				if (new Date(a[0]) < new Date(b[0])) return -1;
+   				if (new Date(a[0]) > new Date(b[0])) return 1;
+  				 return 0;
+ 			}
                   function displayfavs(){
                   var json = JSON.parse(localStorage.json)  
                   var favsdiv = document.getElementById("favsdiv")
@@ -539,7 +546,7 @@
                if (isNaN(json.rows[ref][5])){
                	var colour = "yellow !important"
                	}
-                      else if(json.rows[ref][5]>json.rows[ref][4]){
+                      else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-" && json.rows[ref][5]!=""){
                       var colour = "blue !important"
                       }
                       else if(json.rows[ref][5]<json.rows[ref][3]){
@@ -548,13 +555,48 @@
                       else{
                       var colour = "green !important"
                       }
-               	var node = "<p style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p>";
+		var qualityRegex = />(.+)</g,
+                matches,
+                qualities = [];
+            while (matches = qualityRegex.exec(json.rows[ref][1])) {
+              qualities.push(decodeURIComponent(matches[1]));
+            }  
+			  var secGraph = qualities[0]
+               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p><div id = \""+secGraph+"curve_chart\" style = \"max-width:100% !important\"></div>";
                	contents.push(node)
                       }
                       else{
                       }
-                  }
-                  para.innerHTML=contents.join("")
+                  
+			  			para.innerHTML=contents.join("")
+			  firebase.database().ref('sections/'+secGraph).off()
+		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
+			var dataArrayHead = [['Date', 'Level']]
+			var dataArrayBody = new Array()
+			for (var i in snapshot.val()){
+			//var d = new Date(i)
+			dataArrayBody.push([new Date(i),parseFloat(snapshot.val()[i])])
+				//d.getDate().toString()+'/'+(d.getMonth()+1).toString()
+			}
+			var dataArrayBody=dataArrayBody.sort(Comparator)
+			//for (var i=0; i<dataArrayBody.length; i++){
+			//dataArrayBody[i].shift()
+			//}
+			var dataArray = dataArrayHead.concat(dataArrayBody)
+		        var data = google.visualization.arrayToDataTable(dataArray);
+        var options = {
+          'title': snapshot.key,
+          'curveType': 'function',
+          'legend': 'none',
+	  'width': '100%',
+	  'hAxis': {gridlines: { count: 6 }}
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
+
+        chart.draw(data, options);
+		});
+		  }	  
                   }
                     
                     	function removeOptions(selectbox)
