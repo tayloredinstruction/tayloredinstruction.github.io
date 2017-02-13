@@ -589,10 +589,9 @@
           title: snapshot.key,
           curveType: 'function',
           legend: 'none',
-		width: '100%',
-		hAxis: {format:'dd MMM', 
-			showTextEvery: showEvery},
-		
+	  width: '100%',
+	  hAxis: {format:'dd MMM'},
+	  hAxis: {showTextEvery: showEvery}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
