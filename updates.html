@@ -583,15 +583,14 @@
 			//}
 			var dataArray = dataArrayHead.concat(dataArrayBody)
 		        var data = google.visualization.arrayToDataTable(dataArray);
-			var showEvery = parseInt(dataArrayBody.length/6)
+			var showEvery = parseInt(dataArrayBody.length/4)
 			console.log(showEvery)
         var options = {
           title: snapshot.key,
           curveType: 'function',
           legend: 'none',
 	  width: '100%',
-	  hAxis: {format:'dd MMM'},
-	  hAxis: {showTextEvery: showEvery}
+	  hAxis: {format:'EEE', showTextEvery: showEvery}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
