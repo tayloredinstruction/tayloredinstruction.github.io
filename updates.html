@@ -569,7 +569,7 @@
                       }
                   
 			  			para.innerHTML=contents.join("")
-			  off(firebase.database().ref('sections/'+secGraph))
+			  firebase.database().ref('sections/'+secGraph).off()
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
 			var dataArrayHead = [['Date', 'Level']]
 			var dataArrayBody = new Array()
