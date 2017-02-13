@@ -584,12 +584,14 @@
 			var dataArray = dataArrayHead.concat(dataArrayBody)
 		        var data = google.visualization.arrayToDataTable(dataArray);
 			var showEvery = parseInt(dataArrayBody.length/6)
+			console.log(showEvery)
         var options = {
           title: snapshot.key,
           curveType: 'function',
           legend: 'none',
 		width: '100%',
-		hAxis: {showTextEvery: showEvery, format:'dd MMM'},
+		hAxis: {format:'dd MMM', 
+			showTextEvery: showEvery},
 		
         };
 
