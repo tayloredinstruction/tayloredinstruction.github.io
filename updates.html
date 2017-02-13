@@ -583,12 +583,13 @@
         var options = {
           title: snapshot.key,
           curveType: 'function',
-          legend: { position: 'bottom' }
+          legend: 'none',
+		width: '100%'
         };
 
         var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
 
-        chart.draw(data, {width: '100%'});
+        chart.draw(data, options);
 		});
 		  }	  
                   }
