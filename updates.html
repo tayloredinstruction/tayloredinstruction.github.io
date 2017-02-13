@@ -546,7 +546,7 @@
                if (isNaN(json.rows[ref][5])){
                	var colour = "yellow !important"
                	}
-                      else if(json.rows[ref][5]>json.rows[ref][4]){
+                      else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-"){
                       var colour = "blue !important"
                       }
                       else if(json.rows[ref][5]<json.rows[ref][3]){
@@ -569,6 +569,7 @@
                       }
                   
 			  			para.innerHTML=contents.join("")
+			  off(firebase.database().ref('sections/'+secGraph))
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
 			var dataArrayHead = [['Date', 'Level']]
 			var dataArrayBody = new Array()
