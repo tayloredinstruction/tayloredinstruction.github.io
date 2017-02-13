@@ -577,12 +577,9 @@
 			dataArrayBody.push([i,d.getDay().toString()+'/'+(d.getMonth()+1).toString()+' '+d.getHours().toString()+d.getMinutes().toString(),parseFloat(snapshot.val()[i])])
 			}
 			var dataArrayBody=dataArrayBody.sort(Comparator)
-			console.log(dataArrayBody)
 			for (var i=0; i<dataArrayBody.length; i++){
-				console.log(dataArrayBody[i].shift())
-			dataArrayBody[i]=[dataArrayBody[i].shift()]
+			dataArrayBody[i].shift()
 			}
-			console.log(dataArrayBody)
 			var dataArray = dataArrayHead.concat(dataArrayBody)
 			console.log(dataArray);
 		        var data = google.visualization.arrayToDataTable(dataArray);
