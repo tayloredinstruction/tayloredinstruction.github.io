@@ -573,13 +573,14 @@
 			var dataArrayHead = [['Date', 'Level']]
 			var dataArrayBody = new Array()
 			for (var i in snapshot.val()){
-			var d = new Date(i)
-			dataArrayBody.push([i,d.getDate().toString()+'/'+(d.getMonth()+1).toString(),parseFloat(snapshot.val()[i])])
+			//var d = new Date(i)
+			dataArrayBody.push([new Date(i),parseFloat(snapshot.val()[i])])
+				//d.getDate().toString()+'/'+(d.getMonth()+1).toString()
 			}
 			var dataArrayBody=dataArrayBody.sort(Comparator)
-			for (var i=0; i<dataArrayBody.length; i++){
-			dataArrayBody[i].shift()
-			}
+			//for (var i=0; i<dataArrayBody.length; i++){
+			//dataArrayBody[i].shift()
+			//}
 			var dataArray = dataArrayHead.concat(dataArrayBody)
 		        var data = google.visualization.arrayToDataTable(dataArray);
 			var showEvery = parseInt(dataArrayBody.length/6)
@@ -588,7 +589,8 @@
           curveType: 'function',
           legend: 'none',
 		width: '100%',
-		hAxis: {showTextEvery: showEvery}
+		hAxis: {showTextEvery: showEvery, format:'dd MMM'},
+		
         };
 
         var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
