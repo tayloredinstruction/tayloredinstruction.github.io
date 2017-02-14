@@ -283,10 +283,10 @@
 	  <div id = "userdeets" class = "w3-col l4 w3-container">
 		  <div id="userLoad" class = "loader">
 			  <div id = "loadContainerUser" class= "w3-hide">
-				  <header class="w3-container w3-theme-l4">
+				  <header class="w3-container w3-theme-light">
 		  <h4>User Details</h4>
 				  </header>
-				  <div class = "w3-container w3-theme-l3">
+				  <div class = "w3-container w3-theme-l1">
 		  <p id="userino">Not signed in. </p>
 		 <button onclick="signIn()">Sign in</button>
 		 <button onclick="signOut()">Sign out</button><br>
@@ -501,7 +501,7 @@
 				else{
 					var comments = commSnapshot.val().comments
 					}
-                     var node = '<br><header class = "w3-theme-l1" style = "text-align:center">' + data.trip + '</header><div><strong>Trip Organiser</strong>: '+ data.organiser+'<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-theme-l3"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align w3-theme-l3">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container w3-theme-l4"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
+                     var node = '<br><header class = "w3-theme-l4" style = "text-align:center">' + data.trip + '</header><div><strong>Trip Organiser</strong>: '+ data.organiser+'<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-theme-l3"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align w3-theme-l3">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container w3-theme-l4"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'" style=\"max-width:95%\"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
@@ -606,7 +606,6 @@
 			//for (var i=0; i<dataArrayBody.length; i++){
 			//dataArrayBody[i].shift()
 			//}
-			console.log(dataArrayBody)
 			if(dataArrayBody.length<=1){
 				    document.getElementById(snapshot.key+'curve_chart').parentNode.removeChild;
 			}
