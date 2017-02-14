@@ -205,7 +205,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-theme-light" onload="initialize();favpopulate();" style='background-image: url("images/splash-desktop.jpg")'>
+   <body class="w3-theme-light" onload="initialize();favpopulate();">
         <script>
   // Initialize Firebase
   var config = {
@@ -221,7 +221,7 @@
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
       <nav class="w3-sidenav w3-center w3-small w3-hide-small w3-theme-l4">
          <!-- Avatar image in top left corner -->
-         <img src="images/sidebar-icon.jpg" style="width:100%">
+         <img src="images/icon.jpg" style="width:100%">
          <a class="w3-padding-large w3-hover-theme" href="#">
             <i class="fa fa-user w3-xxlarge"></i>
             <p>USER</p>
@@ -274,12 +274,12 @@
 		   }
 		   
 	   </script>
-      <div class="w3-padding-large" id="main">
+      <div class="w3-padding-large" id="main" style='background-image: url("images/splash-desktop.jpg")'>
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-black" align = "center">Taylored Instruction</h2>
 		 
-  <div class="w3-row" style="min-height:95vh">
+  <div class="w3-row w3-container" style="min-height:95vh">
 	  <div id = "userdeets" class = "w3-col l4 w3-container">
 		  <div id="userLoad" class = "loader">
 			  <div id = "loadContainerUser" class= "w3-hide">
