@@ -304,7 +304,8 @@
 			  <header class="w3-container w3-theme">
   <h4>Notifications</h4>
 			  </header>
-			  <div class="w3-container w3-theme-l4">
+			  <div id = "appContainer" class="w3-container w3-theme-l4">
+	<div id = "noNotification" class="w3-hide">No Notifications</div>
 	  <div id = "approveWait"></div>
 	  <div id = "approveInvite"></div>
 			  </div>
@@ -367,6 +368,12 @@
 		  });
 
    });
+		    function notificationChecker(){
+			    if(document.getElementById("approveWait").length===0 && document.getElementById("approveInvite)".length===0){
+			        console.log("no notifications")
+				document.getElementById("noNotification").className=""
+		    }
+		    }
 		    function approveList(){
                var user=firebase.auth().currentUser.uid
                var paraWait = document.getElementById("approveWait");
@@ -377,6 +384,7 @@
 				if(item.uid===user){
 				var trip=i
 				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
+					document.getElementById("noNotification").className="w3-hide"
 					if(document.getElementById(snapshot.key+"notification")){
 						var element = document.getElementById(snapshot.key+"notification");
 						element.parentNode.removeChild(element);
@@ -403,12 +411,14 @@
 						var element = document.getElementById(snapshot.key+"notification");
 						element.parentNode.removeChild(element);
 					}
+					notificationChecker()
 				});
 				
 			}
 			}	
                      });
 		firebase.database().ref('users/' + user + '/trips/invited' ).on('value', function(snapshot) {
+		document.getElementById("noNotification").className="w3-hide"
 		 var contentsInvite = new Array()
                   snapshot.forEach(function(childSnapshot) {
 			var data = childSnapshot.val()
@@ -416,7 +426,7 @@
                      contentsInvite.push(node);                       
                      });
                      paraInvite.innerHTML=contentsInvite.join("")
-
+			notificationChecker()
                   });
 
                }
