@@ -507,7 +507,7 @@
                function clearfavs() {
                   localStorage.removeItem("favslist")
                      localStorage.favslist = ""
-		       displayfavs()
+    document.getElementById("favsdiv").innerHTML = "";
                      }  
                 
                function addtofavs(){
@@ -583,6 +583,11 @@
 			//for (var i=0; i<dataArrayBody.length; i++){
 			//dataArrayBody[i].shift()
 			//}
+			console.log(dataArrayBody)
+			if(dataArrayBody.length=<1){
+				    document.getElementById(snapshot.key+'curve_chart').parentNode.removeChild;
+			}
+			else{
 			var dataArray = dataArrayHead.concat(dataArrayBody)
 		        var data = google.visualization.arrayToDataTable(dataArray);
         var options = {
@@ -596,6 +601,7 @@
         var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
 
         chart.draw(data, options);
+			}
 		});
 		  }	  
                   }
