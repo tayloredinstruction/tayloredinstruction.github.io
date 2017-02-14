@@ -369,7 +369,7 @@
 
    });
 		    function notificationChecker(){
-			    if(document.getElementById("approveWait").length===0 && document.getElementById("approveInvite").length===0){
+			    if(document.getElementById("approveWait").childNodes.length===0 && document.getElementById("approveInvite").childNodes.length===0){
 			        console.log("no notifications")
 				document.getElementById("noNotification").className=""
 		    }
