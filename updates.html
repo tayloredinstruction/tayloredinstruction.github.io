@@ -27,10 +27,7 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-		   	.trans {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-}
+		   	
 body {
   /* Location of the image */
   background-image: url(images/background-desktop.jpg);
@@ -53,9 +50,10 @@ body {
      while the background image is loading */
   background-color: #464646;
 }
-The most essential property/value pair to pay attention to is:
-
-background-size: cover;
+body.trans {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
 @media only screen and (max-width: 767px) {
   body {
     /* The file size of this background image is 93% smaller
