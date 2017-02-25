@@ -456,6 +456,13 @@ body {
 			document.getElementById(trip+"inv").className=("w3-hide")
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
+			firebase.database().ref('/trips/active/'+trip+'/details/').once('value').then(function(snapshot){
+				var participants = snapshot.val().participants
+				firebase.database().ref('/trips/active/'+trip+'/details/participants').update({
+				participants: participants+', '+user.displayName
+				}
+													      )
+			})
 		}
 		    function decReq(trip, user){
 			document.getElementById(trip+"inv").className=("w3-hide")
@@ -467,7 +474,12 @@ body {
 			document.getElementById(trip+"notification").className=("w3-hide")
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
-
+			firebase.database().ref('/trips/active/'+trip+'/details/').once('value').then(function(snapshot){
+				var participants = snapshot.val().participants
+				firebase.database().ref('/trips/active/'+trip+'/details/participants').update({
+				participants: participants+', '+user.displayName
+				}											      )
+			})
 		}
 		    function denReq(trip, user){
 			document.getElementById(trip+"notification").className=("w3-hide")
