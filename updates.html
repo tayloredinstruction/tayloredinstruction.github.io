@@ -27,6 +27,17 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+body {
+  background: url(images/background-desktop.jpg) center center cover no-repeat fixed;
+}
+@media only screen and (max-width: 767px) {
+  body {
+    /* The file size of this background image is 93% smaller
+       to improve page load speed on mobile internet connections */
+    background-image: url(images/background-xsmall.jpg);
+  }
+}
+		   
 </style>
 	<script type="text/javascript">
         (function(document,navigator,standalone) {
@@ -50,7 +61,6 @@
         })(document,window.navigator,'standalone');
     </script>
       <link rel="stylesheet" href="lib/w3.css">
-      <link rel="stylesheet" href="lib/w3-theme-black.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <style type="text/css">
@@ -113,7 +123,7 @@
       </style>
       <style>
          body { 
-         background-color: White;
+         background-color: Black;
          }
       </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -205,7 +215,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-theme" onload="initialize();favpopulate();">
+   <body class="w3-black" onload="initialize();favpopulate()">
         <script>
   // Initialize Firebase
   var config = {
@@ -219,37 +229,37 @@
       </script>   
       
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
-      <nav class="w3-sidenav w3-center w3-small w3-hide-small w3-theme-l1">
+      <nav class="w3-sidenav w3-center w3-small w3-hide-small">
          <!-- Avatar image in top left corner -->
-         <!-- <img src="images/icon.png" style="width:100%"> -->
-         <a class="w3-padding-large w3-hover-theme" href="#">
+         <img src="images/sidebar-icon.jpg" style="width:100%">
+         <a class="w3-padding-large w3-black" href="#">
             <i class="fa fa-user w3-xxlarge"></i>
             <p>USER</p>
          </a>
-         <a class="w3-padding-large w3-hover-theme" href="#favsecs">
+         <a class="w3-padding-large w3-hover-black" href="#favsecs">
             <i class="fa fa-star w3-xxlarge"></i>
             <p>FAVOURITE SECTIONS</p>
          </a>
-         <a class="w3-padding-large w3-hover-theme" href="#about">
+         <a class="w3-padding-large w3-hover-black" href="#about">
             <i class="fa fa-globe w3-xxlarge"></i>
             <p>RIVER MAP</p>
          </a>
-         <a class="w3-padding-large w3-hover-theme" href="#logbook">
+         <a class="w3-padding-large w3-hover-black" href="#logbook">
             <i class="fa fa-book w3-xxlarge"></i>
             <p>LOGBOOK</p>
          </a>
-         <a class="w3-padding-large w3-hover-theme" href="#trips">
+         <a class="w3-padding-large w3-hover-black" href="#trips">
             <i class="fa fa-calendar w3-xxlarge"></i>
             <p>UPCOMING TRIPS</p>
          </a>
-         <a class="w3-padding-large w3-hover-theme" href="#contact">
+         <a class="w3-padding-large w3-hover-black" href="#contact">
             <i class="fa fa-envelope w3-xxlarge"></i>
             <p>CONTACT</p>
          </a>
       </nav>
       <!-- Navbar on small screens (Hidden on medium and large screens) -->
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-         <ul class="w3-navbar w3-theme-l1 w3-opacity w3-hover-opacity-off w3-center w3-small">
+         <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
             <li class="w3-left" style="width:15% !important"><a href="#"><i class="fa fa-user w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:15% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
             <li class="w3-left" style="width:15% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
@@ -277,49 +287,37 @@
       <div class="w3-padding-large" id="main">
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
-            <h2 class="w3-text-black" align = "center">Taylored Instruction</h2>
+            <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
 		 
-  <div class="w3-row w3-container" style="min-height:95vh">
+  <div class="w3-row" style="min-height:95vh">
 	  <div id = "userdeets" class = "w3-col l4">
 		  <div id="userLoad" class = "loader">
 			  <div id = "loadContainerUser" class= "w3-hide">
-				  <header class="w3-container w3-theme-light" style="text-align:center">
 		  <h4>User Details</h4>
-				  </header>
-				  <div class = "w3-container w3-theme-l1">
 		  <p id="userino">Not signed in. </p>
 		 <button onclick="signIn()">Sign in</button>
 		 <button onclick="signOut()">Sign out</button><br>
 		 <div id="infodiv" class = "w3-hide">
 		<p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
 		 </div>
-				  </div>
 			  </div>
 		  </div>
-		  <br>
 	  </div>
   <div class="w3-col  l4">
 	  <div id="appLoad" class = "loader">
 		  <div id = "loadContainerApp" class = "w3-hide">
-			  <header class="w3-container w3-theme-light" style="text-align:center">
   <h4>Notifications</h4>
-			  </header>
-			  <div id = "appContainer" class="w3-container w3-theme-l1">
-	<div id = "noNotification" class="w3-hide">No Notifications</div>
+	  <div id = "noNotification" class="w3-hide">No Notifications</div>
 	  <div id = "approveWait"></div>
 	  <div id = "approveInvite"></div>
-			  </div>
 		  </div>
 	  </div>
-	  <br>
 </div>
-  <div class="w3-col l4">
+  <div class="w3-col  l4">
 	  <div id="tripLoad" class = "loader">
 		  <div id="loadContainerTrip" class ="w3-hide"> 
-			  <header class="w3-container w3-theme-light" style="text-align:center">
   <h4>My Trips</h4>
-			  </header>
-     <div id="mytrips" class = "w3-container w3-theme-l1"></div> 
+     <div id="mytrips"></div> 
 	  </div>
 	  </div>
 </div>
@@ -332,11 +330,11 @@
             <script>
 		    setTimeout(stopLoader, 3000);
 		    function stopLoader(){
-			    document.getElementById("userLoad").className="w3-card-4"
+			    document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
-			    document.getElementById("appLoad").className="w3-card-4"
+			    document.getElementById("appLoad").className=""
 		document.getElementById("loadContainerApp").className=""
-			     document.getElementById("tripLoad").className="w3-card-4"
+			     document.getElementById("tripLoad").className=""
 		  document.getElementById("loadContainerTrip").className=""
 		    }
 			    
@@ -363,7 +361,7 @@
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
-		document.getElementById("userLoad").className="w3-card-4"
+		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
 
@@ -428,7 +426,6 @@
                      paraInvite.innerHTML=contentsInvite.join("")
 			notificationChecker()
                   });
-
                }
 		    
 		function accReq(trip, user){
@@ -501,7 +498,7 @@
 				else{
 					var comments = commSnapshot.val().comments
 					}
-                     var node = '<br><header class = "w3-theme-l4" style = "text-align:center">' + data.trip + '</header><div><b>Trip Organiser</b>: '+ data.organiser+'<br><b>Section</b>: ' + data.section + '<br><b>Date and Time</b>: ' + data.date +'<br><b>Contact Email</b>: '+ data.email + '<br><b>Contact Phone Number</b>: ' + data.phone + '<br><b>Additional Information</b>: ' + data.info + '<div class="w3-accordion w3-theme-l3"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align w3-theme-l3">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-theme-l4"><div id="'+childSnapshot.key+'view" style="padding-left:5px">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'" style=\"width:95%; max-width:95%\"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
+                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-black"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
@@ -514,7 +511,7 @@
 			
                      });
 			}
-                  document.getElementById("tripLoad").className="w3-card-4"
+                  document.getElementById("tripLoad").className=""
 		  document.getElementById("loadContainerTrip").className=""
 
                   });
@@ -606,6 +603,7 @@
 			//for (var i=0; i<dataArrayBody.length; i++){
 			//dataArrayBody[i].shift()
 			//}
+			console.log(dataArrayBody)
 			if(dataArrayBody.length<=1){
 				    document.getElementById(snapshot.key+'curve_chart').parentNode.removeChild;
 			}
