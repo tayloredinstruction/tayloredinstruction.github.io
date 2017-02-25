@@ -354,6 +354,12 @@
 		  });
 
    });
+		    function notificationChecker(){
+			    if(document.getElementById("approveWait").childNodes.length===0 && document.getElementById("approveInvite").childNodes.length===0){
+			        console.log("no notifications")
+				document.getElementById("noNotification").className=""
+		    }
+		    }
 		    function approveList(){
                var user=firebase.auth().currentUser.uid
                var paraWait = document.getElementById("approveWait");
