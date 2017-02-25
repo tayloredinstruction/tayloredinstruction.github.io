@@ -27,6 +27,39 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+		   	
+body {
+  /* Location of the image */
+  background-image: url(images/background-desktop.jpg);
+  
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+  
+  /* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+  
+  /* Set a background color that will be displayed
+     while the background image is loading */
+}
+		   div.trans{
+			       background: rgba(0, 0, 0, 0.5);
+		   }
+		   
+@media only screen and (max-width: 767px) {
+  body {
+    /* The file size of this background image is 93% smaller
+       to improve page load speed on mobile internet connections */
+    background-image: url(images/background-xsmall.jpg);
+  }
+}	   
 </style>
 	<script type="text/javascript">
         (function(document,navigator,standalone) {
@@ -57,9 +90,8 @@
          color: #000;
          height: 90vh;
          margin: 0;
-         padding-right: 5px;
-         padding-left:5px;
-         width: 98wh;
+         padding-right: 0px;
+         padding-left:0px;
          }
          #legend {
          color: #000 !important;
@@ -204,7 +236,7 @@
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class="w3-black" onload="initialize();favpopulate()">
+   <body class = "w3-black trans" onload="initialize();favpopulate()" style = "min-width:100vw">
         <script>
   // Initialize Firebase
   var config = {
@@ -216,7 +248,7 @@
   };
   firebase.initializeApp(config);
       </script>   
-      
+	               <div class="trans" style="width:100%">
       <!-- Icon Bar (Sidenav - hidden on small screens) -->
       <nav class="w3-sidenav w3-center w3-small w3-hide-small">
          <!-- Avatar image in top left corner -->
@@ -273,7 +305,8 @@
 		   }
 		   
 	   </script>
-      <div class="w3-padding-large" id="main">
+	               <div class="w3-padding-large" id="main" style="max-width:95vw">
+
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
@@ -291,6 +324,7 @@
 		 </div>
 			  </div>
 		  </div>
+		  <br>
 	  </div>
   <div class="w3-col  l4">
 	  <div id="appLoad" class = "loader">
@@ -301,6 +335,7 @@
 	  <div id = "approveInvite"></div>
 		  </div>
 	  </div>
+	  <br>
 </div>
   <div class="w3-col  l4">
 	  <div id="tripLoad" class = "loader">
@@ -487,7 +522,7 @@
 				else{
 					var comments = commSnapshot.val().comments
 					}
-                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion w3-black"><button onclick="commentShow(\''+childSnapshot.key+'\')" class="w3-btn-block w3-left-align">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
+                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion"><button onclick="commentShow(\''+childSnapshot.key+'\')">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
@@ -700,8 +735,8 @@
             <h2 class="w3-text-light-grey"> Logbook </h2>
 		 <div id = "downloadLog">
 			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
-			 <br><button onclick="downloadLog()">Get Log as Table</button><p>(Copy/Paste as required)</p>
-			 <p id = "logDump"></p>
+			 <!-- <br><button onclick="downloadLog()">Get Log as Table</button><p>(Copy/Paste as required)</p>
+			 <p id = "logDump"></p> -->
 		 </div>
 		 <div id = "loginbook">
 		 <p>Sign in to use Logbook</p><br>
@@ -1030,6 +1065,7 @@
          </footer>
          <!-- END PAGE CONTENT -->
       </div>
+	   </div>
    </body>
 </html>
 
