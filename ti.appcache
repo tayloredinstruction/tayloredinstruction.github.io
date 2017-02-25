@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#13/02/2017 v4.0
+#25/02/2017 v5.0
 /lib/maps.js
 /index.html
 /images/icon.png
@@ -7,7 +7,7 @@ CACHE MANIFEST
 /login.html
 /images/fsignin.png
 /images/gsignin.png
-/images/splash-desktop.jpg
-/images/splash-mobile.jpg
+/images/background-desktop.jpg
+/images/background-xsmall.jpg
 /images/sidebar-icon.jpg
 /lib/w3.css
