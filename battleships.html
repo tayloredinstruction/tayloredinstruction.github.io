@@ -9,9 +9,9 @@
    if(isNaN(x)){
       var x = 0
       }
-   console.log(x)
+   console.log((x+1)%3)
    sessionStorage.setItem(id, (x+1)%3)
-   sessionStorage.setItem(id, x+1)
+   sessionStorage.setItem(id, (x+1)%3)
    document.getElementById(id).innerHTML = imageArray[x+1]
    }
    </script>
