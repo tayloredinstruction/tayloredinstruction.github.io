@@ -6,6 +6,9 @@
    function cycle(id){
    imageArray = ["&nbsp;","<img src='images/x.gif'>","<img src='images/o.gif'>"]
    var x = parseInt(sessionStorage.getItem(id))
+   if(isNaN(x)){
+      var x = 0
+      }
    console.log(x)
    sessionStorage.setItem(id, (x+1)%3)
    sessionStorage.setItem(id, x+1)
