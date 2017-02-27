@@ -236,7 +236,7 @@ body {
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class = "w3-black trans" onload="initialize();favpopulate()" style = "min-width:100vw">
+   <body class = "w3-black trans" onload="initialize();loadXMLDoc()" style = "min-width:100vw">
         <script>
   // Initialize Firebase
   var config = {
@@ -688,7 +688,7 @@ body {
                    elm.appendChild(df);
                }   	
             </script>
-            <button type="button" onclick="loadXMLDoc();favpopulate();displayfavs()">Get Latest Info</button><br>
+            <button type="button" onclick="loadXMLDoc()">Get Latest Info</button><br>
             <select id="newfav" style="max-width:90%">
             </select>  
             <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
