@@ -521,6 +521,7 @@ body {
 		        if(snapshot.val()===null){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
+			para.innerHTML=contents
                      }
                         else{
                   snapshot.forEach(function(childSnapshot) {
