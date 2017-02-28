@@ -383,6 +383,7 @@ body {
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
+		localStorage.favslist=snapshot.val().favourites
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
