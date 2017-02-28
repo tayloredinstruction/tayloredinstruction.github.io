@@ -383,6 +383,7 @@ body {
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
+			  console.log(snapshot.val().favourites)
 			  if(snapshot.val().favourites === null && localStorage.favslist!=undefined){
 				  console.log("should be writing")
 		       firebase.database().ref('users/'+user.uid+'/info').update({
