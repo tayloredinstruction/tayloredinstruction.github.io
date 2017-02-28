@@ -604,19 +604,19 @@ body {
                    	var ref = parseFloat(favslist[i])
                if (isNaN(json.rows[ref][5])){
                	var colour = "yellow !important";
-		 var blankdiv=False
+		 var blankdiv=false
                	}
                       else if(json.rows[ref][5]<json.rows[ref][3]){
                       var colour = "red !important"
-		      		 var blankdiv=True
+		      		 var blankdiv=true
                       }
 			else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-" && json.rows[ref][5]!=""){
                       var colour = "blue !important"
-		      		 var blankdiv=True
+		      		 var blankdiv=true
                       }
                       else{
                       var colour = "green !important"
-		      		 var blankdiv=True
+		      		 var blankdiv=true
                       }
 		var qualityRegex = />(.+)</g,
                 matches,
