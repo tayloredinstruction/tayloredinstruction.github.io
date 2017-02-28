@@ -391,7 +391,7 @@ function persevere(){
 			  if(snapshot.val().favourites === null && localStorage.favslist!=undefined){
 		       firebase.database().ref('users/'+user.uid+'/info').update({
          favourites: localStorage.favslist
-		       }, persevere())
+		       }, persevere()).then(persevere())
 			    }	
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
