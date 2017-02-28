@@ -383,20 +383,6 @@ body {
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
-			  console.log(snapshot.val().favourites)
-			  if((snapshot.val().favourites === null || snapshot.val().favourites === undefined) && localStorage.favslist!=undefined){
-				  console.log("should be writing")
-		       firebase.database().ref('users/'+user.uid+'/info').update({
-         favourites: localStorage.favslist
-		       },  function(error) {
-   if (error) {
-       //alert(“Data could not be saved.” + error);
-   } else {
-			localStorage.favslist=snapshot.val().favourites
-			displayfavs();   
-   }
-			    });
-			  }
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
