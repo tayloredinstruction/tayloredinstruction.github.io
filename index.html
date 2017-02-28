@@ -575,7 +575,7 @@ body {
 		  var user = firebase.auth().currentUser
 			    if(user){
 		       firebase.database().ref('users/'+user.uid+'/info').update({
-         favourites: localStorage.favlist
+         favourites: localStorage.favslist
 		       })
 			    }
                      }  
