@@ -362,9 +362,7 @@ body {
 		  document.getElementById("loadContainerTrip").className=""
 		    }
 			    
-function persevere(){
-			localStorage.favslist=snapshot.val().favourites
-			displayfavs();
+
 }
 		    
 		    function updateInfo(){
@@ -391,8 +389,14 @@ function persevere(){
 			  if(snapshot.val().favourites === null && localStorage.favslist!=undefined){
 		       firebase.database().ref('users/'+user.uid+'/info').update({
          favourites: localStorage.favslist
-		       }, persevere()).then(persevere())
-			    }	
+		       },  function(error) {
+   if (error) {
+       //alert(“Data could not be saved.” + error);
+   } else {
+			localStorage.favslist=snapshot.val().favourites
+			displayfavs();   
+   }
+			    });
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
