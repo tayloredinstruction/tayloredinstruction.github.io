@@ -623,6 +623,9 @@ body {
                   var json = JSON.parse(localStorage.json)  
                   var favsdiv = document.getElementById("favsdiv")
                   var favslist= localStorage.favslist.split(";")
+		  if(favslist===undefined || favslist===null || favslist===""){
+		  }
+			  else{
                  	var para = document.getElementById("pfav");
                   var contents = new Array()
                   for(var i = 0; i<favslist.length-1; i++){
@@ -699,6 +702,7 @@ body {
 		});
 		  }
                   }
+		  }
                     
                     	function removeOptions(selectbox)
                {
