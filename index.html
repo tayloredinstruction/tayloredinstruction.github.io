@@ -390,7 +390,8 @@ body {
          favourites: localStorage.favslist
 		       })
 			    }
-			localStorage.favslist=snapshot.val().favourites
+			localStorage.favslist=snapshot.val().favourites;
+			  displayfavs();
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
