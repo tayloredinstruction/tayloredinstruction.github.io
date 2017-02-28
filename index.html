@@ -384,7 +384,7 @@ body {
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
 			  if(snapshot.val().favourites === undefined || snapshot.val().favourites === null){
-				  localStroage.favslist=""
+				  localStorage.favslist=""
 			  }
 			  else{
 		localStorage.favslist=snapshot.val().favourites
