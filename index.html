@@ -385,6 +385,12 @@ body {
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
+			  if(snapshot.val().favourites === null){
+		       firebase.database().ref('users/'+user.uid+'/info').update({
+         favourites: localStorage.favslist
+		       })
+			    }
+			localStorage.favslist=snapshot.val().favourites
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
@@ -566,10 +572,16 @@ body {
                   localStorage.removeItem("favslist")
                      localStorage.favslist = ""
     document.getElementById("pfav").innerHTML = "";
+		  var user = firebase.auth().currentUser
+			    if(user){
+		       firebase.database().ref('users/'+user.uid+'/info').update({
+         favourites: localStorage.favlist
+		       })
+			    }
                      }  
                 
                function addtofavs(){
-                  if(localStorage.favslist=== undefined){
+                  if(localStorage.favslist===undefined || localStorage.favslist===null){
                   localStorage.favslist=""
                   }
                   var favslist = localStorage.favslist
@@ -585,9 +597,17 @@ body {
                     var favstring = n.toString()+";" 
                     localStorage.favslist=localStorage.favslist+favstring
                  }
+			    var user = firebase.auth().currentUser
+			    if(user){
+		       firebase.database().ref('users/'+user.uid+'/info').update({
+         favourites: localStorage.favslist
+		       })
+			    }
                     }
+		    
                 google.charts.load('current', {'packages':['corechart']});
                 google.charts.setOnLoadCallback(displayfavs);
+		    
 			 function Comparator(a, b) {
    				if (new Date(a[0]) < new Date(b[0])) return -1;
    				if (new Date(a[0]) > new Date(b[0])) return 1;
