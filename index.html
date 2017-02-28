@@ -385,7 +385,7 @@ body {
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
-			  if(snapshot.val().favourites === null){
+			  if(snapshot.val().favourites === null && localStorage.favslist!=undefined){
 		       firebase.database().ref('users/'+user.uid+'/info').update({
          favourites: localStorage.favslist
 		       })
