@@ -362,7 +362,10 @@ body {
 		  document.getElementById("loadContainerTrip").className=""
 		    }
 			    
-
+function persevere(){
+			localStorage.favslist=snapshot.val().favourites
+			displayfavs();
+}
 		    
 		    function updateInfo(){
 			    var user = firebase.auth().currentUser
@@ -388,10 +391,8 @@ body {
 			  if(snapshot.val().favourites === null && localStorage.favslist!=undefined){
 		       firebase.database().ref('users/'+user.uid+'/info').update({
          favourites: localStorage.favslist
-		       })
-			    }
-			localStorage.favslist=snapshot.val().favourites;
-			  displayfavs();
+		       }, persevere())
+			    }	
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
