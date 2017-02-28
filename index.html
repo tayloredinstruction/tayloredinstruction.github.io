@@ -622,10 +622,11 @@ body {
                   function displayfavs(){
                   var json = JSON.parse(localStorage.json)  
                   var favsdiv = document.getElementById("favsdiv")
-                  var favslist= localStorage.favslist.split(";")
+                  var favslist= localStorage.favslist
 		  if(favslist===undefined || favslist===null || favslist===""){
 		  }
 			  else{
+		var favslist= localStorage.favslist.split(";")
                  	var para = document.getElementById("pfav");
                   var contents = new Array()
                   for(var i = 0; i<favslist.length-1; i++){
