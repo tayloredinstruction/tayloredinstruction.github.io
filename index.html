@@ -603,16 +603,20 @@ body {
                   if (!isNaN(parseFloat(favslist[i]))){
                    	var ref = parseFloat(favslist[i])
                if (isNaN(json.rows[ref][5])){
-               	var colour = "yellow !important"
+               	var colour = "yellow !important";
+		 var blankdiv=False
                	}
-                      else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-" && json.rows[ref][5]!=""){
-                      var colour = "blue !important"
-                      }
                       else if(json.rows[ref][5]<json.rows[ref][3]){
                       var colour = "red !important"
+		      		 var blankdiv=True
+                      }
+			else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-" && json.rows[ref][5]!=""){
+                      var colour = "blue !important"
+		      		 var blankdiv=True
                       }
                       else{
                       var colour = "green !important"
+		      		 var blankdiv=True
                       }
 		var qualityRegex = />(.+)</g,
                 matches,
@@ -621,7 +625,13 @@ body {
               qualities.push(decodeURIComponent(matches[1]));
             }  
 			  var secGraph = qualities[0]
-               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p><div id = \""+secGraph+"curve_chart\" style = \"max-width:100% !important; height:200px\"></div>";
+			  if(blankdiv){
+				  var divHeight = "200px"
+				  }
+			  else{
+				  var divHeight=""
+				  }
+               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p><div id = \""+secGraph+"curve_chart\" style = \"max-width:100% !important; height:"+divHeight+"\"></div>";
                	contents.push(node)
                       }
                       else{
