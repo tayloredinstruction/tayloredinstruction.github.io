@@ -383,7 +383,12 @@ body {
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
+			  if(snapshot.val().favourites === undefined || snapshot.val().favourites === null){
+				  localStroage.favslist=""
+			  }
+			  else{
 		localStorage.favslist=snapshot.val().favourites
+			  }
 			  displayfavs()
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
