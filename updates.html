@@ -236,7 +236,7 @@ body {
          google.maps.event.addDomListener(window, 'load', initialize);
       </script>
    </head>
-   <body class = "w3-black trans" onload="initialize();favpopulate()" style = "min-width:100vw">
+   <body class = "w3-black trans" onload="initialize();loadXMLDoc()" style = "min-width:100vw">
         <script>
   // Initialize Firebase
   var config = {
@@ -361,8 +361,6 @@ body {
 			     document.getElementById("tripLoad").className=""
 		  document.getElementById("loadContainerTrip").className=""
 		    }
-			    
-
 		    
 		    function updateInfo(){
 			    var user = firebase.auth().currentUser
@@ -385,6 +383,13 @@ body {
 		  document.getElementById("infodiv").className=""
 		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
 		  document.getElementById("myinfo").defaultValue=snapshot.val().about
+			  if(snapshot.val().favourites === undefined || snapshot.val().favourites === null){
+				clearfavs()
+			  }
+			  else{
+		localStorage.favslist=snapshot.val().favourites
+			  }
+			  displayfavs()
 		document.getElementById("userLoad").className=""
 		document.getElementById("loadContainerUser").className=""
 		  });
@@ -456,6 +461,12 @@ body {
 			document.getElementById(trip+"inv").className=("w3-hide")
 			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
+			firebase.database().ref('/trips/active/'+trip).once('value').then(function(snapshot){
+				var participants = snapshot.val().details.participants
+				firebase.database().ref('/trips/active/'+trip+'/details').update({
+				participants: participants+', '+snapshot.val().confirmed[user].name
+				}											      )
+			})
 		}
 		    function decReq(trip, user){
 			document.getElementById(trip+"inv").className=("w3-hide")
@@ -467,7 +478,12 @@ body {
 			document.getElementById(trip+"notification").className=("w3-hide")
 			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
 			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
-
+			firebase.database().ref('/trips/active/'+trip).once('value').then(function(snapshot){
+				var participants = snapshot.val().details.participants
+				firebase.database().ref('/trips/active/'+trip+'/details').update({
+				participants: participants+', '+snapshot.val().confirmed[user].name
+				}											      )
+			})
 		}
 		    function denReq(trip, user){
 			document.getElementById(trip+"notification").className=("w3-hide")
@@ -505,9 +521,12 @@ body {
                var para = document.getElementById("mytrips");
                firebase.database().ref('users/' + user + '/trips' ).on('value', function(snapshot) {
 		                      var contents = new Array()
-		        if(!(snapshot.hasChildren())){
+				      console.log(snapshot.val()===null)
+		       			console.log(snapshot.val())
+		        if(snapshot.val()===null){
                         var node = "<p>No upcoming trips</p>"
                         contents.push(node)
+			para.innerHTML=contents
                      }
                         else{
                   snapshot.forEach(function(childSnapshot) {
@@ -522,7 +541,7 @@ body {
 				else{
 					var comments = commSnapshot.val().comments
 					}
-                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<div class="w3-accordion"><button onclick="commentShow(\''+childSnapshot.key+'\')">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
+                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Participants: '+data.participants+'<br>Additional Information: ' + data.info + '<div class="w3-accordion"><button onclick="commentShow(\''+childSnapshot.key+'\')">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
@@ -552,10 +571,16 @@ body {
                   localStorage.removeItem("favslist")
                      localStorage.favslist = ""
     document.getElementById("pfav").innerHTML = "";
+		  var user = firebase.auth().currentUser
+			    if(user){
+		       firebase.database().ref('users/'+user.uid+'/info').update({
+         favourites: localStorage.favslist
+		       })
+			    }
                      }  
                 
                function addtofavs(){
-                  if(localStorage.favslist=== undefined){
+                  if(localStorage.favslist===undefined || localStorage.favslist===null){
                   localStorage.favslist=""
                   }
                   var favslist = localStorage.favslist
@@ -571,9 +596,17 @@ body {
                     var favstring = n.toString()+";" 
                     localStorage.favslist=localStorage.favslist+favstring
                  }
+			    var user = firebase.auth().currentUser
+			    if(user){
+		       firebase.database().ref('users/'+user.uid+'/info').update({
+         favourites: localStorage.favslist
+		       })
+			    }
                     }
+		    
                 google.charts.load('current', {'packages':['corechart']});
                 google.charts.setOnLoadCallback(displayfavs);
+		    
 			 function Comparator(a, b) {
    				if (new Date(a[0]) < new Date(b[0])) return -1;
    				if (new Date(a[0]) > new Date(b[0])) return 1;
@@ -582,23 +615,35 @@ body {
                   function displayfavs(){
                   var json = JSON.parse(localStorage.json)  
                   var favsdiv = document.getElementById("favsdiv")
-                  var favslist= localStorage.favslist.split(";")
+                  var favslist= localStorage.favslist
+		  if(favslist===undefined || favslist===null || favslist===""){
+		  }
+			  else{
+		var favslist= localStorage.favslist.split(";")
                  	var para = document.getElementById("pfav");
                   var contents = new Array()
                   for(var i = 0; i<favslist.length-1; i++){
-                  if (!isNaN(parseFloat(favslist[i]))){
-                   	var ref = parseFloat(favslist[i])
+			  for(var x=0; x<json.rows.length; x++){
+				  if(favslist[i]===json.rows[x][1]){
+					  var ref = x
+					  break
+					  }
+			  }
                if (isNaN(json.rows[ref][5])){
-               	var colour = "yellow !important"
+               	var colour = "yellow !important";
+		 var blankdiv=false
                	}
-                      else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-" && json.rows[ref][5]!=""){
-                      var colour = "blue !important"
-                      }
                       else if(json.rows[ref][5]<json.rows[ref][3]){
                       var colour = "red !important"
+		      		 var blankdiv=true
+                      }
+			else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-" && json.rows[ref][5]!=""){
+                      var colour = "blue !important"
+		      		 var blankdiv=true
                       }
                       else{
                       var colour = "green !important"
+		      		 var blankdiv=true
                       }
 		var qualityRegex = />(.+)</g,
                 matches,
@@ -607,12 +652,15 @@ body {
               qualities.push(decodeURIComponent(matches[1]));
             }  
 			  var secGraph = qualities[0]
-               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p><div id = \""+secGraph+"curve_chart\" style = \"max-width:100% !important\"></div>";
+			  if(blankdiv){
+				  var divHeight = "200px"
+				  }
+			  else{
+				  var divHeight=""
+				  }
+               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p><div id = \""+secGraph+"curve_chart\" style = \"max-width:100% !important; height:"+divHeight+"\"></div>";
                	contents.push(node)
-                      }
-                      else{
-                      }
-                  
+               
 			  			para.innerHTML=contents.join("")
 			  firebase.database().ref('sections/'+secGraph).off()
 		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
@@ -627,7 +675,6 @@ body {
 			//for (var i=0; i<dataArrayBody.length; i++){
 			//dataArrayBody[i].shift()
 			//}
-			console.log(dataArrayBody)
 			if(dataArrayBody.length<=1){
 				    document.getElementById(snapshot.key+'curve_chart').parentNode.removeChild;
 			}
@@ -647,8 +694,9 @@ body {
         chart.draw(data, options);
 			}
 		});
-		  }	  
+		  }
                   }
+		  }
                     
                     	function removeOptions(selectbox)
                {
@@ -668,14 +716,14 @@ body {
                    var div = document.createElement('div');
                    div.innerHTML= json.rows[i][1]
                      var option = document.createElement('option');
-                     option.value = i;
+                     option.value = [json.rows[i][1]];
                      option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
                      df.appendChild(option);
                    }
                    elm.appendChild(df);
                }   	
             </script>
-            <button type="button" onclick="loadXMLDoc();favpopulate();displayfavs()">Get Latest Info</button><br>
+            <button type="button" onclick="loadXMLDoc()">Get Latest Info</button><br>
             <select id="newfav" style="max-width:90%">
             </select>  
             <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
@@ -752,7 +800,7 @@ body {
            <input type="text" id="logTripname" value="">
            <br>
                Section:<br>
-            <input type = "text" id = "logSec" value="">
+            <input type = "text" id = "logSec" value="" style="max-width:90%">
                <br>
 		Level:<br>
 	<input type="text" id="logLevel" value="">
@@ -997,7 +1045,7 @@ body {
                }
 		 </script>
                   <!-- TRIP Section -->
-         <div class="w3-padding-64 w3-content w3-text-grey" id="trips" style="min-height:95vh">
+         <div class="w3-padding-64 w3-content" id="trips" style="min-height:95vh">
             <script>
               
               firebase.database().ref('trips/active').on('value', function(snapshot) {
@@ -1034,7 +1082,6 @@ body {
                   }
             </script>
             <h2 class="w3-text-light-grey">Upcoming Trips</h2>
-            <hr style="width:200px" class="w3-opacity">
 		<a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" class="w3-btn w3-white">Add/Delete a Trip</a>
             <p id="tripp"></p>
            </div>
@@ -1043,7 +1090,6 @@ body {
          <!-- Contact Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
             <h2 class="w3-text-light-grey">Contact Us</h2>
-            <hr style="width:200px" class="w3-opacity">
             <div class="w3-section">
                <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
                <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
