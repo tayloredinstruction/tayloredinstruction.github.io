@@ -366,7 +366,8 @@ background-position-y: 50%;
 			       </div>
 	      <br>
          <!-- Favourite Sections Section -->
-         <div class="w3-padding-64 w3-content trans" id = "favsecs" style="min-height:95vh">
+         <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
+		 <div class="trans">
             <h2>Favourite Sections</h2>
             <script>
 		    setTimeout(stopLoader, 3000);
@@ -749,8 +750,10 @@ background-position-y: 50%;
             </div>
             <button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
          </div>
+			       </div>
          <!-- Map Section -->
          <div class="w3-padding-64 w3-content" id = "about" style="min-height:95vh">
+<div class="trans">
             <h2>River Map</h2>
             <p style="text-align:center;color:white">
                Map&nbsp;Type:&nbsp;
@@ -795,8 +798,10 @@ background-position-y: 50%;
             </p>
             <div id="googft-mapCanvas"></div>
          </div>
+			       </div>
          <!-- Logbook Section -->
          <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
+		 <div class="trans">
             <h2 class="w3-text-light-grey"> Logbook </h2>
 		 <div id = "downloadLog">
 			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
@@ -860,6 +865,7 @@ background-position-y: 50%;
 					 </div>
 		 </div>
 		          </div>
+			       </div>
 
 		    <script>
 			    function hideLog(){
@@ -1063,6 +1069,7 @@ background-position-y: 50%;
 		 </script>
                   <!-- TRIP Section -->
          <div class="w3-padding-64 w3-content" id="trips" style="min-height:95vh">
+		 <div class="trans">
             <script>
               
               firebase.database().ref('trips/active').on('value', function(snapshot) {
@@ -1103,15 +1110,18 @@ background-position-y: 50%;
             <p id="tripp"></p>
            </div>
             <br>
+			       </div>
             <!-- End Trip Section -->
          <!-- Contact Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
+		 <div class="trans">
             <h2 class="w3-text-light-grey">Contact Us</h2>
             <div class="w3-section">
                <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
                <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
                <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
             </div>
+		 </div>
             <br>
             <!-- End Contact Section -->
          </div>
