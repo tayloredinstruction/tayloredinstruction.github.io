@@ -303,13 +303,18 @@ background-position-y: 50%;
 });
 		   }
 		  
-		   function openHTab(divName) {
-    var i;
+		   function openHTab(event, divName) {
+  var i, x, tablinks;
     var x = document.getElementsByClassName("HTab");
     for (i = 0; i < x.length; i++) {
        x[i].style.display = "none";  
     }
-    document.getElementById(divName).style.display = "block";  
+	tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+  }
+    document.getElementById(divName).style.display = "block"; 
+    event.currentTarget.className += " w3-red";
 }
 		   
 	   </script>
@@ -318,10 +323,10 @@ background-position-y: 50%;
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-		 <div class="w3-bar w3-black">
-  <button class="w3-bar-item w3-button" onclick="openHTab('userdeets')">User Details</button>
-  <button class="w3-bar-item w3-button" onclick="openHTab('notifcationdeets')">Notifications</button>
-  <button class="w3-bar-item w3-button" onclick="openHTab('tripdeets')">Trips</button>
+		 <div class="w3-black" style="display: inline-block">
+  <div class="w3-hover-light-grey tablink w3-red" onclick="openHTab(event, 'userdeets')">&nbsp;&nbsp;User Details&nbsp;&nbsp;</div>
+  <div class="w3-hover-light-grey tablink" onclick="openHTab(event, 'notifcationdeets')">&nbsp;&nbsp;Notifications&nbsp;&nbsp;</div>
+  <div class="w3-hover-light-grey tablink" onclick="openHTab(event, 'tripdeets')">&nbsp;&nbsp;Trips&nbsp;&nbsp;</div>
 </div>
 	  <div id = "userdeets" class = "HTab" style="display:block">
 		  <div id="userLoad" class = "loader">
