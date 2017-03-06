@@ -302,6 +302,15 @@ background-position-y: 50%;
   console.error('Sign Out Error', error);
 });
 		   }
+		  
+		   function openHTab(divName) {
+    var i;
+    var x = document.getElementsByClassName("HTab");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    document.getElementById(divName).style.display = "block";  
+}
 		   
 	   </script>
 	               <div class="w3-padding-large" id="main" style="max-width:95vw">
@@ -309,9 +318,12 @@ background-position-y: 50%;
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-		 
-  <div class="w3-row" style="min-height:95vh">
-	  <div id = "userdeets" class = "w3-col l4">
+		 <div class="w3-bar w3-black">
+  <button class="w3-bar-item w3-button" onclick="openHTab('userdeets')">User Details</button>
+  <button class="w3-bar-item w3-button" onclick="openHTab('notifcationdeets')">Notifications</button>
+  <button class="w3-bar-item w3-button" onclick="openHTab('tripdeets')">Trips</button>
+</div>
+	  <div id = "userdeets" class = "HTab">
 		  <div id="userLoad" class = "loader">
 			  <div id = "loadContainerUser" class= "w3-hide">
 		  <h4>User Details</h4>
@@ -325,7 +337,7 @@ background-position-y: 50%;
 		  </div>
 		  <br>
 	  </div>
-  <div class="w3-col  l4">
+  <div id = "notifcationdeets"class="HTab">
 	  <div id="appLoad" class = "loader">
 		  <div id = "loadContainerApp" class = "w3-hide">
   <h4>Notifications</h4>
@@ -336,7 +348,7 @@ background-position-y: 50%;
 	  </div>
 	  <br>
 </div>
-  <div class="w3-col  l4">
+  <div id = "tripdeets" class="Htab">
 	  <div id="tripLoad" class = "loader">
 		  <div id="loadContainerTrip" class ="w3-hide"> 
   <h4>My Trips</h4>
@@ -345,7 +357,6 @@ background-position-y: 50%;
 	  </div>
 </div>
 		 </div>
-	      </div>
 	      <br>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
