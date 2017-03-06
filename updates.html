@@ -29,12 +29,14 @@
   100% { transform: rotate(360deg); }
 }
 		   	
-div.rapper {
+body{
   /* Location of the image */
   background-image: url(images/background-desktop.jpg);
   
   /* Background image is centered vertically and horizontally at all times */
   background-position: center center;
+background-position-x: 50%;
+background-position-y: 50%;
   
   /* Background image doesn't tile */
   background-repeat: no-repeat;
@@ -54,7 +56,7 @@ div.rapper {
 		   }
 		   
 @media only screen and (max-width: 767px) {
-  div.rapper {
+  body {
     /* The file size of this background image is 93% smaller
        to improve page load speed on mobile internet connections */
     background-image: url(images/background-xsmall.jpg);
@@ -237,7 +239,6 @@ div.rapper {
       </script>
    </head>
    <body class = "w3-black trans" onload="initialize();loadXMLDoc()" style = "min-width:100vw">
-	   <div class="rapper">
         <script>
   // Initialize Firebase
   var config = {
@@ -1112,7 +1113,6 @@ div.rapper {
          </footer>
          <!-- END PAGE CONTENT -->
       </div>
-	   </div>
 	   </div>
    </body>
 </html>
