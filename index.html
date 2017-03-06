@@ -29,33 +29,30 @@
   100% { transform: rotate(360deg); }
 }
 		   	
-body {
+div.rapper{
   /* Location of the image */
   background-image: url(images/background-desktop.jpg);
   
-  /* Background image is centered vertically and horizontally at all times */
-  background-position: center center;
-  
-  /* Background image doesn't tile */
-  background-repeat: no-repeat;
-  
-  /* Background image is fixed in the viewport so that it doesn't move when 
-     the content's height is greater than the image's height */
-  background-attachment: fixed;
-  
-  /* This is what makes the background image rescale based
-     on the container's size */
-  background-size: cover;
-  
-  /* Set a background color that will be displayed
-     while the background image is loading */
+     z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+	background-repeat: no-repeat;
+    background-attachment: scroll;
+	background-position-x: 50%;
+background-position-y: 50%;
+	background-position: center center;
+
 }
 		   div.trans{
-			       background: rgba(0, 0, 0, 0.5);
+			       background: rgba(0, 0, 0, 0.3);
 		   }
 		   
 @media only screen and (max-width: 767px) {
-  body {
+  div.rapper {
     /* The file size of this background image is 93% smaller
        to improve page load speed on mobile internet connections */
     background-image: url(images/background-xsmall.jpg);
@@ -238,6 +235,7 @@ body {
       </script>
    </head>
    <body class = "w3-black trans" onload="initialize();loadXMLDoc()" style = "min-width:100vw">
+	   <div class="rapper"></div>
         <script>
   // Initialize Firebase
   var config = {
@@ -304,6 +302,20 @@ body {
   console.error('Sign Out Error', error);
 });
 		   }
+		  
+		   function openHTab(event, divName) {
+  var i, x, tablinks;
+    var x = document.getElementsByClassName("HTab");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+	tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+  }
+    document.getElementById(divName).style.display = "block"; 
+    event.currentTarget.className += " w3-red";
+}
 		   
 	   </script>
 	               <div class="w3-padding-large" id="main" style="max-width:95vw">
@@ -311,9 +323,13 @@ body {
          <!-- Header/Home -->
          <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-		 
-  <div class="w3-row" style="min-height:95vh">
-	  <div id = "userdeets" class = "w3-col l4">
+		 <div class="trans">
+		 <div class="w3-black trans" style="display: inline-block">
+  <div class="w3-cell trans w3-hover-light-grey tablink w3-red" onclick="openHTab(event, 'userdeets')">&nbsp;&nbsp;User Details&nbsp;&nbsp;</div>
+  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'notifcationdeets')">&nbsp;&nbsp;Notifications&nbsp;&nbsp;</div>
+  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'tripdeets')">&nbsp;&nbsp;Trips&nbsp;&nbsp;</div>
+</div>
+	  <div id = "userdeets" class = "HTab" style="display:block">
 		  <div id="userLoad" class = "loader">
 			  <div id = "loadContainerUser" class= "w3-hide">
 		  <h4>User Details</h4>
@@ -327,7 +343,7 @@ body {
 		  </div>
 		  <br>
 	  </div>
-  <div class="w3-col  l4">
+  <div id = "notifcationdeets" class="HTab" style="display:none">
 	  <div id="appLoad" class = "loader">
 		  <div id = "loadContainerApp" class = "w3-hide">
   <h4>Notifications</h4>
@@ -338,7 +354,7 @@ body {
 	  </div>
 	  <br>
 </div>
-  <div class="w3-col  l4">
+  <div id = "tripdeets" class="HTab" style="display:none">
 	  <div id="tripLoad" class = "loader">
 		  <div id="loadContainerTrip" class ="w3-hide"> 
   <h4>My Trips</h4>
@@ -347,10 +363,11 @@ body {
 	  </div>
 </div>
 		 </div>
-	      </div>
+			       </div>
 	      <br>
          <!-- Favourite Sections Section -->
          <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
+		 <div class="trans">
             <h2>Favourite Sections</h2>
             <script>
 		    setTimeout(stopLoader, 3000);
@@ -733,8 +750,10 @@ body {
             </div>
             <button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
          </div>
+			       </div>
          <!-- Map Section -->
          <div class="w3-padding-64 w3-content" id = "about" style="min-height:95vh">
+<div class="trans">
             <h2>River Map</h2>
             <p style="text-align:center;color:white">
                Map&nbsp;Type:&nbsp;
@@ -779,8 +798,10 @@ body {
             </p>
             <div id="googft-mapCanvas"></div>
          </div>
+			       </div>
          <!-- Logbook Section -->
          <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
+		 <div class="trans">
             <h2 class="w3-text-light-grey"> Logbook </h2>
 		 <div id = "downloadLog">
 			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
@@ -844,6 +865,7 @@ body {
 					 </div>
 		 </div>
 		          </div>
+			       </div>
 
 		    <script>
 			    function hideLog(){
@@ -1047,6 +1069,7 @@ body {
 		 </script>
                   <!-- TRIP Section -->
          <div class="w3-padding-64 w3-content" id="trips" style="min-height:95vh">
+		 <div class="trans">
             <script>
               
               firebase.database().ref('trips/active').on('value', function(snapshot) {
@@ -1087,15 +1110,18 @@ body {
             <p id="tripp"></p>
            </div>
             <br>
+			       </div>
             <!-- End Trip Section -->
          <!-- Contact Section -->
          <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
+		 <div class="trans">
             <h2 class="w3-text-light-grey">Contact Us</h2>
             <div class="w3-section">
                <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
                <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
                <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
             </div>
+		 </div>
             <br>
             <!-- End Contact Section -->
          </div>
