@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	<html manifest="./ti.appcache">
    <title>Taylored Instruction</title>
    <head>
       <link rel="icon" sizes="192x192" href="images/icon.png">
@@ -28,35 +29,39 @@
   100% { transform: rotate(360deg); }
 }
 		   	
-
-html {
-    /* Whatever you want */
-}
-.html-mobile-background {
-    position: fixed;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* To compensate for mobile browser address bar space */
-    background: url(images/background-desktop.jpg) no-repeat; 
-    background-size: 100% 100%;
-}
-
-@media (min-width: 600px) {
-    html {
-        background: url(images/background-xsmall.jpg) no-repeat center center fixed; 
-        background-size: cover;
-    }
-    .html-mobile-background {
-        display: none;
-    }
+body {
+  /* Location of the image */
+  background-image: url(images/background-desktop.jpg);
+  
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+  
+  /* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+-webkit-background-size:cover;
+  
+  /* Set a background color that will be displayed
+     while the background image is loading */
 }
 		   div.trans{
 			       background: rgba(0, 0, 0, 0.5);
 		   }
 		   
-	   
+@media only screen and (max-width: 767px) {
+  body {
+    /* The file size of this background image is 93% smaller
+       to improve page load speed on mobile internet connections */
+    background-image: url(images/background-xsmall.jpg);
+  }
+}	   
 </style>
 	<script type="text/javascript">
         (function(document,navigator,standalone) {
@@ -234,7 +239,6 @@ html {
       </script>
    </head>
    <body class = "w3-black trans" onload="initialize();loadXMLDoc()" style = "min-width:100vw">
-	   <div class="html-mobile-background"></div>
         <script>
   // Initialize Firebase
   var config = {
