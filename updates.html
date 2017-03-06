@@ -29,7 +29,7 @@
   100% { transform: rotate(360deg); }
 }
 		   	
-body{
+div.rapper{
   /* Location of the image */
   background-image: url(images/background-desktop.jpg);
   
@@ -56,7 +56,7 @@ background-position-y: 50%;
 		   }
 		   
 @media only screen and (max-width: 767px) {
-  body {
+  div.rapper {
     /* The file size of this background image is 93% smaller
        to improve page load speed on mobile internet connections */
     background-image: url(images/background-xsmall.jpg);
@@ -239,6 +239,7 @@ background-position-y: 50%;
       </script>
    </head>
    <body class = "w3-black trans" onload="initialize();loadXMLDoc()" style = "min-width:100vw">
+	   <div class="rapper">
         <script>
   // Initialize Firebase
   var config = {
@@ -1113,6 +1114,7 @@ background-position-y: 50%;
          </footer>
          <!-- END PAGE CONTENT -->
       </div>
+	   </div>
 	   </div>
    </body>
 </html>
