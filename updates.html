@@ -311,10 +311,10 @@ background-position-y: 50%;
     }
 	tablinks = document.getElementsByClassName("tablink");
   for (i = 0; i < x.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+      tablinks[i].className = tablinks[i].className.replace(" w3-green", "");
   }
     document.getElementById(divName).style.display = "block"; 
-    event.currentTarget.className += " w3-red";
+    event.currentTarget.className += " w3-green";
 }
 		   
 	   </script>
@@ -325,9 +325,9 @@ background-position-y: 50%;
             <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
 		 <div class="trans">
 		 <div class="w3-black trans" style="display: inline-block">
-  <div class="w3-cell trans w3-hover-light-grey tablink w3-red" onclick="openHTab(event, 'userdeets')">&nbsp;&nbsp;User Details&nbsp;&nbsp;</div>
-  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'notifcationdeets')">&nbsp;&nbsp;Notifications&nbsp;&nbsp;</div>
-  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'tripdeets')">&nbsp;&nbsp;Trips&nbsp;&nbsp;</div>
+  <div class="w3-cell trans w3-hover-light-grey tablink w3-green" onclick="openHTab(event, 'userdeets')">&nbsp;&nbsp;User Details&nbsp;&nbsp;</div>
+  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'notifcationdeets')">&nbsp;&nbsp;Notifications&nbsp;&nbsp;<span id="notBadge" class="w3-badge w3-margin-left w3-red"></span></div>
+  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'tripdeets')">&nbsp;&nbsp;Trips&nbsp;&nbsp;<span id = "tripBadge"class="w3-badge w3-margin-left w3-red"></span></div>
 </div>
 	  <div id = "userdeets" class = "HTab" style="display:block">
 		  <div id="userLoad" class = "loader">
