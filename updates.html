@@ -836,8 +836,8 @@ background-position-y: 50%;
 		<div id="loggedInBook" class="w3-hide">
 <div class="w3-black trans" style="display: inline-block">
   <div class="w3-cell trans w3-hover-light-grey ltablink w3-green" onclick="openLTab(event, 'logdiv')">&nbsp;&nbsp;View Log&nbsp;&nbsp;</div>
-  <div class="w3-cell trans w3-hover-light-grey ltablink" onclick="openLTab(event, 'downloadLog')">&nbsp;&nbsp;Download Log&nbsp;&nbsp;</div>
-  <div class="w3-cell trans w3-hover-light-grey ltablink" onclick="openLTab(event, 'newlogdiv')">&nbsp;&nbsp;Add Entry&nbsp;&nbsp;</div>
+    <div class="w3-cell trans w3-hover-light-grey ltablink" onclick="openLTab(event, 'newlogdiv')">&nbsp;&nbsp;Add Entry&nbsp;&nbsp;</div>
+	<div class="w3-cell trans w3-hover-light-grey ltablink" onclick="openLTab(event, 'downloadLog')">&nbsp;&nbsp;Download Log&nbsp;&nbsp;</div>
 </div>
 		 <div id = "downloadLog" class="log" style="display:none">
 			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
@@ -891,7 +891,7 @@ background-position-y: 50%;
            Additional Information:<br>
                <textarea id="newlogInfo" style="width:75%"></textarea>
            <br><br>
-           <input type="button" value="Update Entry" onclick="newLog()">
+           <input type="button" value="Submit Entry" onclick="newLog()">
             </p>
 					 </div>
 	</div>
