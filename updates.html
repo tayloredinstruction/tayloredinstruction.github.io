@@ -327,8 +327,8 @@ background-position-y: 50%;
 		 <div class="trans">
 		 <div class="w3-black trans" style="display: inline-block">
   <div class="w3-cell trans w3-hover-light-grey tablink w3-green" onclick="openHTab(event, 'userdeets')">&nbsp;&nbsp;User Details&nbsp;&nbsp;</div>
-  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'notifcationdeets')">&nbsp;&nbsp;Notifications&nbsp;&nbsp;<span id="notBadge" class="w3-badge w3-margin-left w3-red"></span></div>
-  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'tripdeets')">&nbsp;&nbsp;Trips&nbsp;&nbsp;<span id = "tripBadge"class="w3-badge w3-margin-left w3-red"></span></div>
+  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'notifcationdeets')">&nbsp;&nbsp;Notifications<span id="notBadge" class="w3-badge w3-margin-left w3-red"></span></div>
+  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'tripdeets')">&nbsp;&nbsp;Trips<span id = "tripBadge"class="w3-badge w3-margin-left w3-red"></span></div>
 </div>
 	  <div id = "userdeets" class = "HTab" style="display:block">
 		  <div id="userLoad" class = "loader">
@@ -415,6 +415,8 @@ background-position-y: 50%;
 
    });
 		    function notificationChecker(){
+			    var y = document.getElementById("approveWait").childNodes.length+document.getElementById("approveInvite").childNodes.length;
+			    document.getElementById("notBadge").innerHTML=y
 			    if(document.getElementById("approveWait").childNodes.length===0 && document.getElementById("approveInvite").childNodes.length===0){
 			        console.log("no notifications")
 				document.getElementById("noNotification").className=""
@@ -565,7 +567,7 @@ background-position-y: 50%;
 			para.innerHTML=contents.join("")
 					 var x=$("#mytrips > div").length
 					 console.log(x)
-					 document.getElementById("notBadge").innerHTML=x
+					 document.getElementById("tripBadge").innerHTML=x
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
 						if(snapshot.val().comments){
   document.getElementById(childSnapshot.key+'view').innerHTML=snapshot.val().comments
