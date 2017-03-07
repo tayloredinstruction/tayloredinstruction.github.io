@@ -327,7 +327,7 @@ background-position-y: 50%;
 		 <div class="trans">
 		 <div class="w3-black trans" style="display: inline-block">
   <div class="w3-cell trans w3-hover-light-grey tablink w3-green w3-container" onclick="openHTab(event, 'userdeets')">User Details<span class="w3-badge w3-red"></span></div>
-  <div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event, 'notifcationdeets')">Notifications<span id="notBadge" class="w3-badge w3-red"></span></div>
+  <div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event, 'notifcationdeets')">Notifications&nbsp;<span id="notBadge" class="w3-badge w3-red"></span></div>
   <div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event, 'tripdeets')">Trips&nbsp;<span id = "tripBadge"class="w3-badge w3-red"></span></div>
 </div>
 	  <div id = "userdeets" class = "HTab" style="display:block">
@@ -835,9 +835,9 @@ background-position-y: 50%;
 		 </div>
 		<div id="loggedInBook" class="w3-hide">
 <div class="w3-black trans" style="display: inline-block">
-  <div class="w3-cell trans w3-hover-light-grey ltablink w3-green" onclick="openLTab(event, 'logdiv')">&nbsp;&nbsp;View Log&nbsp;&nbsp;</div>
-    <div class="w3-cell trans w3-hover-light-grey ltablink" onclick="openLTab(event, 'newlogdiv')">&nbsp;&nbsp;Add Entry&nbsp;&nbsp;</div>
-	<div class="w3-cell trans w3-hover-light-grey ltablink" onclick="openLTab(event, 'downloadLog')">&nbsp;&nbsp;Download Log&nbsp;&nbsp;</div>
+  <div class="w3-cell trans w3-hover-light-grey ltablink w3-green w3-container" onclick="openLTab(event, 'logdiv')">View Log</div>
+    <div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event, 'newlogdiv')">Add Entry</div>
+	<div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event, 'downloadLog')">Download Log</div>
 </div>
 		 <div id = "downloadLog" class="log" style="display:none">
 			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
