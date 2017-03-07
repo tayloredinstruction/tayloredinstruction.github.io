@@ -416,7 +416,12 @@ background-position-y: 50%;
    });
 		    function notificationChecker(){
 			    var y = document.getElementById("approveWait").childNodes.length+document.getElementById("approveInvite").childNodes.length;
+			    if(y===0){
+			    document.getElementById("notBadge").innerHTML=""
+			    }
+			    else{
 			    document.getElementById("notBadge").innerHTML=y
+			    }
 			    if(document.getElementById("approveWait").childNodes.length===0 && document.getElementById("approveInvite").childNodes.length===0){
 			        console.log("no notifications")
 				document.getElementById("noNotification").className=""
