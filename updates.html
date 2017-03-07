@@ -1097,6 +1097,32 @@ background-position-y: 50%;
                      });
 			
 		}
+			function newLog(){
+			var user=firebase.auth().currentUser.uid;
+			var logRef = firebase.database().ref().child('users/'+user+'/completed').push().key
+			firebase.database().ref('users/' + user + '/completed/'+logRef+'/details').update({
+                        uid: document.getElementById("newlogUid").value,
+			trip: document.getElementById("newlogTripname").value,
+			section: document.getElementById("newlogSec").value,
+			date: document.getElementById("newlogDate").value,
+			time: document.getElementById("newlogTime").value,
+			email: document.getElementById("newlogEmail").value,
+			phone: document.getElementById("newlogPhone").value,
+			info: document.getElementById("newlogInfo").value,
+			participants: document.getElementById("newlogParticipants").value,
+			level: document.getElementById("newlogLevel").value,
+			skills: document.getElementById("newlogSkills").value,
+			role: document.getElementById("newlogRole").value,
+			grade: document.getElementById("newlogGrade").value,
+			duration: document.getElementById("newlogDuration").value,
+			distance: document.getElementById("newlogDistance").value
+				
+                     });
+				
+					alert("Logbook updated")
+				logList()	
+					
+		}
 			function updateLog(){
 				if(document.getElementById("logbooklist").value==-1){
 					alert("You must select a trip that you have created or joined. For historic trips you can add a new trip then wait approx. one hour for it to appear here.")
