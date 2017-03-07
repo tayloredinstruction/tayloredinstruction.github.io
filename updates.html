@@ -563,6 +563,7 @@ background-position-y: 50%;
                      contents.push(node);
 			para.innerHTML=contents.join("")
 					 var x=$("#mytrips > div").length
+					 console.log(x)
 					 document.getElementById("notBadge").innerHTML=x
 					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
 						if(snapshot.val().comments){
