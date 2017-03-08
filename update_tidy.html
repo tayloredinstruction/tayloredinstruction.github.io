@@ -1,466 +1,317 @@
 <!DOCTYPE html>
 <html>
-   <title>Taylored Instruction</title>
-   <head>
-	   <script>
-		   (function(document,navigator,standalone) {
-            // prevents links from apps from oppening in mobile safari
-            // this javascript must be the first script in your head
-            if ((standalone in navigator) && navigator[standalone]) {
-                var curnode, location=document.location, stop=/^(a|html)$/i;
-                document.addEventListener('click', function(e) {
-                    curnode=e.target;
-                    while (!(stop).test(curnode.nodeName)) {
-                        curnode=curnode.parentNode;
-                    }
-                    // Condidions to do this only on links to your own app
-                    // if you want all links, use if('href' in curnode) instead.
-                    if('href' in curnode && ( curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host) ) ) {
-                        e.preventDefault();
-                        location.href = curnode.href;
-                    }
-                },false);
-            }
-        })
-		   (document,window.navigator,'standalone');
-	   </script>
-	   	   	<script  async src="lib/ti-app.js"></script>	      
-      <link rel="icon" sizes="192x192" href="images/icon.png">
-      <link rel="apple-touch-icon" href="images/icon.png">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="mobile-web-app-capable" content="yes">
-	   <style>
-.loader {
-  border: 8px solid black;
-  border-radius: 50%;
-  border-top: 8px solid white;
-  width: 50px;
-  height: 50px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-		   	
-div.rapper{
-  /* Location of the image */
-  background-image: url(images/background-desktop.jpg);
-  
-     z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-	background-repeat: no-repeat;
-    background-attachment: scroll;
-	background-position-x: 50%;
-background-position-y: 50%;
-	background-position: center center;
-
-}
-		   div.trans{
-			       background: rgba(0, 0, 0, 0.3);
-		   }
-		   
-@media only screen and (max-width: 767px) {
-  div.rapper {
-    /* The file size of this background image is 93% smaller
-       to improve page load speed on mobile internet connections */
-    background-image: url(images/background-xsmall.jpg);
-  }
-}	   
-</style>
-      <style type="text/css">
-         html, body, #googft-mapCanvas {
-         color: #000;
-         height: 90vh;
-         margin: 0;
-         padding-right: 0px;
-         padding-left:0px;
-         }
-         #legend {
-         color: #000 !important;
-         background: #FFF;
-         padding: 10px;
-         margin: 5px;
-         font-size: 12px;
-         font-family: Arial, sans-serif;
-         }
-         .color {
-         border: 1px solid;
-         height: 12px;
-         width: 12px;
-         margin-right: 3px;
-         float: left;
-         }
-         .red {
-         background: #C00;
-         }
-         .yellow {
-         background: #FF3;
-         }
-         .green {
-         background: #6F0;
-         }
-         .blue {
-         background: #06C;
-         }
-         .white{
-         background:#FFF;
-         }
-         .box{
-         border: 1px;
-         height: 12px;
-         width: 12px;
-         margin-right: 3px;
-         float: left;
-         }
-         #googft-mapCanvas a { color: #00F;}
-      </style>
-	   <link rel="stylesheet" href="lib/w3.css">
-	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	   <style>
-         body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-         .w3-row-padding img {margin-bottom: 12px}
-         /* Set the width of the sidenav to 120px */
-         .w3-sidenav {width: 120px;background: #222;}
-         /* Add a left margin to the "page content" that matches the width of the sidenav (120px) */
-         #main {margin-left: 120px}
-         /* Remove margins from "page content" on small screens */
-         @media only screen and (max-width: 600px) {#main {margin-left: 0}}
-      </style>
-	   <style>
-         body { 
-         background-color: Black;
-         }
-      </style>
-   </head>
-   <body class = "w3-black trans" style = "min-width:100vw">
-	   <div class="rapper"></div>
-	               <div class="trans" style="width:100%">
-      <!-- Icon Bar (Sidenav - hidden on small screens) -->
-      <nav class="w3-sidenav w3-center w3-small w3-hide-small">
-         <!-- Avatar image in top left corner -->
-         <img src="images/sidebar-icon.jpg" style="width:100%">
-         <a class="w3-padding-large w3-black" href="#">
-            <i class="fa fa-user w3-xxlarge"></i>
-            <p>USER</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#favsecs">
-            <i class="fa fa-star w3-xxlarge"></i>
-            <p>FAVOURITE SECTIONS</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#about">
-            <i class="fa fa-globe w3-xxlarge"></i>
-            <p>RIVER MAP</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#logbook">
-            <i class="fa fa-book w3-xxlarge"></i>
-            <p>LOGBOOK</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#trips">
-            <i class="fa fa-calendar w3-xxlarge"></i>
-            <p>UPCOMING TRIPS</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#contact">
-            <i class="fa fa-envelope w3-xxlarge"></i>
-            <p>CONTACT</p>
-         </a>
-      </nav>
-      <!-- Navbar on small screens (Hidden on medium and large screens) -->
-      <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-         <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-            <li class="w3-left" style="width:15% !important"><a href="#"><i class="fa fa-user w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#logbook"><i class="fa fa-book w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#trips"><i class="fa fa-calendar w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
-         </ul>
-      </div>
-      <!-- Page Content -->
-	               <div class="w3-padding-large" id="main" style="max-width:95vw">
-
-         <!-- Header/Home -->
-         <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
-            <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-		 <div class="trans">
-		 <div class="w3-black trans" style="display: inline-block">
-  <div class="w3-cell trans w3-hover-light-grey tablink w3-green w3-container" onclick="openHTab(event, 'userdeets')">User Details<span class="w3-badge w3-red"></span></div>
-  <div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event, 'notifcationdeets')">Notifications&nbsp;<span id="notBadge" class="w3-badge w3-red"></span></div>
-  <div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event, 'tripdeets')">Trips&nbsp;<span id = "tripBadge"class="w3-badge w3-red"></span></div>
+<title>Taylored Instruction</title>
+<head>
+<script>(function(a,c,d){if((d in c)&&c[d]){var f,b=a.location,e=/^(a|html)$/i;a.addEventListener("click",function(g){f=g.target;while(!(e).test(f.nodeName)){f=f.parentNode}if("href" in f&&(f.href.indexOf("http")||~f.href.indexOf(b.host))){g.preventDefault();b.href=f.href}},false)}})(document,window.navigator,"standalone");</script>
+<script async src=lib/ti-app.js></script>
+<link rel=icon sizes=192x192 href=images/icon.png>
+<link rel=apple-touch-icon href=images/icon.png>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<meta name=apple-mobile-web-app-capable content=yes>
+<meta name=mobile-web-app-capable content=yes>
+<style>.loader{border:8px solid black;border-radius:50%;border-top:8px solid white;width:50px;height:50px;-webkit-animation:spin 2s linear infinite;animation:spin 2s linear infinite}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}div.rapper{background-image:url(images/background-desktop.jpg);z-index:-1;position:fixed;top:0;left:0;height:100%;width:100%;background-size:cover;background-repeat:no-repeat;background-attachment:scroll;background-position-x:50%;background-position-y:50%;background-position:center center}div.trans{background:rgba(0,0,0,0.3)}@media only screen and (max-width:767px){div.rapper{background-image:url(images/background-xsmall.jpg)}}</style>
+<style type=text/css>html,body,#googft-mapCanvas{color:#000;height:90vh;margin:0;padding-right:0;padding-left:0}#legend{color:#000!important;background:#FFF;padding:10px;margin:5px;font-size:12px;font-family:Arial,sans-serif}.color{border:1px solid;height:12px;width:12px;margin-right:3px;float:left}.red{background:#C00}.yellow{background:#FF3}.green{background:#6F0}.blue{background:#06C}.white{background:#FFF}.box{border:1px;height:12px;width:12px;margin-right:3px;float:left}#googft-mapCanvas a{color:#00F}</style>
+<link rel=stylesheet href=lib/w3.css>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<style>body,h1,h2,h3,h4,h5,h6{font-family:"Montserrat",sans-serif}.w3-row-padding img{margin-bottom:12px}.w3-sidenav{width:120px;background:#222}#main{margin-left:120px}@media only screen and (max-width:600px){#main{margin-left:0}}</style>
+<style>body{background-color:Black}</style>
+</head>
+<body class="w3-black trans" style=min-width:100vw>
+<div class=rapper></div>
+<div class=trans style=width:100%>
+<nav class="w3-sidenav w3-center w3-small w3-hide-small">
+<img src=images/sidebar-icon.jpg style=width:100%>
+<a class="w3-padding-large w3-black" href=#>
+<i class="fa fa-user w3-xxlarge"></i>
+<p>USER</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#favsecs>
+<i class="fa fa-star w3-xxlarge"></i>
+<p>FAVOURITE SECTIONS</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#about>
+<i class="fa fa-globe w3-xxlarge"></i>
+<p>RIVER MAP</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#logbook>
+<i class="fa fa-book w3-xxlarge"></i>
+<p>LOGBOOK</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#trips>
+<i class="fa fa-calendar w3-xxlarge"></i>
+<p>UPCOMING TRIPS</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#contact>
+<i class="fa fa-envelope w3-xxlarge"></i>
+<p>CONTACT</p>
+</a>
+</nav>
+<div class="w3-top w3-hide-large w3-hide-medium" id=myNavbar>
+<ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+<li class=w3-left style=width:15%!important><a href=#><i class="fa fa-user w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#favsecs><i class="fa fa-star w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#about><i class="fa fa-globe w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#logbook><i class="fa fa-book w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#trips><i class="fa fa-calendar w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#contact><i class="fa fa-envelope w3-xxlarge"></i></a></li>
+</ul>
 </div>
-	  <div id = "userdeets" class = "HTab" style="display:block">
-		  <div id="userLoad" class = "loader">
-			  <div id = "loadContainerUser" class= "w3-hide">
-		  <h4>User Details</h4>
-		  <p id="userino">Not signed in. </p>
-		 <button onclick="signIn()">Sign in</button>
-		 <button onclick="signOut()">Sign out</button><br>
-		 <div id="infodiv" class = "w3-hide">
-		<p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
-		 </div>
-			  </div>
-		  </div>
-		  <br>
-	  </div>
-  <div id = "notifcationdeets" class="HTab" style="display:none">
-	  <div id="appLoad" class = "loader">
-		  <div id = "loadContainerApp" class = "w3-hide">
-  <h4>Notifications</h4>
-	  <div id = "noNotification" class="w3-hide">No Notifications</div>
-	  <div id = "approveWait"></div>
-	  <div id = "approveInvite"></div>
-		  </div>
-	  </div>
-	  <br>
+<div class=w3-padding-large id=main style=max-width:95vw>
+<div class="w3-padding-64 w3-content" id=home style=min-height:95vh>
+<h2 class=w3-text-light-grey align=center>Taylored Instruction</h2>
+<div class=trans>
+<div class="w3-black trans" style=display:inline-block>
+<div class="w3-cell trans w3-hover-light-grey tablink w3-green w3-container" onclick="openHTab(event,'userdeets')">User Details<span class="w3-badge w3-red"></span></div>
+<div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event,'notifcationdeets')">Notifications&nbsp;<span id=notBadge class="w3-badge w3-red"></span></div>
+<div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event,'tripdeets')">Trips&nbsp;<span id="tripBadge"class="w3-badge w3-red"></span></div>
 </div>
-  <div id = "tripdeets" class="HTab" style="display:none">
-	  <div id="tripLoad" class = "loader">
-		  <div id="loadContainerTrip" class ="w3-hide"> 
-  <h4>My Trips</h4>
-     <div id="mytrips"></div> 
-	  </div>
-	  </div>
+<div id=userdeets class=HTab style=display:block>
+<div id=userLoad class=loader>
+<div id=loadContainerUser class=w3-hide>
+<h4>User Details</h4>
+<p id=userino>Not signed in. </p>
+<button onclick=signIn()>Sign in</button>
+<button onclick=signOut()>Sign out</button><br>
+<div id=infodiv class=w3-hide>
+<p>About me (paddle experience, craft, home river): </p><textarea id=myinfo defaultValue=wut></textarea><br><button onclick=updateInfo()>Update</button><br>
 </div>
-		 </div>
-			       </div>
-	      <br>
-         <!-- Favourite Sections Section -->
-         <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
-		 <div class="trans">
-            <h2>Favourite Sections</h2>
-            <button type="button" onclick="loadXMLDoc()">Get Latest Info</button><br>
-            <select id="newfav" style="max-width:90%">
-            </select>  
-            <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
-            <div id = "favsdiv">
-               <p id = "pfav"></p>
-            </div>
-            <button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
-         </div>
-			       </div>
-         <!-- Map Section -->
-         <div class="w3-padding-64 w3-content" id = "about" style="min-height:95vh">
-<div class="trans">
-            <h2>River Map</h2>
-            <p style="text-align:center;color:white">
-               Map&nbsp;Type:&nbsp;
-               <select id="type" onchange="initialize()">
-                  <option value=1 selected>River Levels</option>
-                  <option value=2>Forecast Rainfall</option>
-               </select>
-               Min.&nbsp;Level:&nbsp;
-               <select id="min. level" onchange="initialize()">
-                  <option value=-1 selected>Any</option>
-                  <option value=0>Visual</option>
-                  <option value=1>Low Level</option>
-                  <option value=2>Good Level</option>
-                  <option value=3>High Level</option>
-               </select>
-               Max.&nbsp;Level:&nbsp;
-               <select id="max. level" onchange="initialize()" default>
-                  <option value=0>Visual</option>
-                  <option value=1>Low Level</option>
-                  <option value=2>Good Level</option>
-                  <option value=3>High Level</option>
-                  <option value=4 selected>Any</option>
-               </select>
-               Min.&nbsp;Grade:&nbsp;
-               <select id="min. grade" onchange="initialize()" default>
-                  <option value=-1>None</option>
-                  <option value=2 selected>2</option>
-                  <option value=3>3</option>
-                  <option value=4>4</option>
-                  <option value=5>5</option>
-                  <option value=6>6</option>
-               </select>
-               Max.&nbsp;Grade:&nbsp;
-               <select id="max. grade" onchange="initialize()" default>
-                  <option value=7>None</option>
-                  <option value=2>2</option>
-                  <option value=3>3</option>
-                  <option value=4>4</option>
-                  <option value=5>5</option>
-                  <option value=6 selected>6</option>
-               </select>
-            </p>
-            <div id="googft-mapCanvas"></div>
-         </div>
-			       </div>
-         <!-- Logbook Section -->
-         <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
-		 <div class="trans">
-            <h2 class="w3-text-light-grey"> Logbook </h2>
-		<div id = "loginbook">
-		<p>Sign in to use Logbook</p><br>
-		<button onclick="signIn()">Sign in</button>
-		 </div>
-		<div id="loggedInBook" class="w3-hide">
-<div class="w3-black trans" style="display: inline-block">
-  <div class="w3-cell trans w3-hover-light-grey ltablink w3-green w3-container" onclick="openLTab(event, 'logdiv')">View Log</div>
-    <div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event, 'newlogdiv')">Add Entry</div>
-	<div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event, 'downloadLog')">Download Log</div>
 </div>
-		 <div id = "downloadLog" class="log" style="display:none">
-			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
-			 <!-- <br><button onclick="downloadLog()">Get Log as Table</button><p>(Copy/Paste as required)</p>
-			 <p id = "logDump"></p> -->
-		 </div>
-<div id="newlogdiv" class="log" style="display:none">
-					 <div id="lognew" class="">
-		 <p>Trip Organiser:<br>
-                 <input type="text" id="newlogUid" value="">
-            <br>
-           Trip Name:<br>
-           <input type="text" id="newlogTripname" value="">
-           <br>
-               Section:<br>
-            <input type = "text" id = "newlogSec" value="" style="max-width:90%">
-               <br>
-		Level:<br>
-	<input type="text" id="newlogLevel" value="">
- <br>
-			 Grade:<br>
-	<input type="text" id="newlogGrade" value="">
- <br>
-			 Duration (hrs):<br>
-	<input type="text" id="newlogDuration" value="">
- <br>
-			 Distance (km):<br>
-	<input type="text" id="newlogDistance" value="">
- <br>
-           Date:<br>
-           <input type="date" id="newlogDate" value="">
-           <br>
-           Time:<br>
-           <input type="time" id="newlogTime" value="">
-           <br>
-           Participants:<br>
-	<textarea id="newlogParticipants" value="" style="width:75%"></textarea>
-           <br>
-	My Role:<br>
-	<input type="text" id="newlogRole" value="">
-			 <br>
-		Skills Practiced:<br>
-			 <textarea id="newlogSkills" value="" style="width:75%"></textarea>
-			 <br>
-           Organiser Email:<br>
-           <input type="text" id="newlogEmail" value="">
-           <br>
-           Organiser Phone Number:<br>
-           <input type="text" id="newlogPhone" value="">
-           <br>
-           Additional Information:<br>
-               <textarea id="newlogInfo" style="width:75%"></textarea>
-           <br><br>
-           <input type="button" value="Submit Entry" onclick="newLog()">
-            </p>
-					 </div>
-	</div>
-		 		 <div id="logdiv" class="log" style="display:block">
-		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();hideLog()"></select><br>
-					 <div id="logmod" class="w3-hide">
-		 <p>Trip Organiser:<br>
-                 <input type="text" id="logUid" value="">
-            <br>
-           Trip Name:<br>
-           <input type="text" id="logTripname" value="">
-           <br>
-               Section:<br>
-            <input type = "text" id = "logSec" value="" style="max-width:90%">
-               <br>
-		Level:<br>
-	<input type="text" id="logLevel" value="">
- <br>
-			 Grade:<br>
-	<input type="text" id="logGrade" value="">
- <br>
-			 Duration (hrs):<br>
-	<input type="text" id="logDuration" value="">
- <br>
-			 Distance (km):<br>
-	<input type="text" id="logDistance" value="">
- <br>
-           Date:<br>
-           <input type="date" id="logDate" value="">
-           <br>
-           Time:<br>
-           <input type="time" id="logTime" value="">
-           <br>
-           Participants:<br>
-	<textarea id="logParticipants" value="" style="width:75%"></textarea>
-           <br>
-	My Role:<br>
-	<input type="text" id="logRole" value="">
-			 <br>
-		Skills Practiced:<br>
-			 <textarea id="logSkills" value="" style="width:75%"></textarea>
-			 <br>
-           Organiser Email:<br>
-           <input type="text" id="logEmail" value="">
-           <br>
-           Organiser Phone Number:<br>
-           <input type="text" id="logPhone" value="">
-           <br>
-           Additional Information:<br>
-               <textarea id="logInfo" style="width:75%"></textarea>
-           <br><br>
-           <input type="button" value="Update Entry" onclick="updateLog()">
-            </p>
-					 </div>
-		 </div>
-		          </div>
-			       </div>
-			       </div>
-                  <!-- TRIP Section -->
-         <div class="w3-padding-64 w3-content" id="trips" style="min-height:95vh">
-		 <div class="trans">
-            <h2 class="w3-text-light-grey">Upcoming Trips</h2>
-		<a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" class="w3-btn w3-white">Add/Delete a Trip</a>
-            <p id="tripp"></p>
-           </div>
-            <br>
-			       </div>
-            <!-- End Trip Section -->
-         <!-- Contact Section -->
-         <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
-		 <div class="trans">
-            <h2 class="w3-text-light-grey">Contact Us</h2>
-            <div class="w3-section">
-               <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
-               <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
-               <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
-            </div>
-		 </div>
-            <br>
-            <!-- End Contact Section -->
-         </div>
-         <!-- Footer -->
-         <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
-            <i class="fa fa-facebook-official w3-hover-text-indigo"></i>
-            <i class="fa fa-instagram w3-hover-text-purple"></i>
-            <i class="fa fa-snapchat w3-hover-text-yellow"></i>
-            <i class="fa fa-pinterest-p w3-hover-text-red"></i>
-            <i class="fa fa-twitter w3-hover-text-light-blue"></i>
-            <i class="fa fa-linkedin w3-hover-text-indigo"></i>
-            <p class="w3-medium">Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-            <!-- End footer -->
-         </footer>
-         <!-- END PAGE CONTENT -->
-      </div>
-	   </div>
-   </body>
+</div>
+<br>
+</div>
+<div id=notifcationdeets class=HTab style=display:none>
+<div id=appLoad class=loader>
+<div id=loadContainerApp class=w3-hide>
+<h4>Notifications</h4>
+<div id=noNotification class=w3-hide>No Notifications</div>
+<div id=approveWait></div>
+<div id=approveInvite></div>
+</div>
+</div>
+<br>
+</div>
+<div id=tripdeets class=HTab style=display:none>
+<div id=tripLoad class=loader>
+<div id=loadContainerTrip class=w3-hide>
+<h4>My Trips</h4>
+<div id=mytrips></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<br>
+<div class="w3-padding-64 w3-content" id=favsecs style=min-height:95vh>
+<div class=trans>
+<h2>Favourite Sections</h2>
+<button type=button onclick=loadXMLDoc()>Get Latest Info</button><br>
+<select id=newfav style=max-width:90%>
+</select>
+<button type=button onclick=addtofavs();displayfavs()>Add to Favourites</button><br>
+<div id=favsdiv>
+<p id=pfav></p>
+</div>
+<button type=button onclick=clearfavs();displayfavs()>Clear Favourites</button><br>
+</div>
+</div>
+<div class="w3-padding-64 w3-content" id=about style=min-height:95vh>
+<div class=trans>
+<h2>River Map</h2>
+<p style=text-align:center;color:white>
+Map&nbsp;Type:&nbsp;
+<select id=type onchange=initialize()>
+<option value=1 selected>River Levels</option>
+<option value=2>Forecast Rainfall</option>
+</select>
+Min.&nbsp;Level:&nbsp;
+<select id="min. level" onchange=initialize()>
+<option value=-1 selected>Any</option>
+<option value=0>Visual</option>
+<option value=1>Low Level</option>
+<option value=2>Good Level</option>
+<option value=3>High Level</option>
+</select>
+Max.&nbsp;Level:&nbsp;
+<select id="max. level" onchange=initialize() default>
+<option value=0>Visual</option>
+<option value=1>Low Level</option>
+<option value=2>Good Level</option>
+<option value=3>High Level</option>
+<option value=4 selected>Any</option>
+</select>
+Min.&nbsp;Grade:&nbsp;
+<select id="min. grade" onchange=initialize() default>
+<option value=-1>None</option>
+<option value=2 selected>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6>6</option>
+</select>
+Max.&nbsp;Grade:&nbsp;
+<select id="max. grade" onchange=initialize() default>
+<option value=7>None</option>
+<option value=2>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6 selected>6</option>
+</select>
+</p>
+<div id=googft-mapCanvas></div>
+</div>
+</div>
+<div class="w3-padding-64 w3-content" id=logbook style=min-height:95vh>
+<div class=trans>
+<h2 class=w3-text-light-grey> Logbook </h2>
+<div id=loginbook>
+<p>Sign in to use Logbook</p><br>
+<button onclick=signIn()>Sign in</button>
+</div>
+<div id=loggedInBook class=w3-hide>
+<div class="w3-black trans" style=display:inline-block>
+<div class="w3-cell trans w3-hover-light-grey ltablink w3-green w3-container" onclick="openLTab(event,'logdiv')">View Log</div>
+<div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event,'newlogdiv')">Add Entry</div>
+<div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event,'downloadLog')">Download Log</div>
+</div>
+<div id=downloadLog class=log style=display:none>
+<button onclick=excelLog()>Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
+</div>
+<div id=newlogdiv class=log style=display:none>
+<div id=lognew class>
+<p>Trip Organiser:<br>
+<input type=text id=newlogUid value>
+<br>
+Trip Name:<br>
+<input type=text id=newlogTripname value>
+<br>
+Section:<br>
+<input type=text id=newlogSec value style=max-width:90%>
+<br>
+Level:<br>
+<input type=text id=newlogLevel value>
+<br>
+Grade:<br>
+<input type=text id=newlogGrade value>
+<br>
+Duration (hrs):<br>
+<input type=text id=newlogDuration value>
+<br>
+Distance (km):<br>
+<input type=text id=newlogDistance value>
+<br>
+Date:<br>
+<input type=date id=newlogDate value>
+<br>
+Time:<br>
+<input type=time id=newlogTime value>
+<br>
+Participants:<br>
+<textarea id=newlogParticipants value style=width:75%></textarea>
+<br>
+My Role:<br>
+<input type=text id=newlogRole value>
+<br>
+Skills Practiced:<br>
+<textarea id=newlogSkills value style=width:75%></textarea>
+<br>
+Organiser Email:<br>
+<input type=text id=newlogEmail value>
+<br>
+Organiser Phone Number:<br>
+<input type=text id=newlogPhone value>
+<br>
+Additional Information:<br>
+<textarea id=newlogInfo style=width:75%></textarea>
+<br><br>
+<input type=button value="Submit Entry" onclick=newLog()>
+</p>
+</div>
+</div>
+<div id=logdiv class=log style=display:block>
+<p>Select logged trip: </p> <select id=logbooklist onChange=getTrip();hideLog()></select><br>
+<div id=logmod class=w3-hide>
+<p>Trip Organiser:<br>
+<input type=text id=logUid value>
+<br>
+Trip Name:<br>
+<input type=text id=logTripname value>
+<br>
+Section:<br>
+<input type=text id=logSec value style=max-width:90%>
+<br>
+Level:<br>
+<input type=text id=logLevel value>
+<br>
+Grade:<br>
+<input type=text id=logGrade value>
+<br>
+Duration (hrs):<br>
+<input type=text id=logDuration value>
+<br>
+Distance (km):<br>
+<input type=text id=logDistance value>
+<br>
+Date:<br>
+<input type=date id=logDate value>
+<br>
+Time:<br>
+<input type=time id=logTime value>
+<br>
+Participants:<br>
+<textarea id=logParticipants value style=width:75%></textarea>
+<br>
+My Role:<br>
+<input type=text id=logRole value>
+<br>
+Skills Practiced:<br>
+<textarea id=logSkills value style=width:75%></textarea>
+<br>
+Organiser Email:<br>
+<input type=text id=logEmail value>
+<br>
+Organiser Phone Number:<br>
+<input type=text id=logPhone value>
+<br>
+Additional Information:<br>
+<textarea id=logInfo style=width:75%></textarea>
+<br><br>
+<input type=button value="Update Entry" onclick=updateLog()>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w3-padding-64 w3-content" id=trips style=min-height:95vh>
+<div class=trans>
+<h2 class=w3-text-light-grey>Upcoming Trips</h2>
+<a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" class="w3-btn w3-white">Add/Delete a Trip</a>
+<p id=tripp></p>
+</div>
+<br>
+</div>
+<div class="w3-padding-64 w3-content w3-text-grey" id=contact style=min-height:95vh>
+<div class=trans>
+<h2 class=w3-text-light-grey>Contact Us</h2>
+<div class=w3-section>
+<p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
+<p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
+<p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
+</div>
+</div>
+<br>
+</div>
+<footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+<i class="fa fa-facebook-official w3-hover-text-indigo"></i>
+<i class="fa fa-instagram w3-hover-text-purple"></i>
+<i class="fa fa-snapchat w3-hover-text-yellow"></i>
+<i class="fa fa-pinterest-p w3-hover-text-red"></i>
+<i class="fa fa-twitter w3-hover-text-light-blue"></i>
+<i class="fa fa-linkedin w3-hover-text-indigo"></i>
+<p class=w3-medium>Powered by <a href=http://www.w3schools.com/w3css/default.asp target=_blank class=w3-hover-text-green>w3.css</a></p>
+</footer>
+</div>
+</div>
+</body>
 </html>
-
