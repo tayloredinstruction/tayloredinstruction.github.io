@@ -284,13 +284,125 @@ Additional Information:<br>
 </div>
 </div>
 <div class="w3-padding-64 w3-content" id=trips style=min-height:95vh>
-<div class=trans>
+  <div class=trans>
+  <div id=logintrip>
+<p>Sign in to use Trip Management</p><br>
+<button onclick=signIn()>Sign in</button>
+</div>
+<div id=loggedInTrip class=w3-hide>
+<div class="w3-black trans" style=display:inline-block>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-green w3-container" onclick="openTTab(event,'vtrip')">View Trips</div>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'addtrip')">Add Trip</div>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'updtrip')">Update Trip</div>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'deltrip')">Delete Trip</div>
+</div>
+  <div id = "addtrip" class="trip" style=display:none>
+           <h2>Add a Trip</h2>
+            <p>Trip Organiser:<br>
+                          <input type="text" id="userId" value="">
+            <br>
+           Trip Name:<br>
+           <input type="text" id="tripname" value="">
+           <br>
+               Section:</p>
+               <div id="rivsecsdiv">
+               <select id="rivsecs" style="max-width:90%"></select><br>
+            </div>
+            <p>Other: <input type="checkbox" id = "rivsecsalt" onChange="hider()"><br></p>
+            <div id="rivsecsalttextdiv" class = "w3-hide">   
+            <input type = "text" id = "rivsecsalttext">
+               <br>
+            </div>
+            <p>
+           Date:<br>
+           <input type="date" id="date" value="">
+           <br>
+           Time:<br>
+           <input type="time" id="time" value="">
+           <br>
+           Max. Group Size:<br>
+           <input type="number" id="groupsize" value="">
+           <br>
+           Contact Email:<br>
+           <input type="text" id="email" value="">
+           <br>
+           Contact Phone Number:<br>
+           <input type="text" id="phone" value="">
+           <br>
+           Private Trip: <input type="checkbox" id="private">
+           <br>
+           Invite Paddlers:<br>
+               Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.<br>
+               <select id="userlist" multiple="true" style="max-width:90%"></select>
+               <br>
+           Additional Information:<br>
+               <textarea id="info" style="width:75wh"></textarea>
+           <br>
+           <br><br>
+           <input type="button" value="Submit" onclick="writeTripInformation()">
+            </p>
+         </div>
+  
+  
+  <div id = "updtrip" class="trip" style=display:none>
+           <h2>Update a Trip</h2>
+                     <p>Select a trip to update</p><select id = "updtriplist" onChange="getTrip()"></select>
+            <p>Trip Name:<br>
+           <input type="text" id="updtripname" value="">
+           <br>
+               Section:</p>
+               <div id="updrivsecsdiv">
+               <select id="updrivsecs" style="max-width:90%"></select><br>
+            </div>
+            <p>Other: <input type="checkbox" id = "updrivsecsalt" onChange="updhider()"><br></p>
+            <div id="updrivsecsalttextdiv" class = "w3-hide">   
+            <input type = "text" id = "updrivsecsalttext">
+               <br>
+            </div>
+            <p>
+           Date:<br>
+           <input type="date" id="upddate" value="">
+           <br>
+           Time:<br>
+           <input type="time" id="updtime" value="">
+           <br>
+           Max. Group Size:<br>
+           <input type="number" id="updgroupsize" value="">
+           <br>
+           Contact Email:<br>
+           <input type="text" id="updemail" value="">
+           <br>
+           Contact Phone Number:<br>
+           <input type="text" id="updphone" value="">
+           <br>
+           Private Trip: <input type="checkbox" id="updprivate">
+           <br>
+           Invite Paddlers:<br>
+               Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.<br>
+               <select id="upduserlist" multiple="true" style="max-width:90%"></select>
+               <br>
+           Additional Information:<br>
+               <textarea id="updinfo" style="width:75wh"></textarea>
+           <br>
+           <br><br>
+           <input type="button" value="Submit" onclick="updTripInformation()">
+            </p>
+         </div>
+  
+  <div id = "deltrip" class="trip" style=display:none>
+            <h2>Delete a Trip</h2>
+            <select id = "deletelist" style = "max-width:90%"></select>
+            <input type = "button" value = "Delete" id = "delete" onclick = "deleteTrip()">
+         </div>
+  
+  <div id="vtrip" class="trip" style=display:block>
 <h2 class=w3-text-light-grey>Upcoming Trips</h2>
-<a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" class="w3-btn w3-white">Add/Delete a Trip</a>
 <p id=tripp></p>
 </div>
 <br>
 </div>
+    </div>
+  </div>
 <div class="w3-padding-64 w3-content w3-text-grey" id=contact style=min-height:95vh>
 <div class=trans>
 <h2 class=w3-text-light-grey>Contact Us</h2>
