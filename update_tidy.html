@@ -285,6 +285,7 @@ Additional Information:<br>
 </div>
 <div class="w3-padding-64 w3-content" id=trips style=min-height:95vh>
   <div class=trans>
+    <h2 class=w3-text-light-grey>Trip Management</h2>
   <div id=logintrip>
 <p>Sign in to use Trip Management</p><br>
 <button onclick=signIn()>Sign in</button>
@@ -297,7 +298,6 @@ Additional Information:<br>
 <div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'deltrip')">Delete Trip</div>
 </div>
   <div id = "addtrip" class="trip" style=display:none>
-           <h2>Add a Trip</h2>
             <p>Trip Organiser:<br>
                           <input type="text" id="userId" value="">
             <br>
@@ -345,7 +345,6 @@ Additional Information:<br>
   
   
   <div id = "updtrip" class="trip" style=display:none>
-           <h2>Update a Trip</h2>
                      <p>Select a trip to update</p><select id = "updtriplist" onChange="getTrip()"></select>
             <p>Trip Name:<br>
            <input type="text" id="updtripname" value="">
@@ -390,13 +389,11 @@ Additional Information:<br>
          </div>
   
   <div id = "deltrip" class="trip" style=display:none>
-            <h2>Delete a Trip</h2>
             <select id = "deletelist" style = "max-width:90%"></select>
             <input type = "button" value = "Delete" id = "delete" onclick = "deleteTrip()">
          </div>
   
   <div id="vtrip" class="trip" style=display:block>
-<h2 class=w3-text-light-grey>Upcoming Trips</h2>
 <p id=tripp></p>
 </div>
 <br>
