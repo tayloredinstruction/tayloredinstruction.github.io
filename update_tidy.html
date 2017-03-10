@@ -297,17 +297,13 @@ Additional Information:<br>
 <div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'updtrip')">Update Trip</div>
 <div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'deltrip')">Delete Trip</div>
 </div>
-  <script>
-    function grrr(){
-      window.scrollTo(0,$('#tripname').offset().top);
-    }
-  </script>
   <div id = "addtrip" class="trip" style=display:none>
+    <form>
             <p>Trip Organiser:<br>
                           <input type="text" id="userId" value="">
             <br>
            Trip Name:<br>
-           <input type="text" id="tripname" value="" onFocus="grrr()">
+           <input type="text" id="tripname" value="">
            <br>
                Section:</p>
                <div id="rivsecsdiv">
@@ -346,6 +342,7 @@ Additional Information:<br>
            <br><br>
            <input type="button" value="Submit" onclick="writeTripInformation()">
             </p>
+    </form>
          </div>
   
   
