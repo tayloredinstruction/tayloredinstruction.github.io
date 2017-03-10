@@ -299,8 +299,7 @@ Additional Information:<br>
 </div>
   <script>
     function grrr(){
-      console.log($(document).scrollTop())
-      window.scrollTo(0,$(document).scrollTop());
+      window.scrollTo(0,$('tripname').offset().top);
     }
   </script>
   <div id = "addtrip" class="trip" style=display:none>
