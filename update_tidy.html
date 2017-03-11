@@ -3,7 +3,7 @@
 <title>Taylored Instruction</title>
 <head>
 <script>(function(a,c,d){if((d in c)&&c[d]){var f,b=a.location,e=/^(a|html)$/i;a.addEventListener("click",function(g){f=g.target;while(!(e).test(f.nodeName)){f=f.parentNode}if("href" in f&&(f.href.indexOf("http")||~f.href.indexOf(b.host))){g.preventDefault();b.href=f.href}},false)}})(document,window.navigator,"standalone");</script>
-<script async src=lib/ti-app.js?64534></script>
+<script async src=lib/ti-app.js?110317></script>
 <link rel=stylesheet href=lib/w3.css>
 <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
 <link rel=icon sizes=192x192 href=images/icon.png>
@@ -181,6 +181,7 @@ Max.&nbsp;Grade:&nbsp;
 </div>
 <div id=newlogdiv class=log style=display:none>
 <div id=lognew class>
+  <form id="flognew">
 <p>Trip Organiser:<br>
 <input type=text id=newlogUid value>
 <br>
@@ -228,6 +229,7 @@ Additional Information:<br>
 <br><br>
 <input type=button value="Submit Entry" onclick=newLog()>
 </p>
+  </form>
 </div>
 </div>
 <div id=logdiv class=log style=display:block>
@@ -300,7 +302,7 @@ Additional Information:<br>
 <div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'deltrip')">Delete Trip</div>
 </div>
   <div id = "addtrip" class="trip" style=display:none>
-    <form>
+    <form id="faddtrip">
             <p>Trip Organiser:<br>
                           <input type="text" id="userId" value="">
             <br>
@@ -349,6 +351,7 @@ Additional Information:<br>
   
   
   <div id = "updtrip" class="trip" style=display:none>
+    <form id="fupdtrip">
                      <p>Select a trip to update</p><select id = "updtriplist" onChange="tripgetTrip()"></select>
             <p>Trip Name:<br>
            <input type="text" id="updtripname" value="">
@@ -390,6 +393,7 @@ Additional Information:<br>
            <br><br>
            <input type="button" value="Submit" onclick="updTripInformation()">
             </p>
+    </form>
          </div>
   
   <div id = "deltrip" class="trip" style=display:none>
