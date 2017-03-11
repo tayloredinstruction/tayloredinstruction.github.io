@@ -1,1143 +1,434 @@
 <!DOCTYPE html>
-<html>
-	<html manifest="./ti.appcache">
-   <title>Taylored Instruction</title>
-   <head>
-      <link rel="icon" sizes="192x192" href="images/icon.png">
-      <link rel="apple-touch-icon" href="images/icon.png">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="mobile-web-app-capable" content="yes">
-	   <style>
-.loader {
-  border: 8px solid black;
-  border-radius: 50%;
-  border-top: 8px solid white;
-  width: 50px;
-  height: 50px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-		   	
-div.rapper{
-  /* Location of the image */
-  background-image: url(images/background-desktop.jpg);
-  
-     z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-	background-repeat: no-repeat;
-    background-attachment: scroll;
-	background-position-x: 50%;
-background-position-y: 50%;
-	background-position: center center;
-
-}
-		   div.trans{
-			       background: rgba(0, 0, 0, 0.3);
-		   }
-		   
-@media only screen and (max-width: 767px) {
-  div.rapper {
-    /* The file size of this background image is 93% smaller
-       to improve page load speed on mobile internet connections */
-    background-image: url(images/background-xsmall.jpg);
-  }
-}	   
-</style>
-	<script type="text/javascript">
-        (function(document,navigator,standalone) {
-            // prevents links from apps from oppening in mobile safari
-            // this javascript must be the first script in your head
-            if ((standalone in navigator) && navigator[standalone]) {
-                var curnode, location=document.location, stop=/^(a|html)$/i;
-                document.addEventListener('click', function(e) {
-                    curnode=e.target;
-                    while (!(stop).test(curnode.nodeName)) {
-                        curnode=curnode.parentNode;
-                    }
-                    // Condidions to do this only on links to your own app
-                    // if you want all links, use if('href' in curnode) instead.
-                    if('href' in curnode && ( curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host) ) ) {
-                        e.preventDefault();
-                        location.href = curnode.href;
-                    }
-                },false);
-            }
-        })(document,window.navigator,'standalone');
-    </script>
-      <link rel="stylesheet" href="lib/w3.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <style type="text/css">
-         html, body, #googft-mapCanvas {
-         color: #000;
-         height: 90vh;
-         margin: 0;
-         padding-right: 0px;
-         padding-left:0px;
-         }
-         #legend {
-         color: #000 !important;
-         background: #FFF;
-         padding: 10px;
-         margin: 5px;
-         font-size: 12px;
-         font-family: Arial, sans-serif;
-         }
-         .color {
-         border: 1px solid;
-         height: 12px;
-         width: 12px;
-         margin-right: 3px;
-         float: left;
-         }
-         .red {
-         background: #C00;
-         }
-         .yellow {
-         background: #FF3;
-         }
-         .green {
-         background: #6F0;
-         }
-         .blue {
-         background: #06C;
-         }
-         .white{
-         background:#FFF;
-         }
-         .box{
-         border: 1px;
-         height: 12px;
-         width: 12px;
-         margin-right: 3px;
-         float: left;
-         }
-         #googft-mapCanvas a { color: #00F;}
-      </style>
-      <style>
-         body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-         .w3-row-padding img {margin-bottom: 12px}
-         /* Set the width of the sidenav to 120px */
-         .w3-sidenav {width: 120px;background: #222;}
-         /* Add a left margin to the "page content" that matches the width of the sidenav (120px) */
-         #main {margin-left: 120px}
-         /* Remove margins from "page content" on small screens */
-         @media only screen and (max-width: 600px) {#main {margin-left: 0}}
-      </style>
-      <style>
-         body { 
-         background-color: Black;
-         }
-      </style>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
-      <script async src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
-      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
-      <script type="text/javascript">
-         function initialize() {
-           google.maps.visualRefresh = true;
-         
-         
-           var mapDiv = document.getElementById('googft-mapCanvas');
-           var map = new google.maps.Map(mapDiv, {
-             center: new google.maps.LatLng(-30.3333, 152.7167),
-             zoom: 4,
-             mapTypeId: google.maps.MapTypeId.ROADMAP
-           });
-         
-           var mini = document.getElementById("min. level");
-           var miniVal = mini.options[mini.selectedIndex].value;
-           var maxi = document.getElementById("max. level");
-           var maxiVal = maxi.options[maxi.selectedIndex].value;
-           var minig = document.getElementById("min. grade");
-           var miniValg = minig.options[minig.selectedIndex].value;
-           var maxig = document.getElementById("max. grade");
-           var maxiValg = maxig.options[maxig.selectedIndex].value;
-           var mults = document.getElementById("type");
-           var mult = mults.options[mults.selectedIndex].value;
-           var sid = mult*2
-           var tid = mult*3
-           var layer = new google.maps.FusionTablesLayer({
-             map: map,
-             heatmap: { enabled: false },
-             query: {
-         select: "col11",
-         from: "1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke",
-         where:  "col15 \x3e\x3d "+miniVal+" and col15 \x3c\x3d "+maxiVal+" and col14 \x3e\x3d "+miniValg+" and col16 \x3c\x3d "+maxiValg
-             },
-             options: {
-         styleId: sid,
-         templateId: tid
-             }
-           });
-         
-         // Create the legend and display on the map
-         if(mult==1){
-         var redtext = "Low Level"
-         var yeltext = "Visual"
-         var gretext = "Good Level"
-         var blutext = "High Level"
-         }
-         else{
-         var redtext = "24h < 10mm OR <br><div class='box white'></div> 5-day < 30mm"
-         var yeltext = "24h < 20mm OR <br><div class='box white'></div> 5-day < 50mm"
-         var gretext = "24h < 40mm OR <br><div class='box white'></div> 5-day < 80mm"
-         var blutext = "24h > 40mm OR <br><div class='box white'></div> 5-day > 80mm"
-         }
-         var legend = document.createElement('div');
-         legend.id = 'legend';
-         var content = [];
-         content.push('<p><input type="checkbox" name="hide" value = 1 onclick = "showHide()"> Hide </p>')
-         content.push('<h3>Legend</h3>');
-         content.push('<p><div class="color red"></div>'+redtext+'</p>');
-         content.push('<p><div class="color yellow"></div>'+yeltext+'</p>');
-         content.push('<p><div class="color green"></div>'+gretext+'</p>');
-         content.push('<p><div class="color blue"></div>'+blutext+'</p>');
-         content.push('<p><input type="checkbox" name="hide" value = 1 onclick = "showHide()"> Hide </p>')
-         legend.innerHTML = content.join('');
-         legend.index = 1;
-         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-         
-         }
-         function showHide() {
-          var el = document.getElementById('legend');
-         el.value+=1
-         if (el.value % 2 ===0){
-              el.style.display = 'block';
-         }
-         else{
-         el.style.display = 'none';
-         }
-         
-         }
-         
-         
-         google.maps.event.addDomListener(window, 'load', initialize);
-      </script>
-   </head>
-   <body class = "w3-black trans" onload="initialize();loadXMLDoc()" style = "min-width:100vw">
-	   <div class="rapper"></div>
-        <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAPGboQdrh1wMjLi6cxhPF53NNuCdbRgBY",
-    authDomain: "taylored-instruction.firebaseapp.com",
-    databaseURL: "https://taylored-instruction.firebaseio.com",
-    storageBucket: "taylored-instruction.appspot.com",
-    messagingSenderId: "1091342339175"
-  };
-  firebase.initializeApp(config);
-      </script>   
-	               <div class="trans" style="width:100%">
-      <!-- Icon Bar (Sidenav - hidden on small screens) -->
-      <nav class="w3-sidenav w3-center w3-small w3-hide-small">
-         <!-- Avatar image in top left corner -->
-         <img src="images/sidebar-icon.jpg" style="width:100%">
-         <a class="w3-padding-large w3-black" href="#">
-            <i class="fa fa-user w3-xxlarge"></i>
-            <p>USER</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#favsecs">
-            <i class="fa fa-star w3-xxlarge"></i>
-            <p>FAVOURITE SECTIONS</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#about">
-            <i class="fa fa-globe w3-xxlarge"></i>
-            <p>RIVER MAP</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#logbook">
-            <i class="fa fa-book w3-xxlarge"></i>
-            <p>LOGBOOK</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#trips">
-            <i class="fa fa-calendar w3-xxlarge"></i>
-            <p>UPCOMING TRIPS</p>
-         </a>
-         <a class="w3-padding-large w3-hover-black" href="#contact">
-            <i class="fa fa-envelope w3-xxlarge"></i>
-            <p>CONTACT</p>
-         </a>
-      </nav>
-      <!-- Navbar on small screens (Hidden on medium and large screens) -->
-      <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-         <ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-            <li class="w3-left" style="width:15% !important"><a href="#"><i class="fa fa-user w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#favsecs"><i class="fa fa-star w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#about"><i class="fa fa-globe w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#logbook"><i class="fa fa-book w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#trips"><i class="fa fa-calendar w3-xxlarge"></i></a></li>
-            <li class="w3-left" style="width:15% !important"><a href="#contact"><i class="fa fa-envelope w3-xxlarge"></i></a></li>
-         </ul>
-      </div>
-      <!-- Page Content -->
-	   <script>
-		   function signIn(){
-			window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html'
-		   }
-		   function signOut(){
-			   firebase.auth().signOut().then(function() {
-  alert('Signed Out');
-  window.location.href = 'https://tayloredinstruction.github.io/'
-
-}, function(error) {
-  console.error('Sign Out Error', error);
-});
-		   }
-		  
-		   function openHTab(event, divName) {
-  var i, x, tablinks;
-    var x = document.getElementsByClassName("HTab");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-	tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < x.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
-  }
-    document.getElementById(divName).style.display = "block"; 
-    event.currentTarget.className += " w3-red";
-}
-		   
-	   </script>
-	               <div class="w3-padding-large" id="main" style="max-width:95vw">
-
-         <!-- Header/Home -->
-         <div class="w3-padding-64 w3-content" id="home" style="min-height:95vh">
-            <h2 class="w3-text-light-grey" align = "center">Taylored Instruction</h2>
-		 <div class="trans">
-		 <div class="w3-black trans" style="display: inline-block">
-  <div class="w3-cell trans w3-hover-light-grey tablink w3-red" onclick="openHTab(event, 'userdeets')">&nbsp;&nbsp;User Details&nbsp;&nbsp;</div>
-  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'notifcationdeets')">&nbsp;&nbsp;Notifications&nbsp;&nbsp;</div>
-  <div class="w3-cell trans w3-hover-light-grey tablink" onclick="openHTab(event, 'tripdeets')">&nbsp;&nbsp;Trips&nbsp;&nbsp;</div>
+<html manifest= "ti.appcache">
+<title>Taylored Instruction</title>
+<head>
+<script>(function(a,c,d){if((d in c)&&c[d]){var f,b=a.location,e=/^(a|html)$/i;a.addEventListener("click",function(g){f=g.target;while(!(e).test(f.nodeName)){f=f.parentNode}if("href" in f&&(f.href.indexOf("http")||~f.href.indexOf(b.host))){g.preventDefault();b.href=f.href}},false)}})(document,window.navigator,"standalone");</script>
+<script async src=lib/ti-app.js?20170312></script>
+<link rel=stylesheet href=lib/w3.css>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=icon sizes=192x192 href=images/icon.png>
+<link rel=apple-touch-icon href=images/icon.png>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<meta name=apple-mobile-web-app-capable content=yes>
+<meta name=mobile-web-app-capable content=yes>
+<meta name="description" content="View live river data for Australian white water rivers, create and join trips and automatically create logs of trips.">
+<style> select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] { font-size: 16px; }</style>
+<style>.loader{border:8px solid black;border-radius:50%;border-top:8px solid white;width:50px;height:50px;-webkit-animation:spin 2s linear infinite;animation:spin 2s linear infinite}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}div.rapper{background-image:url(images/background-desktop.jpg);z-index:-1;position:fixed;top:0;left:0;height:100vh;width:100vw;background-size:cover;background-repeat:no-repeat;background-attachment:scroll;background-position-x:50%;background-position-y:50%;background-position:center center}div.trans{background:rgba(0,0,0,0.3)}@media only screen and (max-width:767px){div.rapper{background-image:url(images/background-xsmall.jpg)}}</style>
+<style type=text/css>html,body,#googft-mapCanvas{color:#000;height:90vh;margin:0;padding-right:0;padding-left:0}#legend{color:#000!important;background:#FFF;padding:10px;margin:5px;font-size:12px;font-family:Arial,sans-serif}.color{border:1px solid;height:12px;width:12px;margin-right:3px;float:left}.red{background:#C00}.yellow{background:#FF3}.green{background:#6F0}.blue{background:#06C}.white{background:#FFF}.box{border:1px;height:12px;width:12px;margin-right:3px;float:left}#googft-mapCanvas a{color:#00F}</style>
+<style>body,h1,h2,h3,h4,h5,h6{font-family:"Montserrat",sans-serif}.w3-row-padding img{margin-bottom:12px}.w3-sidenav{width:120px;background:#222}#main{margin-left:120px}@media only screen and (max-width:600px){#main{margin-left:0}}</style>
+<style>body{background-color:Black}</style>
+</head>
+<body class="w3-black trans" style=min-width:100vw>
+<div class=rapper></div>
+<div class=trans style=width:100%>
+<nav class="w3-sidenav w3-center w3-small w3-hide-small">
+<img src=images/sidebar-icon.jpg style=width:100%>
+<a class="w3-padding-large w3-black" href=#>
+<i class="fa fa-user w3-xxlarge"></i>
+<p>USER</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#favsecs>
+<i class="fa fa-star w3-xxlarge"></i>
+<p>FAVOURITE SECTIONS</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#about>
+<i class="fa fa-globe w3-xxlarge"></i>
+<p>RIVER MAP</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#logbook>
+<i class="fa fa-book w3-xxlarge"></i>
+<p>LOGBOOK</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#trips>
+<i class="fa fa-calendar w3-xxlarge"></i>
+<p>UPCOMING TRIPS</p>
+</a>
+<a class="w3-padding-large w3-hover-black" href=#contact>
+<i class="fa fa-envelope w3-xxlarge"></i>
+<p>CONTACT</p>
+</a>
+</nav>
+<div class="w3-top w3-hide-large w3-hide-medium" id=myNavbar>
+<ul class="w3-navbar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+<li class=w3-left style=width:15%!important><a href=#><i class="fa fa-user w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#favsecs><i class="fa fa-star w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#about><i class="fa fa-globe w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#logbook><i class="fa fa-book w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#trips><i class="fa fa-calendar w3-xxlarge"></i></a></li>
+<li class=w3-left style=width:15%!important><a href=#contact><i class="fa fa-envelope w3-xxlarge"></i></a></li>
+</ul>
 </div>
-	  <div id = "userdeets" class = "HTab" style="display:block">
-		  <div id="userLoad" class = "loader">
-			  <div id = "loadContainerUser" class= "w3-hide">
-		  <h4>User Details</h4>
-		  <p id="userino">Not signed in. </p>
-		 <button onclick="signIn()">Sign in</button>
-		 <button onclick="signOut()">Sign out</button><br>
-		 <div id="infodiv" class = "w3-hide">
-		<p>About me (paddle experience, craft, home river): </p><textarea id="myinfo" defaultValue="wut"></textarea><br><button onclick="updateInfo()">Update</button><br>
-		 </div>
-			  </div>
-		  </div>
-		  <br>
-	  </div>
-  <div id = "notifcationdeets" class="HTab" style="display:none">
-	  <div id="appLoad" class = "loader">
-		  <div id = "loadContainerApp" class = "w3-hide">
-  <h4>Notifications</h4>
-	  <div id = "noNotification" class="w3-hide">No Notifications</div>
-	  <div id = "approveWait"></div>
-	  <div id = "approveInvite"></div>
-		  </div>
-	  </div>
-	  <br>
+<div class=w3-padding-large id=main style=max-width:95vw>
+<div class="w3-padding-64 w3-content" id=home style=min-height:95vh>
+<h2 class=w3-text-light-grey align=center>Taylored Instruction</h2>
+<div class=trans>
+<div class="w3-black trans" style=display:inline-block>
+<div class="w3-cell trans w3-hover-light-grey tablink w3-green w3-container" onclick="openHTab(event,'userdeets')">User Details<span class="w3-badge w3-red"></span></div>
+<div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event,'notifcationdeets')">Notifications&nbsp;<span id=notBadge class="w3-badge w3-red"></span></div>
+<div class="w3-cell trans w3-hover-light-grey tablink w3-container" onclick="openHTab(event,'tripdeets')">Trips&nbsp;<span id="tripBadge"class="w3-badge w3-red"></span></div>
 </div>
-  <div id = "tripdeets" class="HTab" style="display:none">
-	  <div id="tripLoad" class = "loader">
-		  <div id="loadContainerTrip" class ="w3-hide"> 
-  <h4>My Trips</h4>
-     <div id="mytrips"></div> 
-	  </div>
-	  </div>
+<div id=userdeets class=HTab style=display:block>
+<div id=userLoad class=loader>
+<div id=loadContainerUser class=w3-hide>
+<h4>User Details</h4>
+<p id=userino>Not signed in. </p>
+<button onclick=signIn()>Sign in</button>
+<button onclick=signOut()>Sign out</button><br>
+<div id=infodiv class=w3-hide>
+<p>About me (paddle experience, craft, home river): </p><textarea id=myinfo defaultValue=wut></textarea><br><button onclick=updateInfo()>Update</button><br>
 </div>
-		 </div>
-			       </div>
-	      <br>
-         <!-- Favourite Sections Section -->
-         <div class="w3-padding-64 w3-content" id = "favsecs" style="min-height:95vh">
-		 <div class="trans">
-            <h2>Favourite Sections</h2>
-            <script>
-		    setTimeout(stopLoader, 3000);
-		    function stopLoader(){
-			    document.getElementById("userLoad").className=""
-		document.getElementById("loadContainerUser").className=""
-			    document.getElementById("appLoad").className=""
-		document.getElementById("loadContainerApp").className=""
-			     document.getElementById("tripLoad").className=""
-		  document.getElementById("loadContainerTrip").className=""
-		    }
-		    
-		    function updateInfo(){
-			    var user = firebase.auth().currentUser
-			    var info = document.getElementById("myinfo").value
-			firebase.database().ref('users/'+user.uid+'/info').update({
-			about: info
-   });    
-		    }
-               firebase.auth().onAuthStateChanged(function() {
-		       approveList();
-      usertriplist();
-		       logList();
-		       document.getElementById("loginbook").className="w3-hide"
-		       document.getElementById("logdiv").className=""     
-                  var user = firebase.auth().currentUser
-		        firebase.database().ref('users/'+user.uid+'/info').update({
-         name: user.displayName,
-         uid: user.uid})
-		  document.getElementById("userino").innerHTML="Signed in as "+user.displayName+". "
-		  document.getElementById("infodiv").className=""
-		  return firebase.database().ref('users/'+user.uid+'/info').once('value').then(function(snapshot) {
-		  document.getElementById("myinfo").defaultValue=snapshot.val().about
-			  if(snapshot.val().favourites === undefined || snapshot.val().favourites === null){
-				clearfavs()
-			  }
-			  else{
-		localStorage.favslist=snapshot.val().favourites
-			  }
-			  displayfavs()
-		document.getElementById("userLoad").className=""
-		document.getElementById("loadContainerUser").className=""
-		  });
-
-   });
-		    function notificationChecker(){
-			    if(document.getElementById("approveWait").childNodes.length===0 && document.getElementById("approveInvite").childNodes.length===0){
-			        console.log("no notifications")
-				document.getElementById("noNotification").className=""
-		    }
-		    }
-		    function approveList(){
-               var user=firebase.auth().currentUser.uid
-               var paraWait = document.getElementById("approveWait");
-               var paraInvite = document.getElementById("approveInvite");
-               firebase.database().ref('users/'+user+'/trips').once('value').then(function(snapshot) {
-			for(var i in snapshot.val()){
-				var item=snapshot.val()[i]
-				if(item.uid===user){
-				var trip=i
-				firebase.database().ref('trips/active/'+trip).on('value', function(snapshot) {
-					document.getElementById("noNotification").className="w3-hide"
-					if(document.getElementById(snapshot.key+"notification")){
-						var element = document.getElementById(snapshot.key+"notification");
-						element.parentNode.removeChild(element);
-					}
-					var idiv=document.createElement('div')
-					idiv.id=snapshot.key+"notification"
-					               var contentsWait = new Array()
-						       if(snapshot.val()){
-							
-						
-					for (var j in snapshot.val().waiting){
-						
-						var name = snapshot.val().waiting[j].name;
-						var about = snapshot.val().waiting[j].about;
-						var email =snapshot.val().waiting[j].email;
-						var id= snapshot.val().waiting[j].id;
-						var node = "<p>"+ name + " would like to join " + snapshot.val().details.trip +". <br> About: "+about+"<br> Email: "+email+"<br><button onClick=\"appReq(\'"+snapshot.key+"\',\'"+id+"\')\">Approve</button><button onClick=\"denReq(\'"+snapshot.key+"\',\'"+id+"\')\">Deny</button></p>"
-						contentsWait.push(node)
-						}
-						       }
-					idiv.innerHTML=contentsWait.join("")
-					paraWait.appendChild(idiv)
-					if (contentsWait.join("")===""){
-						var element = document.getElementById(snapshot.key+"notification");
-						element.parentNode.removeChild(element);
-					}
-					notificationChecker()
-				});
-				
-			}
-			}	
-                     });
-		firebase.database().ref('users/' + user + '/trips/invited' ).on('value', function(snapshot) {
-		document.getElementById("noNotification").className="w3-hide"
-		 var contentsInvite = new Array()
-                  snapshot.forEach(function(childSnapshot) {
-			var data = childSnapshot.val()
-                     var node = '<p id="'+childSnapshot.key+'inv">Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onClick=\"accReq(\''+childSnapshot.key+"\',\'"+user+"\')\">Accept</button><button onClick=\"decReq(\'"+childSnapshot.key+"\',\'"+user+"\')\">Decline</button></p>"
-                     contentsInvite.push(node);                       
-                     });
-                     paraInvite.innerHTML=contentsInvite.join("")
-			notificationChecker()
-                  });
-               }
-		    
-		function accReq(trip, user){
-			document.getElementById(trip+"inv").className=("w3-hide")
-			moveFbRecord(firebase.database().ref('users/'+user+'/trips/invited/'+trip),firebase.database().ref('users/'+user+'/trips/'+trip))
-			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/invited/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
-			firebase.database().ref('/trips/active/'+trip).once('value').then(function(snapshot){
-				var participants = snapshot.val().details.participants
-				firebase.database().ref('/trips/active/'+trip+'/details').update({
-				participants: participants+', '+snapshot.val().confirmed[user].name
-				}											      )
-			})
-		}
-		    function decReq(trip, user){
-			document.getElementById(trip+"inv").className=("w3-hide")
-			firebase.database().ref('users/'+user+'/trips/invited/'+trip).set(null)
-			firebase.database().ref('trips/active/'+trip+'/invited/'+user).set(null)		
-			
-		}
-		    function appReq(trip, user){
-			document.getElementById(trip+"notification").className=("w3-hide")
-			copyFbRecord(firebase.database().ref('trips/active/'+trip+'/details/'), firebase.database().ref('users/'+user+'/trips/'+trip))
-			moveFbRecord(firebase.database().ref('trips/active/'+trip+'/waiting/'+user),firebase.database().ref('trips/active/'+trip+'/confirmed/'+user))
-			firebase.database().ref('/trips/active/'+trip).once('value').then(function(snapshot){
-				var participants = snapshot.val().details.participants
-				firebase.database().ref('/trips/active/'+trip+'/details').update({
-				participants: participants+', '+snapshot.val().confirmed[user].name
-				}											      )
-			})
-		}
-		    function denReq(trip, user){
-			document.getElementById(trip+"notification").className=("w3-hide")
-			firebase.database().ref('trips/active/'+trip+'/waiting/'+user).set(null)
-		}
-		    
-		function copyFbRecord(oldRef, newRef) {    
-     oldRef.once('value', function(snap)  {
-          newRef.set( snap.val(), function(error) {
-               if( error && typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
-          });
-     });
-}  
-
-		    
-               function moveFbRecord(oldRef, newRef) {    
-     oldRef.once('value', function(snap)  {
-          newRef.set( snap.val(), function(error) {
-               if( !error ) {  oldRef.remove(); }
-               else if( typeof(console) !== 'undefined' && console.error ) {  console.error(error); }
-          });
-     });
-}     
-          
-		    function commentShow(id) {
-    var x = document.getElementById(id);
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else { 
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-            function usertriplist(){
-               var user=firebase.auth().currentUser.uid
-               var para = document.getElementById("mytrips");
-               firebase.database().ref('users/' + user + '/trips' ).on('value', function(snapshot) {
-		                      var contents = new Array()
-				      console.log(snapshot.val()===null)
-		       			console.log(snapshot.val())
-		        if(snapshot.val()===null){
-                        var node = "<p>No upcoming trips</p>"
-                        contents.push(node)
-			para.innerHTML=contents
-                     }
-                        else{
-                  snapshot.forEach(function(childSnapshot) {
-			  if(childSnapshot.key=="invited"){
-			  }
-			  else{
-			var data = childSnapshot.val()
-				 firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').once('value').then(function(commSnapshot) {
-				if(!(commSnapshot.val().comments) || commSnapshot.val().comments===null){
-					var comments= ""
-					}
-				else{
-					var comments = commSnapshot.val().comments
-					}
-                     var node = '<div>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date +'<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Participants: '+data.participants+'<br>Additional Information: ' + data.info + '<div class="w3-accordion"><button onclick="commentShow(\''+childSnapshot.key+'\')">Comments</button><div id="'+childSnapshot.key+'" class="w3-accordion-content w3-container"><div id="'+childSnapshot.key+'view">'+comments+'</div><input type="text" id="'+childSnapshot.key+"text"+'"><br><button onClick="addComment(\''+childSnapshot.key+'\')">Send</button></div></div></div><br>'
-                     contents.push(node);
-			para.innerHTML=contents.join("")
-					firebase.database().ref('trips/active/'+childSnapshot.key+'/details/').on('value', function(snapshot) {
-						if(snapshot.val().comments){
-  document.getElementById(childSnapshot.key+'view').innerHTML=snapshot.val().comments
-						}
-});
-				});
-			  }
-			
-                     });
-			}
-                  document.getElementById("tripLoad").className=""
-		  document.getElementById("loadContainerTrip").className=""
-
-                  });
-               }
-		    function addComment(id){
-			    var comment = document.getElementById(id+'view').innerHTML
-			    var user = firebase.auth().currentUser.displayName
-			 firebase.database().ref('trips/active/'+id+'/details/').update({
-				 comments: comment+"<b style='color:red'>"+user+'</b>:&nbsp;'+document.getElementById(id+"text").value+'<br>'
-			 });
-			    document.getElementById(id+'text').value=""
-		    }
-               function clearfavs() {
-                  localStorage.removeItem("favslist")
-                     localStorage.favslist = ""
-    document.getElementById("pfav").innerHTML = "";
-		  var user = firebase.auth().currentUser
-			    if(user){
-		       firebase.database().ref('users/'+user.uid+'/info').update({
-         favourites: localStorage.favslist
-		       })
-			    }
-                     }  
-                
-               function addtofavs(){
-                  if(localStorage.favslist===undefined || localStorage.favslist===null){
-                  localStorage.favslist=""
-                  }
-                  var favslist = localStorage.favslist
-                 	var n = document.getElementById("newfav").value
-                  var count = 0;
-                  for( var j = 0; j<favslist.split(";").length-1; j++){
-                  	if(n.toString() == favslist.split(";")[j]){
-                          count+=1
-                          }
-                  }
-                  if (count == 0){     
-                 var json = JSON.parse(localStorage.json)
-                    var favstring = n.toString()+";" 
-                    localStorage.favslist=localStorage.favslist+favstring
-                 }
-			    var user = firebase.auth().currentUser
-			    if(user){
-		       firebase.database().ref('users/'+user.uid+'/info').update({
-         favourites: localStorage.favslist
-		       })
-			    }
-                    }
-		    
-                google.charts.load('current', {'packages':['corechart']});
-                google.charts.setOnLoadCallback(displayfavs);
-		    
-			 function Comparator(a, b) {
-   				if (new Date(a[0]) < new Date(b[0])) return -1;
-   				if (new Date(a[0]) > new Date(b[0])) return 1;
-  				 return 0;
- 			}
-                  function displayfavs(){
-                  var json = JSON.parse(localStorage.json)  
-                  var favsdiv = document.getElementById("favsdiv")
-                  var favslist= localStorage.favslist
-		  if(favslist===undefined || favslist===null || favslist===""){
-		  }
-			  else{
-		var favslist= localStorage.favslist.split(";")
-                 	var para = document.getElementById("pfav");
-                  var contents = new Array()
-                  for(var i = 0; i<favslist.length-1; i++){
-			  for(var x=0; x<json.rows.length; x++){
-				  if(favslist[i]===json.rows[x][1]){
-					  var ref = x
-					  break
-					  }
-			  }
-               if (isNaN(json.rows[ref][5])){
-               	var colour = "yellow !important";
-		 var blankdiv=false
-               	}
-                      else if(json.rows[ref][5]<json.rows[ref][3]){
-                      var colour = "red !important"
-		      		 var blankdiv=true
-                      }
-			else if(json.rows[ref][5]>json.rows[ref][4] && json.rows[ref][4]!="-" && json.rows[ref][5]!=""){
-                      var colour = "blue !important"
-		      		 var blankdiv=true
-                      }
-                      else{
-                      var colour = "green !important"
-		      		 var blankdiv=true
-                      }
-		var qualityRegex = />(.+)</g,
-                matches,
-                qualities = [];
-            while (matches = qualityRegex.exec(json.rows[ref][1])) {
-              qualities.push(decodeURIComponent(matches[1]));
-            }  
-			  var secGraph = qualities[0]
-			  if(blankdiv){
-				  var divHeight = "200px"
-				  }
-			  else{
-				  var divHeight=""
-				  }
-               	var node = "<p id = \""+secGraph+"\" style = \"border-left: 6px solid "+colour+";\">River: "+json.rows[ref][0]+" - "+json.rows[ref][1]+"<br>Levels: "+json.rows[ref][3]+"-"+json.rows[ref][4]+" Current: "+(Math.round(100*parseFloat(json.rows[ref][5]))/100).toString()+" Previous: "+(Math.round(100*parseFloat(json.rows[ref][6]))/100).toString()+"<br>Forecast: "+json.rows[ref][18]+"</p><div id = \""+secGraph+"curve_chart\" style = \"max-width:100% !important; height:"+divHeight+"\"></div>";
-               	contents.push(node)
-               
-			  			para.innerHTML=contents.join("")
-			  firebase.database().ref('sections/'+secGraph).off()
-		firebase.database().ref('sections/'+secGraph).on('value', function(snapshot) {
-			var dataArrayHead = [['Date', 'Level']]
-			var dataArrayBody = new Array()
-			for (var i in snapshot.val()){
-			//var d = new Date(i)
-			dataArrayBody.push([new Date(i),parseFloat(snapshot.val()[i])])
-				//d.getDate().toString()+'/'+(d.getMonth()+1).toString()
-			}
-			var dataArrayBody=dataArrayBody.sort(Comparator)
-			//for (var i=0; i<dataArrayBody.length; i++){
-			//dataArrayBody[i].shift()
-			//}
-			if(dataArrayBody.length<=1){
-				    document.getElementById(snapshot.key+'curve_chart').parentNode.removeChild;
-			}
-			else{
-			var dataArray = dataArrayHead.concat(dataArrayBody)
-		        var data = google.visualization.arrayToDataTable(dataArray);
-        var options = {
-          'title': snapshot.key,
-          'curveType': 'function',
-          'legend': 'none',
-	  'width': '100%',
-	  'hAxis': {gridlines: { count: 6 }}
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById(snapshot.key+'curve_chart'));
-
-        chart.draw(data, options);
-			}
-		});
-		  }
-                  }
-		  }
-                    
-                    	function removeOptions(selectbox)
-               {
-                   var i;
-                   for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
-                   {
-               	selectbox.remove(i);
-                   }
-               }
-               
-                 function favpopulate(){
-               	var json = JSON.parse(localStorage.json)
-                   removeOptions(document.getElementById("newfav"));
-                   var elm = document.getElementById('newfav'),
-               	df = document.createDocumentFragment();
-                   for (var i=0; i<json.rows.length; i++){	    
-                   var div = document.createElement('div');
-                   div.innerHTML= json.rows[i][1]
-                     var option = document.createElement('option');
-                     option.value = [json.rows[i][1]];
-                     option.appendChild(document.createTextNode(json.rows[i][0]+" - "+div.textContent));
-                     df.appendChild(option);
-                   }
-                   elm.appendChild(df);
-               }   	
-            </script>
-            <button type="button" onclick="loadXMLDoc()">Get Latest Info</button><br>
-            <select id="newfav" style="max-width:90%">
-            </select>  
-            <button type="button" onclick="addtofavs();displayfavs()">Add to Favourites</button><br>
-            <div id = "favsdiv">
-               <p id = "pfav"></p>
-            </div>
-            <button type="button" onclick="clearfavs();displayfavs()">Clear Favourites</button><br>    
-         </div>
-			       </div>
-         <!-- Map Section -->
-         <div class="w3-padding-64 w3-content" id = "about" style="min-height:95vh">
-<div class="trans">
-            <h2>River Map</h2>
-            <p style="text-align:center;color:white">
-               Map&nbsp;Type:&nbsp;
-               <select id="type" onchange="initialize()">
-                  <option value=1 selected>River Levels</option>
-                  <option value=2>Forecast Rainfall</option>
-               </select>
-               Min.&nbsp;Level:&nbsp;
-               <select id="min. level" onchange="initialize()">
-                  <option value=-1 selected>Any</option>
-                  <option value=0>Visual</option>
-                  <option value=1>Low Level</option>
-                  <option value=2>Good Level</option>
-                  <option value=3>High Level</option>
-               </select>
-               Max.&nbsp;Level:&nbsp;
-               <select id="max. level" onchange="initialize()" default>
-                  <option value=0>Visual</option>
-                  <option value=1>Low Level</option>
-                  <option value=2>Good Level</option>
-                  <option value=3>High Level</option>
-                  <option value=4 selected>Any</option>
-               </select>
-               Min.&nbsp;Grade:&nbsp;
-               <select id="min. grade" onchange="initialize()" default>
-                  <option value=-1>None</option>
-                  <option value=2 selected>2</option>
-                  <option value=3>3</option>
-                  <option value=4>4</option>
-                  <option value=5>5</option>
-                  <option value=6>6</option>
-               </select>
-               Max.&nbsp;Grade:&nbsp;
-               <select id="max. grade" onchange="initialize()" default>
-                  <option value=7>None</option>
-                  <option value=2>2</option>
-                  <option value=3>3</option>
-                  <option value=4>4</option>
-                  <option value=5>5</option>
-                  <option value=6 selected>6</option>
-               </select>
-            </p>
-            <div id="googft-mapCanvas"></div>
-         </div>
-			       </div>
-         <!-- Logbook Section -->
-         <div class="w3-padding-64 w3-content" id="logbook" style="min-height:95vh">
-		 <div class="trans">
-            <h2 class="w3-text-light-grey"> Logbook </h2>
-		 <div id = "downloadLog">
-			 <button onclick="excelLog()">Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
-			 <!-- <br><button onclick="downloadLog()">Get Log as Table</button><p>(Copy/Paste as required)</p>
-			 <p id = "logDump"></p> -->
-		 </div>
-		 <div id = "loginbook">
-		 <p>Sign in to use Logbook</p><br>
-		<button onclick="signIn()">Sign in</button>
-		 </div>
-		 		 <div id="logdiv" class="w3-hide">
-		 <p>Select logged trip: </p> <select id="logbooklist" onChange="getTrip();hideLog()"></select><br>
-					 <div id="logmod" class="w3-hide">
-		 <p>Trip Organiser:<br>
-                 <input type="text" id="logUid" value="">
+</div>
+</div>
+<br>
+</div>
+<div id=notifcationdeets class=HTab style=display:none>
+<div id=appLoad class=loader>
+<div id=loadContainerApp class=w3-hide>
+<h4>Notifications</h4>
+<p id=noNotification class=w3-hide>No notifications</p>
+<div id=approveWait></div>
+<div id=approveInvite></div>
+</div>
+</div>
+<br>
+</div>
+<div id=tripdeets class=HTab style=display:none>
+<div id=tripLoad class=loader>
+<div id=loadContainerTrip class=w3-hide>
+<h4>My Trips</h4>
+<div id=mytrips></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<br>
+<div class="w3-padding-64 w3-content" id=favsecs style=min-height:95vh>
+<div class=trans>
+<h2>Favourite Sections</h2>
+<button type=button onclick=loadXMLDoc()>Get Latest Info</button><br>
+<select id=newfav style=max-width:90%>
+</select>
+<button type=button onclick=addtofavs();displayfavs()>Add to Favourites</button><br>
+<div id=favsdiv>
+<p id=pfav></p>
+</div>
+<button type=button onclick=clearfavs();displayfavs()>Clear Favourites</button><br>
+</div>
+</div>
+<div class="w3-padding-64 w3-content" id=about style=min-height:95vh>
+<div class=trans>
+<h2>River Map</h2>
+<p style=text-align:center;color:white>
+Map&nbsp;Type:&nbsp;
+<select id=type onchange=initialize()>
+<option value=1 selected>River Levels</option>
+<option value=2>Forecast Rainfall</option>
+</select>
+Min.&nbsp;Level:&nbsp;
+<select id="min. level" onchange=initialize()>
+<option value=-1 selected>Any</option>
+<option value=0>Visual</option>
+<option value=1>Low Level</option>
+<option value=2>Good Level</option>
+<option value=3>High Level</option>
+</select>
+Max.&nbsp;Level:&nbsp;
+<select id="max. level" onchange=initialize() default>
+<option value=0>Visual</option>
+<option value=1>Low Level</option>
+<option value=2>Good Level</option>
+<option value=3>High Level</option>
+<option value=4 selected>Any</option>
+</select>
+Min.&nbsp;Grade:&nbsp;
+<select id="min. grade" onchange=initialize() default>
+<option value=-1>None</option>
+<option value=2 selected>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6>6</option>
+</select>
+Max.&nbsp;Grade:&nbsp;
+<select id="max. grade" onchange=initialize() default>
+<option value=7>None</option>
+<option value=2>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6 selected>6</option>
+</select>
+</p>
+<div id=googft-mapCanvas></div>
+</div>
+</div>
+<div class="w3-padding-64 w3-content" id=logbook style=min-height:95vh>
+<div class=trans>
+<h2 class=w3-text-light-grey> Logbook </h2>
+<div id=loginbook>
+<p>Sign in to use Logbook</p><br>
+<button onclick=signIn()>Sign in</button>
+</div>
+<div id=loggedInBook class=w3-hide>
+<div class="w3-black trans" style=display:inline-block>
+<div class="w3-cell trans w3-hover-light-grey ltablink w3-green w3-container" onclick="openLTab(event,'logdiv')">View Log</div>
+<div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event,'newlogdiv')">Add Entry</div>
+<div class="w3-cell trans w3-hover-light-grey ltablink w3-container" onclick="openLTab(event,'downloadLog')">Download Log</div>
+</div>
+<div id=downloadLog class=log style=display:none>
+<button onclick=excelLog()>Download Logbook as Excel File</button><p>(Will not display on mobiles)</p>
+</div>
+<div id=newlogdiv class=log style=display:none>
+<div id=lognew class>
+  <form id="flognew">
+<p>Trip Organiser:<br>
+<input type=text id=newlogUid value>
+<br>
+Trip Name:<br>
+<input type=text id=newlogTripname value>
+<br>
+Section:<br>
+<input type=text id=newlogSec value style=max-width:90%>
+<br>
+Level:<br>
+<input type=text id=newlogLevel value>
+<br>
+Grade:<br>
+<input type=text id=newlogGrade value>
+<br>
+Duration (hrs):<br>
+<input type=text id=newlogDuration value>
+<br>
+Distance (km):<br>
+<input type=text id=newlogDistance value>
+<br>
+Date:<br>
+<input type=date id=newlogDate value>
+<br>
+Time:<br>
+<input type=time id=newlogTime value>
+<br>
+Participants:<br>
+<textarea id=newlogParticipants value style=width:75%></textarea>
+<br>
+My Role:<br>
+<input type=text id=newlogRole value>
+<br>
+Skills Practiced:<br>
+<textarea id=newlogSkills value style=width:75%></textarea>
+<br>
+Organiser Email:<br>
+<input type=text id=newlogEmail value>
+<br>
+Organiser Phone Number:<br>
+<input type=text id=newlogPhone value>
+<br>
+Additional Information:<br>
+<textarea id=newlogInfo style=width:75%></textarea>
+<br><br>
+<input type=button value="Submit Entry" onclick=newLog()>
+</p>
+  </form>
+</div>
+</div>
+<div id=logdiv class=log style=display:block>
+<p>Select logged trip: </p> <select id=logbooklist onChange=getTrip();hideLog()></select><br>
+<div id=logmod class=w3-hide>
+<p>Trip Organiser:<br>
+<input type=text id=logUid value>
+<br>
+Trip Name:<br>
+<input type=text id=logTripname value>
+<br>
+Section:<br>
+<input type=text id=logSec value style=max-width:90%>
+<br>
+Level:<br>
+<input type=text id=logLevel value>
+<br>
+Grade:<br>
+<input type=text id=logGrade value>
+<br>
+Duration (hrs):<br>
+<input type=text id=logDuration value>
+<br>
+Distance (km):<br>
+<input type=text id=logDistance value>
+<br>
+Date:<br>
+<input type=date id=logDate value>
+<br>
+Time:<br>
+<input type=time id=logTime value>
+<br>
+Participants:<br>
+<textarea id=logParticipants value style=width:75%></textarea>
+<br>
+My Role:<br>
+<input type=text id=logRole value>
+<br>
+Skills Practiced:<br>
+<textarea id=logSkills value style=width:75%></textarea>
+<br>
+Organiser Email:<br>
+<input type=text id=logEmail value>
+<br>
+Organiser Phone Number:<br>
+<input type=text id=logPhone value>
+<br>
+Additional Information:<br>
+<textarea id=logInfo style=width:75%></textarea>
+<br><br>
+<input type=button value="Update Entry" onclick=updateLog()>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w3-padding-64 w3-content" id=trips style=min-height:95vh>
+  <div class=trans>
+    <h2 class=w3-text-light-grey>Trip Management</h2>
+  <div id=logintrip>
+<p>Sign in to use Trip Management</p><br>
+<button onclick=signIn()>Sign in</button>
+</div>
+<div id=loggedInTrip class=w3-hide>
+<div class="w3-black trans" style=display:inline-block>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-green w3-container" onclick="openTTab(event,'vtrip')">View Trips</div>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'addtrip')">Add Trip</div>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'updtrip')">Update Trip</div>
+<div class="w3-cell trans w3-hover-light-grey ttablink w3-container" onclick="openTTab(event,'deltrip')">Delete Trip</div>
+</div>
+  <div id = "addtrip" class="trip" style=display:none>
+    <form id="faddtrip">
+            <p>Trip Organiser:<br>
+                          <input type="text" id="userId" value="">
             <br>
            Trip Name:<br>
-           <input type="text" id="logTripname" value="">
+           <input type="text" id="tripname" value="">
            <br>
-               Section:<br>
-            <input type = "text" id = "logSec" value="" style="max-width:90%">
+               Section:</p>
+               <div id="rivsecsdiv">
+               <select id="rivsecs" style="max-width:90%"></select><br>
+            </div>
+            <p>Other: <input type="checkbox" id = "rivsecsalt" onChange="hider()"><br></p>
+            <div id="rivsecsalttextdiv" class = "w3-hide">   
+            <input type = "text" id = "rivsecsalttext">
                <br>
-		Level:<br>
-	<input type="text" id="logLevel" value="">
- <br>
-			 Grade:<br>
-	<input type="text" id="logGrade" value="">
- <br>
-			 Duration (hrs):<br>
-	<input type="text" id="logDuration" value="">
- <br>
-			 Distance (km):<br>
-	<input type="text" id="logDistance" value="">
- <br>
+            </div>
+            <p>
            Date:<br>
-           <input type="date" id="logDate" value="">
+           <input type="date" id="date" value="">
            <br>
            Time:<br>
-           <input type="time" id="logTime" value="">
+           <input type="time" id="time" value="">
            <br>
-           Participants:<br>
-	<textarea id="logParticipants" value="" style="width:75%"></textarea>
+           Max. Group Size:<br>
+           <input type="number" id="groupsize" value="">
            <br>
-	My Role:<br>
-	<input type="text" id="logRole" value="">
-			 <br>
-		Skills Practiced:<br>
-			 <textarea id="logSkills" value="" style="width:75%"></textarea>
-			 <br>
-           Organiser Email:<br>
-           <input type="text" id="logEmail" value="">
+           Contact Email:<br>
+           <input type="text" id="email" value="">
            <br>
-           Organiser Phone Number:<br>
-           <input type="text" id="logPhone" value="">
+           Contact Phone Number:<br>
+           <input type="text" id="phone" value="">
            <br>
+           Private Trip: <input type="checkbox" id="private">
+           <br>
+           Invite Paddlers:<br>
+               Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.<br>
+               <select id="userlist" multiple="true" style="max-width:90%"></select>
+               <br>
            Additional Information:<br>
-               <textarea id="logInfo" style="width:75%"></textarea>
+               <textarea id="info" style="width:75wh"></textarea>
+           <br>
            <br><br>
-           <input type="button" value="Update Entry" onclick="updateLog()">
+           <input type="button" value="Submit" onclick="writeTripInformation()">
             </p>
-					 </div>
-		 </div>
-		          </div>
-			       </div>
-
-		    <script>
-			    function hideLog(){
-				    if(document.getElementById("logbooklist").value==-1){
-					    document.getElementById("logmod").className="w3-hide"
-				    }
-				    else{
-					document.getElementById("logmod").className=""
-				    }
-
-			    }
-			    function downloadLog(){
-				   var user = firebase.auth().currentUser.uid;
-				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
-				   var data=snapshot.val()
-				var log = '<table><tr style=\"border: 1px solid #000000; text-align: left\"><th>Organiser</th><th>Trip Name</th><th>Section</th><th>Date</th><th>Time</th><th>Email</th><th>Phone</th><th>Grade</th><th>Duration (hrs)</th><th>Distance (km)</th><th>Level</th><th>Participants</th><th>Role</th><th>Skills Practiced</th><th>Additional Info</th></tr>'
-				   var parity=0
-				   for (x in data){
-					   if(parity%2===1){
-						   var trstyle = "<tr style=\"background-color: #dddddd; border: 1px solid #000000; text-align: left\">"
-						   }
-					   else{
-						   trstyle="<tr style=\"border: 1px solid #000000; text-align: left\">"
-					   }
-					 var details = data[x].details
-					 log+=trstyle+'<td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>="'+details.phone+'"</td><td>="'+details.grade+'"</td><td>="'+details.duration+'"</td><td>="'+details.distance+'"</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>'
-				parity+=1		  
-				   }
-					log+='</table>'
-						  document.getElementById("logDump").innerHTML = log;
-						  });
-    
-			    }
-			    function excelLog(){
-				   var user = firebase.auth().currentUser.uid;
-				firebase.database().ref('users/' + user + '/completed').once('value').then(function(snapshot) {
-				   var data=snapshot.val()
-				   var log = '<table><tr style=\"border: 1px solid #000000; text-align: left\"><th>Organiser</th><th>Trip Name</th><th>Section</th><th>Date</th><th>Time</th><th>Email</th><th>Phone</th><th>Grade</th><th>Duration (hrs)</th><th>Distance (km)</th><th>Level</th><th>Participants</th><th>Role</th><th>Skills Practiced</th><th>Additional Info</th></tr>'
-				   var parity=0
-				   for (x in data){
-					   if(parity%2===1){
-						   var trstyle = "<tr style=\"background-color: #dddddd; border: 1px solid #000000; text-align: left\">"
-						   }
-					   else{
-						   trstyle="<tr style=\"border: 1px solid #000000; text-align: left\">"
-					   }
-					 var details = data[x].details
-					 log+=trstyle+'<td>'+details.organiser+'</td><td>'+details.trip+'</td><td>'+details.section+'</td><td>'+details.date+'</td><td>'+details.time+'</td><td>'+details.email+'</td><td>="'+details.phone+'"</td><td>="'+details.grade+'"</td><td>="'+details.duration+'"</td><td>="'+details.distance+'"</td><td>'+details.level+'</td><td>'+details.participants+'</td><td>'+details.role+'</td><td>'+details.skills+'</td><td>'+details.info+'</td></tr>'
-				parity+=1		  
-				   }
-					log+='</table>'
-					console.log(log)
-					 sa = true;
-     var myBlob =  new Blob( [log] , {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-					console.log(myBlob)
-     var url = window.URL.createObjectURL(myBlob);
-     var a = document.createElement("a");
-     document.body.appendChild(a);
-     a.href = url;
-     a.download = firebase.auth().currentUser.displayName+" log.xls";
-     a.click();
-     setTimeout(function() {window.URL.revokeObjectURL(url);},0);
-    
-    return (sa);
-  
-						  });
-    
-			    }
-			    
-			    
-			    function resizeInput() {
-    var ins = document.getElementsByTagName("input")
-    for (var x=0; x<ins.length;x++){
-	    if (ins[x].type="text"){
-            ins[x].size= ins[x].value.length;
-	    }
-    }
-       
-
-			    }
-			    
-			    
-			    
-			    
-			    function logList(){
-			var user=firebase.auth().currentUser.uid;
-			firebase.database().ref('users/' + user + '/completed/').on('value', function(snapshot) {
-				removeOptions(document.getElementById("logbooklist"));
-				var elm = document.getElementById("logbooklist");
-				var df = document.createDocumentFragment();
-				var option = document.createElement('option');
-                     option.value = -1;
-                     option.appendChild(document.createTextNode("Choose a completed trip"));
-                     df.appendChild(option);
-				for(i in snapshot.val()){
-                     var option = document.createElement('option');
-                     option.value = i;
-                     option.appendChild(document.createTextNode(snapshot.val()[i].details.trip +" - "+snapshot.val()[i].details.date));
-                     df.appendChild(option);
-                   }
-                   elm.appendChild(df);
-			});
-			    }
-			    
-			   function getTrip(){
-				 dispLog(document.getElementById("logbooklist").value)
-			    }
-		function dispLog(trip){
-			var user=firebase.auth().currentUser.uid;
-		firebase.database().ref('users/' + user + '/completed/'+trip).on('value', function(snapshot) {
-			var data = snapshot.val()
-			if(data.details.section.split("<")[1] === undefined ){
-				var sec = data.details.section
-				}
-			else{
-			var sec= data.details.section.split("<")[0]+data.details.section.split("<")[1].split(">")[1]
-			}
-                     document.getElementById("logUid").value=data.details.organiser
-			document.getElementById("logTripname").value=data.details.trip
-			 document.getElementById("logSec").value= sec
-			 document.getElementById("logDate").value= data.details.date
-			 document.getElementById("logTime").value= data.details.time
-			document.getElementById("logEmail").value = data.details.email
-			 document.getElementById("logPhone").value= data.details.phone
-			 document.getElementById("logInfo").value= data.details.info
-			document.getElementById("logLevel").value= data.details.level
-			document.getElementById("logGrade").value= data.details.grade
-			document.getElementById("logDuration").value= data.details.duration
-			document.getElementById("logDistance").value= data.details.distance
-			document.getElementById("logRole").value= data.details.role
-			document.getElementById("logSkills").value= data.details.skills
-
-
-			if(data.details.participants.length>0){
-				document.getElementById("logParticipants").value=data.details.participants
-			}
-			else{
-			  var names = new Array()
-			  for(i in data.confirmed){
-				names.push(data.confirmed[i].name)
-			  }
-			  document.getElementById("logGroupsize").value=names.join(", ")
-			}
-			resizeInput()
-                     });
-			
-		}
-			function updateLog(){
-				if(document.getElementById("logbooklist").value==-1){
-					alert("You must select a trip that you have created or joined. For historic trips you can add a new trip then wait approx. one hour for it to appear here.")
-				}
-				else{
-			var user=firebase.auth().currentUser.uid;
-			firebase.database().ref('users/' + user + '/completed/'+document.getElementById("logbooklist").value+'/details').update({
-                        uid: document.getElementById("logUid").value,
-			trip: document.getElementById("logTripname").value,
-			section: document.getElementById("logSec").value,
-			date: document.getElementById("logDate").value,
-			time: document.getElementById("logTime").value,
-			email: document.getElementById("logEmail").value,
-			phone: document.getElementById("logPhone").value,
-			info: document.getElementById("logInfo").value,
-			participants: document.getElementById("logParticipants").value,
-			level: document.getElementById("logLevel").value,
-			skills: document.getElementById("logSkills").value,
-			role: document.getElementById("logRole").value,
-			grade: document.getElementById("logGrade").value,
-			duration: document.getElementById("logDuration").value,
-			distance: document.getElementById("logDistance").value
-				
-                     });
-				
-					alert("Logbook updated")
-					document.getElementById("logbooklist").selectedIndex = "0";
-					hideLog()
-				logList()	
-				}	
-		}
-               function removeOptions(selectbox)
-               {
-                 var i;
-                 for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
-                 {
-               selectbox.remove(i);
-                 }
-               }
-               function loadXMLDoc() {
-               var xhttp = new XMLHttpRequest();
-               xhttp.onreadystatechange = function() {
-                 if (this.readyState == 4 && this.status == 200) {
-               var json = JSON.parse(this.responseText);
-                    localStorage.removeItem("json")
-                    localStorage.json=JSON.stringify(json);
-		favpopulate();
-               	displayfavs();
-                 }
-               }
-               xhttp.open("GET", "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+River%2C+Section%2C+Character%2C+'Min.+Level'%2C+'Max.+Level'%2C+'Current+Level'%2C+'12+hr+Previous'%2C+'Average+Grade'%2C+'Length+(km)'%2C+'Time+(hrs)'%2C+'Shuttle+(min)'%2C+'State'%2C+'Go+or+No'%2C+'Min+Grade'%2C+'Max+Grade'%2C+'Full+Description'%2c+'LATLONG IN'%2c+'Weather'%2c+'Forecast'+FROM+1xOnTf3qaHEzBGDv0iSEihtLUMK7nIn9QV2ED17ke&key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew", true);
-               xhttp.send();
-               }
-		 </script>
-                  <!-- TRIP Section -->
-         <div class="w3-padding-64 w3-content" id="trips" style="min-height:95vh">
-		 <div class="trans">
-            <script>
-              
-              firebase.database().ref('trips/active').on('value', function(snapshot) {
-		        var para = document.getElementById("tripp");
-               var contents = new Array()
-                  snapshot.forEach(function(childSnapshot) {
-                     var data = childSnapshot.child('details').val();
-		if(data.private === true || data.space ==="0"){
-		   }
-		   else{
-                     var node = '<p>Trip Organiser: '+ data.organiser+'<br>Trip Name: ' + data.trip + '<br>Section: ' + data.section + '<br>Date and Time: ' + data.date + '<br>Max. Group Size: ' + data.groupsize + '<br>Contact Email: '+ data.email + '<br>Contact Phone Number: ' + data.phone + '<br>Additional Information: ' + data.info + '<br><button onclick=\"joinTrip(\''+childSnapshot.key+'\')\">Request to Join</button></p>'
-                     contents.push(node);
-		  }
-                     });
-                     para.innerHTML=contents.join("")
-                  
-                  });
-               
-                  function joinTrip(key){
-                     var user=firebase.auth().currentUser
-                  if(user){
-			console.log(document.getElementById("myinfo").value)
-                     firebase.database().ref('trips/active/' + key + '/waiting/'+ user.uid).update({
-                          name: user.displayName,
-                          id: user.uid,
-                          email: user.email,
-			  about: document.getElementById("myinfo").value
-                     });   
-			  alert("Request sent.")
-		  }
-                  else {
-                     window.location.href = 'https://tayloredinstruction.github.io/login.html?target=index.html#trips'
-                  }
-                  }
-            </script>
-            <h2 class="w3-text-light-grey">Upcoming Trips</h2>
-		<a href="https://tayloredinstruction.github.io/login.html?target=add_delete_trip" class="w3-btn w3-white">Add/Delete a Trip</a>
-            <p id="tripp"></p>
-           </div>
-            <br>
-			       </div>
-            <!-- End Trip Section -->
-         <!-- Contact Section -->
-         <div class="w3-padding-64 w3-content w3-text-grey" id="contact" style="min-height:95vh">
-		 <div class="trans">
-            <h2 class="w3-text-light-grey">Contact Us</h2>
-            <div class="w3-section">
-               <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
-               <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
-               <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
-            </div>
-		 </div>
-            <br>
-            <!-- End Contact Section -->
+    </form>
          </div>
-         <!-- Footer -->
-         <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
-            <i class="fa fa-facebook-official w3-hover-text-indigo"></i>
-            <i class="fa fa-instagram w3-hover-text-purple"></i>
-            <i class="fa fa-snapchat w3-hover-text-yellow"></i>
-            <i class="fa fa-pinterest-p w3-hover-text-red"></i>
-            <i class="fa fa-twitter w3-hover-text-light-blue"></i>
-            <i class="fa fa-linkedin w3-hover-text-indigo"></i>
-            <p class="w3-medium">Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-            <!-- End footer -->
-         </footer>
-         <!-- END PAGE CONTENT -->
-      </div>
-	   </div>
-   </body>
+  
+  
+  <div id = "updtrip" class="trip" style=display:none>
+    <form id="fupdtrip">
+                     <p>Select a trip to update</p><select id = "updtriplist" onChange="tripgetTrip()"></select>
+            <p>Trip Name:<br>
+           <input type="text" id="updtripname" value="">
+           <br>
+               Section:</p>
+               <div id="updrivsecsdiv">
+               <select id="updrivsecs" style="max-width:90%"></select><br>
+            </div>
+            <p>Other: <input type="checkbox" id = "updrivsecsalt" onChange="updhider()"><br></p>
+            <div id="updrivsecsalttextdiv" class = "w3-hide">   
+            <input type = "text" id = "updrivsecsalttext">
+               <br>
+            </div>
+            <p>
+           Date:<br>
+           <input type="date" id="upddate" value="">
+           <br>
+           Time:<br>
+           <input type="time" id="updtime" value="">
+           <br>
+           Max. Group Size:<br>
+           <input type="number" id="updgroupsize" value="">
+           <br>
+           Contact Email:<br>
+           <input type="text" id="updemail" value="">
+           <br>
+           Contact Phone Number:<br>
+           <input type="text" id="updphone" value="">
+           <br>
+           Private Trip: <input type="checkbox" id="updprivate">
+           <br>
+           Invite Paddlers:<br>
+               Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.<br>
+               <select id="upduserlist" multiple="true" style="max-width:90%"></select>
+               <br>
+           Additional Information:<br>
+               <textarea id="updinfo" style="width:75wh"></textarea>
+           <br>
+           <br><br>
+           <input type="button" value="Submit" onclick="updTripInformation()">
+            </p>
+    </form>
+         </div>
+  
+  <div id = "deltrip" class="trip" style=display:none>
+            <select id = "deletelist" style = "max-width:90%"></select>
+            <input type = "button" value = "Delete" id = "delete" onclick = "deleteTrip()">
+         </div>
+  
+  <div id="vtrip" class="trip" style=display:block>
+<div id=tripp></div>
+</div>
+<br>
+</div>
+    </div>
+  </div>
+<div class="w3-padding-64 w3-content w3-text-grey" id=contact style=min-height:95vh>
+<div class=trans>
+<h2 class=w3-text-light-grey>Contact Us</h2>
+<div class=w3-section>
+<p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Kyogle, NSW</p>
+<p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: 0431033970</p>
+<p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: tayloredinstruction@gmail.com</p>
+</div>
+</div>
+<br>
+</div>
+<footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+<i class="fa fa-facebook-official w3-hover-text-indigo"></i>
+<i class="fa fa-instagram w3-hover-text-purple"></i>
+<i class="fa fa-snapchat w3-hover-text-yellow"></i>
+<i class="fa fa-pinterest-p w3-hover-text-red"></i>
+<i class="fa fa-twitter w3-hover-text-light-blue"></i>
+<i class="fa fa-linkedin w3-hover-text-indigo"></i>
+<p class=w3-medium>Powered by <a href=http://www.w3schools.com/w3css/default.asp target=_blank class=w3-hover-text-green>w3.css</a></p>
+</footer>
+</div>
+</div>
+</body>
 </html>
-
