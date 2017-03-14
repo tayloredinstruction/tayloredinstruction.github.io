@@ -154,10 +154,10 @@ Max.&nbsp;Grade:&nbsp;<select id="max. grade" onchange=initialize() default>
 <option value=5>5</option>
 <option value=6 selected>6</option>
 </select>
-River:&nbsp;<select id="mapRiver" onchange="initialize();resetRivSec()" default>
+River:&nbsp;<select id="mapRiver" onchange="resetRivSec();initialize() style=max-width:75%" default>
   <option value="Any">Any</option>
   </select>
- Section:&nbsp;<select id="mapSection" onchange=initialize() default>
+ Section:&nbsp;<select id="mapSection" onchange=initialize() style=max-width:75% default>
     <option value="Any">Any</option>
  </select>
 </p>
@@ -234,7 +234,7 @@ Additional Information:<br>
 </div>
 </div>
 <div id=logdiv class=log style=display:block>
-<p>Select logged trip: </p> <select id=logbooklist onChange=getTrip();hideLog()></select><br>
+<p>Select logged trip: </p> <select id=logbooklist onChange=getTrip();hideLog() style=max-width:90%></select><br>
 <div id=logmod class=w3-hide>
 <p>Trip Organiser:<br>
 <input type=text id=logUid value>
