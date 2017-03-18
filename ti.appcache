@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#16/03/2017 v9.19
+#18/03/2017 v10.00
 /lib/ti-app.js
 /index.html
 /images/icon.png
@@ -10,5 +10,7 @@ CACHE MANIFEST
 /images/background-xsmall.jpg
 /images/sidebar-icon.jpg
 /lib/w3.css
+https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
+https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew
 NETWORK:
 *
