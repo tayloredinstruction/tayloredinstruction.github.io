@@ -8,8 +8,8 @@ CACHE MANIFEST
 /images/background-xsmall.jpg
 /images/sidebar-icon.jpg
 /lib/w3.css
-https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
-https://www.gstatic.com/charts/loader.js
-https://www.gstatic.com/firebasejs/3.7.1/firebase.js
+#https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
+#https://www.gstatic.com/charts/loader.js
+#https://www.gstatic.com/firebasejs/3.7.1/firebase.js
 NETWORK:
 *
