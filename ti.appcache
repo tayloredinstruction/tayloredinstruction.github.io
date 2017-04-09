@@ -9,9 +9,4 @@ CACHE MANIFEST
 /images/sidebar-icon.jpg
 /lib/w3.css
 NETWORK:
-https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
-https://www.gstatic.com/charts/loader.js
-https://www.gstatic.com/firebasejs/3.7.1/firebase.js
-https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew
-https://www.google-analytics.com/analytics.js
-https://maps.googleapis.com/*
+*
