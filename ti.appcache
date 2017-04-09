@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#03/04/2017 v14.13
+#09/04/2017 v14.13
 /lib/ti-app.js
 #/index.html
 /images/icon.png
@@ -11,7 +11,7 @@ CACHE MANIFEST
 /images/sidebar-icon.jpg
 /lib/w3.css
 https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
-https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew
+#https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew
 https://www.gstatic.com/charts/loader.js
 https://www.gstatic.com/firebasejs/3.7.1/firebase.js
 NETWORK:
