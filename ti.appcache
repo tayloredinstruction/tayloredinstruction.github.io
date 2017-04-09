@@ -8,5 +8,7 @@ CACHE MANIFEST
 /images/background-xsmall.jpg
 /images/sidebar-icon.jpg
 /lib/w3.css
+https://www.gstatic.com/charts/loader.js
+https://www.gstatic.com/firebasejs/3.7.1/firebase.js
 NETWORK:
 *
