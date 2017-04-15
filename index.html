@@ -2,6 +2,13 @@
 <html manifest="ti.appcache">
 <title>Taylored Instruction</title>
 <head>
+<style> select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] { font-size: 16px; }</style>
+<style>.loader{border:8px solid black;border-radius:50%;border-top:8px solid white;width:50px;height:50px;-webkit-animation:spin 2s linear infinite;animation:spin 2s linear infinite}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}div.rapper{background-image:url(images/background-desktop.jpg);z-index:-1;position:fixed;top:0;left:0;height:100vh;width:100vw;background-size:cover;background-repeat:no-repeat;background-attachment:scroll;background-position-x:50%;background-position-y:50%;background-position:center center}div.trans{background:rgba(0,0,0,0.3)}@media only screen and (max-width:767px){div.rapper{background-image:url(images/background-xsmall.jpg)}}</style>
+<style type=text/css>html,body,#googft-mapCanvas{color:#000;height:90vh;margin:0;padding-right:0;padding-left:0}#legend{color:#000!important;background:#FFF;padding:10px;margin:5px;font-size:12px;font-family:Arial,sans-serif}.color{border:1px solid;height:12px;width:12px;margin-right:3px;float:left}.red{background:#C00}.yellow{background:#FF3}.green{background:#6F0}.blue{background:#06C}.white{background:#FFF}.box{border:1px;height:12px;width:12px;margin-right:3px;float:left}#googft-mapCanvas a{color:#00F}</style>
+<style>body,h1,h2,h3,h4,h5,h6{font-family:"Montserrat",sans-serif}.w3-row-padding img{margin-bottom:12px}.w3-sidenav{width:120px;background:#222}#main{margin-left:120px}@media only screen and (max-width:600px){#main{margin-left:0}}</style>
+<style>body{background-color:Black}</style>
+<link rel=stylesheet href=lib/w3.css>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
 <script>(function(a,c,d){if((d in c)&&c[d]){var f,b=a.location,e=/^(a|html)$/i;a.addEventListener("click",function(g){f=g.target;while(!(e).test(f.nodeName)){f=f.parentNode}if("href" in f&&(f.href.indexOf("http")||~f.href.indexOf(b.host))){g.preventDefault();b.href=f.href}},false)}})(document,window.navigator,"standalone");</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -13,19 +20,12 @@
   ga('send', 'pageview');
 </script>
 <script async src=lib/ti-app.js></script>
-<link rel=stylesheet href=lib/w3.css>
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
 <link rel=icon sizes=192x192 href=images/icon.png>
 <link rel=apple-touch-icon href=images/icon.png>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=apple-mobile-web-app-capable content=yes>
 <meta name=mobile-web-app-capable content=yes>
 <meta name="description" content="View live river data for Australian white water rivers, create and join trips and automatically create logs of trips.">
-<style> select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] { font-size: 16px; }</style>
-<style>.loader{border:8px solid black;border-radius:50%;border-top:8px solid white;width:50px;height:50px;-webkit-animation:spin 2s linear infinite;animation:spin 2s linear infinite}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}div.rapper{background-image:url(images/background-desktop.jpg);z-index:-1;position:fixed;top:0;left:0;height:100vh;width:100vw;background-size:cover;background-repeat:no-repeat;background-attachment:scroll;background-position-x:50%;background-position-y:50%;background-position:center center}div.trans{background:rgba(0,0,0,0.3)}@media only screen and (max-width:767px){div.rapper{background-image:url(images/background-xsmall.jpg)}}</style>
-<style type=text/css>html,body,#googft-mapCanvas{color:#000;height:90vh;margin:0;padding-right:0;padding-left:0}#legend{color:#000!important;background:#FFF;padding:10px;margin:5px;font-size:12px;font-family:Arial,sans-serif}.color{border:1px solid;height:12px;width:12px;margin-right:3px;float:left}.red{background:#C00}.yellow{background:#FF3}.green{background:#6F0}.blue{background:#06C}.white{background:#FFF}.box{border:1px;height:12px;width:12px;margin-right:3px;float:left}#googft-mapCanvas a{color:#00F}</style>
-<style>body,h1,h2,h3,h4,h5,h6{font-family:"Montserrat",sans-serif}.w3-row-padding img{margin-bottom:12px}.w3-sidenav{width:120px;background:#222}#main{margin-left:120px}@media only screen and (max-width:600px){#main{margin-left:0}}</style>
-<style>body{background-color:Black}</style>
 </head>
 <body class="w3-black trans" style=min-width:100vw>
 <div class=rapper></div>
