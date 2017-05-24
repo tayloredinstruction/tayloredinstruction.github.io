@@ -40,13 +40,13 @@
             var map = new google.maps.Map(element, {
                 center: new google.maps.LatLng(57, 21),
                 zoom: 3,
-                mapTypeId: "roadmap",
+                mapTypeId: "WMS",
                 mapTypeControl: false,
                 streetViewControl: false
             });
  
             //Define OSM map type pointing at the OpenStreetMap tile server
-            map.mapTypes.set("roadmap", new google.maps.ImageMapType({
+            map.mapTypes.set("WMS", new google.maps.ImageMapType({
                 getTileUrl: function(coord, zoom) {
                     // "Wrap" x (logitude) at 180th meridian properly
                     // NB: Don't touch coord.x because coord param is by reference, and changing its x property breakes something in Google's lib 
