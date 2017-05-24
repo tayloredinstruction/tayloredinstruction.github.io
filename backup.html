@@ -2,6 +2,7 @@
 	   <!DOCTYPE html>
 <html>
     <head>
+	      <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
         <meta charset="utf-8" />
         <title>Google Maps v3 API Example</title>
         <style>
@@ -25,46 +26,68 @@
             }
         </style> 
     </head>
-    <body>
-        <div id="map" style="float: left;"></div>
-        
-        <div id="footer">&copy; <a href="http://owm.io/weathermap?basemap=map&cities=false&layer=precipitation&lat=30&lon=-20&zoom=3">OpenStreetMap</a> contributors</div>
-        
-        <!-- bring in the google maps library -->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvBPL76AXVKbwSpm9X1BlXTzaTXhNLYew"></script>
-        
-        <script type="text/javascript">
-            //Google maps API initialisation
-            var element = document.getElementById("map");
- 
-            var map = new google.maps.Map(element, {
-                center: new google.maps.LatLng(57, 21),
-                zoom: 3,
-                mapTypeId: "WMS",
-                mapTypeControl: false,
-                streetViewControl: false
-            });
- 
-            //Define OSM map type pointing at the OpenStreetMap tile server
-            map.mapTypes.set("WMS", new google.maps.ImageMapType({
-                getTileUrl: function(coord, zoom) {
-                    // "Wrap" x (logitude) at 180th meridian properly
-                    // NB: Don't touch coord.x because coord param is by reference, and changing its x property breakes something in Google's lib 
-                    var tilesPerGlobe = 1 << zoom;
-                    var x = coord.x % tilesPerGlobe;
-                    if (x < 0) {
-                        x = tilesPerGlobe+x;
-                    }
-                    // Wrap y (latitude) in a like manner if you want to enable vertical infinite scroll
+	<body>
+  <div id="map"></div>
+  <script>
+    var map;
 
-                    return "http://tile.openweathermap.org/map/precipitation_new/"+zoom+"/"+x+"/"+coord.y+".png?appid=b33c02fe5a68e46356570b59b171a517";
-                },
-                tileSize: new google.maps.Size(256, 256),
-                name: "OpenStreetMap",
-                maxZoom: 18
-            }));
-        </script>
-    </body>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+          lat: 19.0356826,
+          lng: 72.9112641
+        },
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
+      });
+
+      var myMapType = new google.maps.ImageMapType({
+        getTileUrl: function(coord, zoom) {
+          var normalizedCoord = getNormalizedCoord(coord, zoom);
+          if (!normalizedCoord) {
+            return null;
+          }
+          var bound = Math.pow(2, zoom);
+          return "http://maps.owm.io:8091/56ce0fcd4376d3010038aaa8/" +
+            zoom + "/" + normalizedCoord.x + "/" + (bound - normalizedCoord.y - 1) + "?hash=5";
+        },
+        tileSize: new google.maps.Size(256, 256),
+        maxZoom: 8,
+        minZoom: 0,
+        name: 'mymaptype'
+      });
+
+      // Normalizes the coords that tiles repeat across the x axis (horizontally)
+      // like the standard Google map tiles.
+      function getNormalizedCoord(coord, zoom) {
+        var y = coord.y;
+        var x = coord.x;
+
+        // tile range in one direction range is dependent on zoom level
+        // 0 = 1 tile, 1 = 2 tiles, 2 = 4 tiles, 3 = 8 tiles, etc
+        var tileRange = 1 << zoom;
+
+        // don't repeat across y-axis (vertically)
+        if (y < 0 || y >= tileRange) {
+          return null;
+        }
+
+        // repeat across x-axis
+        if (x < 0 || x >= tileRange) {
+          x = (x % tileRange + tileRange) % tileRange;
+        }
+
+        return {
+          x: x,
+          y: y
+        };
+      }
+
+      map.overlayMapTypes.insertAt(0, myMapType);
+    }
+  </script>
+</body>
 </html>
 
 
